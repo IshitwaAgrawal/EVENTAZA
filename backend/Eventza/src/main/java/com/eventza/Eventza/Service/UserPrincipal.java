@@ -1,4 +1,4 @@
-package com.eventza.Eventza.config;
+package com.eventza.Eventza.Service;
 
 
 import com.eventza.Eventza.model.User;
