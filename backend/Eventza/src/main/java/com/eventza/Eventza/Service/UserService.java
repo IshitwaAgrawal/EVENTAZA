@@ -4,6 +4,7 @@ import com.eventza.Eventza.DTO.UserDTO;
 import com.eventza.Eventza.Repository.UserRepository;
 import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class UserService implements UserServiceI{
         User user = new User();
         user.setName(userDTO.getName());
         user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
         user.setId(UUID.randomUUID());
         user.setRoles(userDTO.getRoles());
         user.setEnabled(true);
