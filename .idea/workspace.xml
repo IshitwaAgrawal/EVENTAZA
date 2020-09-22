@@ -23,10 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7075de6-312b-4007-813f-8c7a01318916" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/MailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/VerificationController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/Registration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +93,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EventzaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Eventza.main" />
       <extension name="coverage">
@@ -119,7 +134,7 @@
       <workItem from="1600683361237" duration="143000" />
       <workItem from="1600757045815" duration="4790000" />
       <workItem from="1600775657510" duration="6254000" />
-      <workItem from="1600792263869" duration="1562000" />
+      <workItem from="1600792263869" duration="5943000" />
     </task>
     <servers />
   </component>
@@ -139,45 +154,58 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser" timestamp="1600782301333">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="1203" y="145" key="#com.intellij.ide.util.MemberChooser" timestamp="1600804656135">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1600782301333" />
+    <state x="1203" y="145" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1600804656135" />
     <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600757300269">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.864@0.0.1536.864" timestamp="1600757300269" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1600793528826">
+    <state width="1877" height="275" key="GridCell.Tab.0.bottom" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600794632583" />
+    <state width="1877" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.0.center" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1600794632583" />
+    <state width="1877" height="275" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.0.left" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1600794632582" />
+    <state width="1877" height="275" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.0.right" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1600794632583" />
+    <state width="1877" height="275" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.1.bottom" timestamp="1600807239946">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600794632584" />
+    <state width="1877" height="275" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239946" />
+    <state width="1877" height="275" key="GridCell.Tab.1.center" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1600794632583" />
+    <state width="1877" height="275" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.1.left" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1600794632583" />
+    <state width="1877" height="275" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state width="1877" height="275" key="GridCell.Tab.1.right" timestamp="1600807239938">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1600794632584" />
+    <state width="1877" height="275" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
+    <state x="360" y="93" key="new project wizard" timestamp="1600794965342">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1600793528826">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1600793528826">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1600793528826">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.1.bottom" timestamp="1600793528827">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600793528827" />
-    <state width="1493" height="210" key="GridCell.Tab.1.center" timestamp="1600793528826">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.1.left" timestamp="1600793528826">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1600793528826" />
-    <state width="1493" height="210" key="GridCell.Tab.1.right" timestamp="1600793528827">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="210" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1600793528827" />
+    <state x="360" y="93" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1600794965342" />
   </component>
 </project>

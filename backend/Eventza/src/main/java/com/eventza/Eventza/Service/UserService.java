@@ -3,6 +3,7 @@ package com.eventza.Eventza.Service;
 import com.eventza.Eventza.DTO.UserDTO;
 import com.eventza.Eventza.Repository.UserRepository;
 import com.eventza.Eventza.model.User;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class UserService implements UserServiceI{
     @Autowired
     private UserRepository repo;
 
+    @Autowired
+    private MailService mailService;
+
     @Transactional
     @Override
     public User registerNewUserAccount(UserDTO userDTO) throws Exception {
@@ -22,6 +26,7 @@ public class UserService implements UserServiceI{
             throw new Exception("There is an account with that username : "+userDTO.getUsername());
         }
         User user = new User();
+        String k = RandomString.make(64);
         user.setName(userDTO.getName());
         user.setUsername(userDTO.getUsername());
         user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
@@ -30,7 +35,13 @@ public class UserService implements UserServiceI{
         user.setEnabled(true);
         user.setVerified(false);
         user.setEmail(userDTO.getEmail());
+        user.setVerificationToken(k);
+        mailService.sendVerificationEmail(user);
         return repo.save(user);
+    }
+
+    public User getUserByVerificationToken(String code){
+        return repo.getUserByVerificationToken(code);
     }
 
     private boolean userExists(String username){

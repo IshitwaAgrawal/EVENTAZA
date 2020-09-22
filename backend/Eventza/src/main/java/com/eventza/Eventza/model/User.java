@@ -15,6 +15,15 @@ public class User {
     private boolean enabled;
     private String roles;
     private boolean verified;
+    private String verificationToken;
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
 
     public boolean isVerified() {
         return verified;
