@@ -14,6 +14,15 @@ public class User {
     private String email;
     private boolean enabled;
     private String roles;
+    private boolean verified;
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
     public String getEmail() {
         return email;

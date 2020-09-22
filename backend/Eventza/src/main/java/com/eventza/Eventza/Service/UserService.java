@@ -27,6 +27,7 @@ public class UserService implements UserServiceI{
         user.setId(UUID.randomUUID());
         user.setRoles(userDTO.getRoles());
         user.setEnabled(true);
+        user.setVerified(false);
         user.setEmail(userDTO.getEmail());
         return repo.save(user);
     }
