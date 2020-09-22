@@ -3,8 +3,42 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7075de6-312b-4007-813f-8c7a01318916" name="Default Changelist" comment="" />
+    <list default="true" id="e7075de6-312b-4007-813f-8c7a01318916" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Filters/JwtRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/LoginResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserDetailsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/UserPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/eventza.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/resources/eventza.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/eventza.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/resources/eventza.trace.db" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +61,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -48,17 +89,26 @@
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/Eventza/src/main/resources" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ISHITWA\Desktop\EVENTAZA\backend\Eventza\src\main\resources" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -91,44 +141,64 @@
       <option name="presentableId" value="Default" />
       <updated>1600683359168</updated>
       <workItem from="1600683361237" duration="143000" />
+      <workItem from="1600757045815" duration="4790000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom" timestamp="1600683505045">
+    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser" timestamp="1600758099603">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.0.center" timestamp="1600683505045">
+    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1600758099603" />
+    <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600757300269">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.0.left" timestamp="1600683505045">
+    <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.864@0.0.1536.864" timestamp="1600757300269" />
+    <state width="709" height="221" key="GridCell.Tab.0.bottom" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.0.right" timestamp="1600683505045">
+    <state width="709" height="221" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.0.center" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.1.bottom" timestamp="1600683505045">
+    <state width="709" height="221" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.0.left" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.1.center" timestamp="1600683505045">
+    <state width="709" height="221" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.0.right" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.1.left" timestamp="1600683505045">
+    <state width="709" height="221" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.1.bottom" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
-    <state width="1493" height="223" key="GridCell.Tab.1.right" timestamp="1600683505045">
+    <state width="709" height="221" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.1.center" timestamp="1600761693362">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="223" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1600683505045" />
+    <state width="709" height="221" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.1.left" timestamp="1600761693362">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="709" height="221" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
+    <state width="709" height="221" key="GridCell.Tab.1.right" timestamp="1600761693362">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="709" height="221" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1600761693362" />
   </component>
 </project>
