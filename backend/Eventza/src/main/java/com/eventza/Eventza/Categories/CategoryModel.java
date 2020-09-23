@@ -20,7 +20,8 @@ public class CategoryModel {
   public CategoryModel() {
   }
 
-  public CategoryModel(String categoryName) {
+  public CategoryModel(UUID id, String categoryName) {
+    this.id = id;
     this.categoryName = categoryName;
   }
 

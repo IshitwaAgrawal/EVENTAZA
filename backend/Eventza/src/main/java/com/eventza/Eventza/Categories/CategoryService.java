@@ -2,6 +2,7 @@ package com.eventza.Eventza.Categories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,10 @@ public class CategoryService {
   //method to fetch a category by its name from the database
   public CategoryModel getRequestedCategory(String categoryName){
   return categoryRepository.findByCategoryName(categoryName);
+  }
+
+  public UUID getCategoryId(String categoryName){
+    return getRequestedCategory(categoryName).getId();
   }
 
   //method to fetch all available categories from the database
