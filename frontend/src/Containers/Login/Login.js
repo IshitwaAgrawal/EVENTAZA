@@ -25,12 +25,13 @@ class signup extends Component {
         password:this.state.password
     }
     
-    axios.post('http://94c72eedae03.ngrok.io/'
-    ,Data)
+    axios.post('http://97dd75f68594.ngrok.io/login',Data)
     .then(response => {
         if(response.status === 200)
         {
-            console.log(response);
+          localStorage.setItem("jwt", response.data.jwt);
+            console.log(response.data.jwt);
+            console.log(localStorage.getItem("jwt"));
         }
         this.props.loginname(this.state.username);
         this.toRegister();

@@ -22,17 +22,17 @@ class login extends Component {
       password: this.state.password,
       roles:"USER"
     };
-    // const header = {
-    //   headers: {
-    //       "Access-Control-Request-Method":"POST",
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": '*',
-    //   },
-    // };
+    const header = {
+      headers: {
+          "Access-Control-Request-Method":"POST",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": '*',
+      },
+    };
     // console.log(Data);
     // axios.post("https://testsignup-88965.firebaseio.com/login.json",Data )
     
-      axios.post("http://94c72eedae03.ngrok.io/user/registration", Data)
+      axios.post("http://97dd75f68594.ngrok.io/user/registration",Data)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ registered: true });
