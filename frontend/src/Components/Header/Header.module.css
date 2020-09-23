@@ -1,0 +1,100 @@
+.Header1{
+    height:50px;
+    width: 100%;
+    background-color: rgb(51,53,69);
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 10px;
+  
+    
+}
+
+.Logo{
+    display: inline;
+    
+}
+.Link{
+    display: flex;
+    flex-direction: row;
+
+}
+.CitySelect{
+    display: flex;
+    flex-direction: row;
+    margin:0 20px;
+    font-size: medium;
+    margin-top: 12px;
+    cursor: pointer;
+    color:rgb(194,204,204);
+    font-weight: lighter;
+   
+}
+.CitySelect i{
+    
+    margin-top:5px;
+}
+.CitySelect h3 {
+    margin-right:10px;
+}
+.CitySelect:hover {
+    color:white;
+}
+.Login{
+    padding-top: 11px;
+}
+.Login a{
+    margin:0 15px;
+    cursor: pointer;
+    font-size: small;
+    color:rgb(194,204,204);
+    border: 1px solid rgb(194,204,204);
+    text-decoration: none;
+    padding:4px 9px;
+    border-radius: 25px;
+}
+.Login a:hover{
+    font-weight: bolder;
+    color:white;
+    border: 1px solid white;
+}
+.Toggle{
+    font-size:30px;
+    color:rgb(194,204,204);
+    margin:0 20px;
+    transition: all 0.5s ease-in-out;
+}
+.Toggle:hover{
+    color:white;
+    transform: rotate(90deg);
+}
+
+
+
+.Header2{
+    background-color: rgb(31,37,51);
+    height:40px;
+}
+.Header2 h3{
+    float:left;
+    margin:7px 10px;
+    color:rgb(194,204,204); 
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+.CreateEvent{
+    float: right;
+    margin:8px 20px ;
+}
+
+.CreateEvent a {
+    border:2px solid white;
+    padding:3px 5px;
+    text-decoration: none;
+    border-radius: 25px;
+    color:white;
+    background-image: linear-gradient(#6f2232,#950740,#c3073f);
+}
+

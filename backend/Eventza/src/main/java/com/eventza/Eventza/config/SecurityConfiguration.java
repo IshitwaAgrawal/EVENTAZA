@@ -29,50 +29,50 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+  @Autowired
+  private UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+  @Autowired
+  private JwtRequestFilter jwtRequestFilter;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/user/registration").permitAll()
-                .antMatchers("/verify/**").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/hello").permitAll()
-                .antMatchers("/getUser").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.headers().frameOptions().disable();
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService);
+  }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors().and().csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/user/registration").permitAll()
+        .antMatchers("/login").permitAll()
+        .antMatchers("/h2-console/**").permitAll()
+        .antMatchers("/hello").permitAll()
+        .antMatchers("/categories/**").permitAll()
+        .antMatchers("/search/**").permitAll()
+        .antMatchers("/getUser").hasAnyAuthority("ADMIN")
+        .anyRequest().authenticated()
+        .and()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    http.headers().frameOptions().disable();
+  }
 
 //    @Bean
 //    public NoOpPasswordEncoder passwordEncoder(){
 //        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 //    }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception{
-        return super.authenticationManagerBean();
-    }
+  @Override
+  @Bean
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
@@ -84,14 +84,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        return source;
 //    }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
-    }
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+      }
+    };
+  }
 }
 

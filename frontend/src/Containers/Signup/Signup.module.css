@@ -1,0 +1,53 @@
+.Form{
+    margin-top:80px ;
+    width: 100vw;
+}
+.Form main{
+    text-align: center;
+    width:200px;
+    height:350px;
+    margin: auto;
+    min-height:300px;
+    background-color: aliceblue;
+    padding:40px 20px;
+    border-radius: 20px;
+}
+.Form h4{
+
+    font-size: xx-large;
+    font-weight: bold;
+    margin-bottom:30px;
+    color:#c3073f;
+}
+.Form input{
+    border:none;
+    background-color: rgba(128, 128, 128,0.2);
+    height:30px;
+    margin:6px;
+    border-radius: 5px;
+}
+.submit{
+    background-image:linear-gradient(#6f2232,#950740,#c3073f) ;
+    font-family: Montserrat-Bold;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    height: 40px;
+    margin-top: 30px;
+    border-radius: 25px;
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+    transition: all .4s;
+}
+.submit:hover{
+    background-image:linear-gradient(#c3073f,#950740,#6f2232) ;
+
+}
+.Form p{
+    cursor: pointer;
+    text-align: center;
+}
