@@ -18,10 +18,11 @@ public class MailService {
         String subject = "Please verify your registration.";
         String senderName = "EVENTAZA APP";
         String mailContent = "<p>Dear "+user.getName()+", </p>";
-        String site = "localhost:8000";
+        String site = "http://localhost:8000";
         String verifyUrl = "/verify/"+user.getVerificationToken();
         mailContent += "<p>Please click the link below to verify the registration</p>";
-        mailContent += "<a href=\""+site+verifyUrl+"\">VERIFY ME!</a>";
+        // <a href="">VERIFY</a>
+        mailContent += "<a href=\""+site+verifyUrl+"\">VERIFY</a><br>";
         mailContent += site+verifyUrl+" , Please access this url!";
 
         MimeMessage message = mailSender.createMimeMessage();

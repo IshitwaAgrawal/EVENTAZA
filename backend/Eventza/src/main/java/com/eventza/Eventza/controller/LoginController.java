@@ -41,8 +41,12 @@ public class LoginController {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(request.getUsername());
 
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new LoginResponse(jwt));
+        if(userDetails.isEnabled()){
+            final String jwt = jwtTokenUtil.generateToken(userDetails);
+            return ResponseEntity.ok(new LoginResponse(jwt));
+        }
+        else{
+            return ResponseEntity.ok("Not Verified!");
+        }
     }
 }

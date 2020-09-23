@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("select u from User u where u.verificationToken = ?1")
     public User getUserByVerificationToken(String code);
+
+    @Query("select u from User u where u.email = ?1")
+    public User getUserByEmail(String email);
 }
