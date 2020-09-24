@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
 @RestController
-public class Registration {
+public class UserRegistration {
 
     @Autowired
     UserService userService;

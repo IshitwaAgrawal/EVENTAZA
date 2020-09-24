@@ -26,6 +26,10 @@ public class EventService {
     return events;
   }
 
+  public List<EventModel> getAllEvents(){
+    return (List<EventModel>) eventRepository.findAll();
+  }
+
   public void addNewEvent(EventModel eventModel){
     eventRepository.save(eventModel);
   }

@@ -49,7 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/hello").permitAll()
         .antMatchers("/categories/**").permitAll()
         .antMatchers("/search/**").permitAll()
+         .antMatchers("/verify/**").permitAll()
         .antMatchers("/getUser").hasAnyAuthority("ADMIN")
+            .antMatchers("/categories/**").permitAll()
+            .antMatchers("/getPastEvents").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

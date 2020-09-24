@@ -16,6 +16,8 @@ public class User {
     private String roles;
     private boolean verified;
     private String verificationToken;
+    private int created_events;
+    private int register_in_events;
 
     public String getVerificationToken() {
         return verificationToken;
@@ -23,6 +25,22 @@ public class User {
 
     public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
+    }
+
+    public int getCreated_events() {
+        return created_events;
+    }
+
+    public void setCreated_events(int created_events) {
+        this.created_events = created_events;
+    }
+
+    public int getRegister_in_events() {
+        return register_in_events;
+    }
+
+    public void setRegister_in_events(int register_in_events) {
+        this.register_in_events = register_in_events;
     }
 
     public boolean isVerified() {
