@@ -54,9 +54,6 @@ public class EventModel {
     return id;
   }
 
-  public Integer getRemainingTickets() {
-    return totalTickets - registrations;
-  }
 
   public String getEventName() {
     return eventName;

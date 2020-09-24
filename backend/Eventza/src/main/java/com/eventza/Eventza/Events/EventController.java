@@ -20,37 +20,43 @@ public class EventController {
   private CategoryService categoryService;
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
-  public EventModel getRequestedEvent(@PathVariable String eventName){
+  public EventModel getRequestedEvent(@PathVariable String eventName) {
     return eventService.getRequestedEvent(eventName);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
-  public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName){
+  public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName) {
     return eventService.getAllEventsFromRequestedCategory(categoryName);
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events")
-  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
+  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event) {
     UUID id = categoryService.getCategoryId(categoryName);
-    event.setCategory(new CategoryModel(id , categoryName));
+    event.setCategory(new CategoryModel(id, categoryName));
     eventService.addNewEvent(event);
     return "New event added";
   }
 
   @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
-  public String updateExistingEvent(@PathVariable String eventName, @RequestBody EventModel event){
-    eventService.updateExistingEvent(event);
+  public String updateExistingEvent(@PathVariable String categoryName,
+      @PathVariable String eventName, @RequestBody EventModel event) {
+    UUID id = categoryService.getCategoryId(categoryName);
+    event.setCategory(new CategoryModel(id, categoryName));
+    UUID event_id = eventService.getEventId(eventName);
+    eventService.updateExistingEvent(event_id, event);
+
     return eventName + " updated";
+
   }
 
   @RequestMapping(method = RequestMethod.DELETE, path = "/categories/{categoryName}/events/{eventName}")
-  public String deleteEvent(@PathVariable String eventName){
+  public String deleteEvent(@PathVariable String eventName) {
     eventService.deleteEvent(eventName);
     return eventName + " deleted";
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/search/{location}")
-  public List<EventModel> searchEventsByLocation(@PathVariable String location){
+  public List<EventModel> searchEventsByLocation(@PathVariable String location) {
     return eventService.searchEventsByLocation(location);
   }
 }

@@ -393,3 +393,9 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:461)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 95 more
+2020-09-24 01:59:54 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TABLEEVENT_MODEL" not found; SQL statement:
+DELETE TABLEEVENT_MODEL [42102-200]
+2020-09-24 02:00:08 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE TABLE[*] EVENT_MODEL"; expected "identifier"; SQL statement:
+DELETE TABLE EVENT_MODEL [42001-200]

@@ -1,5 +1,6 @@
 package com.eventza.Eventza.Events;
 
+import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,10 @@ public class EventService {
   @Autowired
   private CategoryService categoryService;
 
+
+  public UUID getEventId(String eventName){
+    return eventRepository.findByEventName(eventName).getId();
+  }
   public EventModel getRequestedEvent(String eventName){
    return eventRepository.findByEventName(eventName);
   }
@@ -30,12 +35,18 @@ public class EventService {
     eventRepository.save(eventModel);
   }
 
-  public void updateExistingEvent(EventModel eventModel){
+  public void updateExistingEvent(UUID id, EventModel eventModel){
+    EventModel event = eventRepository.findById(id).get();
+    Integer rating = event.getRating();
+    Integer registrations = event.getRegistrations();
+    eventRepository.deleteById(id);
+    eventModel.setRating(rating);
+    eventModel.setRegistrations(registrations);
     eventRepository.save(eventModel);
   }
 
   public void deleteEvent(String eventName){
-    eventRepository.deleteById(getRequestedEvent(eventName).getId());
+    eventRepository.deleteById(getEventId(eventName));
   }
 
   public List<EventModel> searchEventsByLocation(String eventLocation){
