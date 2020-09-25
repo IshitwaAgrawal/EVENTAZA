@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface EventRepository extends CrudRepository<EventModel, UUID> {
 
+  @Query("select e from EventModel e where e.eventName=?1")
   EventModel findByEventName(String eventName);
+
   List<EventModel> findByCategoryId(UUID categoryId);
   List<EventModel> findByEventLocation(String eventLocation);
   List<EventModel> findByAverageRatingGreaterThanEqual(Double cutoffRating);

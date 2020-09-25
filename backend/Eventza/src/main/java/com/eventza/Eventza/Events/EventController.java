@@ -1,3 +1,4 @@
+
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
@@ -10,6 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import com.eventza.Eventza.Service.UserService;
+import com.eventza.Eventza.model.User;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class EventController {
@@ -18,6 +26,8 @@ public class EventController {
   private EventService eventService;
   @Autowired
   private CategoryService categoryService;
+  @Autowired
+  private UserService userService;
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
   public EventModel getRequestedEvent(@PathVariable String eventName) {
@@ -29,15 +39,17 @@ public class EventController {
     return eventService.getAllEventsFromRequestedCategory(categoryName);
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events")
-  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event) {
+  @PostMapping("/categories/{categoryName}/events")
+  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
+    User user = userService.getUserByUsername(event.getUsername());
+    userService.increaseCreatedEvent(user);
     UUID id = categoryService.getCategoryId(categoryName);
-    event.setCategory(new CategoryModel(id, categoryName));
+    event.setCategory(categoryService.getRequestedCategory(id));
     eventService.addNewEvent(event);
     return "New event added";
   }
 
-  @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
+ /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
   public String updateExistingEvent(@PathVariable String categoryName,
       @PathVariable String eventName, @RequestBody EventModel event) {
     UUID id = categoryService.getCategoryId(categoryName);
@@ -45,7 +57,12 @@ public class EventController {
     UUID event_id = eventService.getEventId(eventName);
     eventService.updateExistingEvent(event_id, event);
     return eventName + " updated";
-
+  }
+  */
+  @PutMapping("/categories/{categoryName}/events/{eventName}")
+  public String updateExistingEvent(@PathVariable String eventName, @RequestBody EventModel event){
+    eventService.updateExistingEvent(event);
+    return eventName + " updated";
   }
 
   @RequestMapping(method = RequestMethod.DELETE, path = "/categories/{categoryName}/events/{eventName}")
@@ -71,4 +88,26 @@ public class EventController {
   public List<EventModel> searchEventsByLocation(@PathVariable String location) {
     return eventService.searchEventsByLocation(location);
   }
-}
+
+
+    @GetMapping("/categories/getAllEvents")
+    public List<EventModel> getAllEvents(){
+      return eventService.getAllEvents();
+    }
+
+    @GetMapping("/getPastEvents")
+    public List<EventModel> getPastEvents()throws ParseException {
+      Date d = new Date();
+      List<EventModel> events = new ArrayList<>();
+      List<EventModel> pastEvents = new ArrayList<>();
+      events = eventService.getAllEvents();
+      for(EventModel event:events){
+        Date endD = new SimpleDateFormat("yyyy-MM-dd").parse(event.getEndDate().substring(0,10));
+        if(endD.before(d)){
+          pastEvents.add(event);
+        }
+      }
+      return pastEvents;
+    }
+
+  }

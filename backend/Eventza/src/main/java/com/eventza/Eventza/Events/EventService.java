@@ -31,17 +31,25 @@ public class EventService {
     return events;
   }
 
+  public List<EventModel> getAllEvents(){
+    return (List<EventModel>) eventRepository.findAll();
+  }
+
   public void addNewEvent(EventModel eventModel){
     eventRepository.save(eventModel);
   }
 
-  public void updateExistingEvent(UUID id, EventModel eventModel){
+  /*public void updateExistingEvent(UUID id, EventModel eventModel){
     EventModel event = eventRepository.findById(id).get();
     Double rating = event.getAverageRating();
     Integer registrations = event.getRegistrations();
     eventRepository.deleteById(id);
     eventModel.setAverageRating(rating);
     eventModel.setRegistrations(registrations);
+    eventRepository.save(eventModel);
+  }*/
+
+  public void updateExistingEvent(EventModel eventModel){
     eventRepository.save(eventModel);
   }
 

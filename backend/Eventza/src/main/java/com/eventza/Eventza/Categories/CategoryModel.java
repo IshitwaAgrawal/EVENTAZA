@@ -12,16 +12,14 @@ public class CategoryModel {
 
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable = false)
   private UUID id;
   private String categoryName;
 
-  public CategoryModel() {
-  }
+  public CategoryModel() { }
 
-  public CategoryModel(UUID id, String categoryName) {
-    this.id = id;
+  public CategoryModel(String categoryName){
+    this.id = UUID.randomUUID();
     this.categoryName = categoryName;
   }
 

@@ -39,7 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService);
   }
-
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
@@ -51,7 +50,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/categories/**").permitAll()
         .antMatchers("/search/**").permitAll()
         .antMatchers("/recommendedEvents").permitAll()
+         .antMatchers("/verify/**").permitAll()
         .antMatchers("/getUser").hasAnyAuthority("ADMIN")
+            .antMatchers("/resendVerification").permitAll()
+            .antMatchers("/categories/**").permitAll()
+            .antMatchers("/getPastEvents").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

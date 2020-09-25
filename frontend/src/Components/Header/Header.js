@@ -12,13 +12,13 @@ const header = (props) => {
         <div className={classes.Link}>
           <div className={classes.CitySelect}>
             <h3>Select city</h3>
-            <i class="fas fa-caret-down"></i>
+            <i className="fas fa-caret-down"></i>
           </div>
           <div className={classes.Login}>
             <Link to="/login">Login</Link>
           </div>
           <div className={classes.Toggle}>
-            <i class="fas fa-bars"></i>
+            <i className="fas fa-bars"></i>
           </div>
         </div>
         {/* <div  className={classes.Hlink}>
