@@ -6,11 +6,7 @@ import { withRouter } from "react-router-dom";
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-const validateForm = errors => {
-  let valid = true;
-  Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  return valid;
-};
+
 
 class login extends Component {
   state = {
@@ -24,35 +20,46 @@ class login extends Component {
       name: "",
       email: "",
       password: "",
-    },
+    }
+  };
+  validateForm = errors => {
+    let valid = true;
+    Object.values(errors).forEach(val => val.length > 0 && (valid = false));
+    return valid;
   };
   submit = (e) => {
     e.preventDefault();
-    const Data = {
-      name: this.state.name,
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      roles: "USER"
-    };
-    axios
-      .post("http://a6bf1655597f.ngrok.io/user/registration", Data)
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({ registered: true });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    this.props.history.push("/login");
+    console.log(this.state.errors.name)
+    if(this.validateForm(this.state.errors) === true) {
+      const Data = {
+        name: this.state.name,
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        roles: "USER"
+      };
+      axios
+        .post("http://a6bf1655597f.ngrok.io/user/registration", Data)
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ registered: true });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  
+      this.props.history.push("/login");
+    }else{
+      alert('Invalid Form')
+    }
+    
   };
   onChangeHandler = (event) => {
     const { name, value } = event.target;
     let errors = this.state.errors;
     this.setState({
-      [name]: value,
+      [name]:value
     });
 
     switch (name) {
@@ -72,7 +79,9 @@ class login extends Component {
       default:
         break;
     }
-    this.setState({ errors, [name]: value });
+    this.setState({
+      errors:{[name]:value}
+    });
     //  this.passvalid();
   };
   //  passwordvalidation='';
@@ -88,7 +97,6 @@ class login extends Component {
   };
 
   render() {
-    const { errors } = this.state;
     return (
       <div className={classes.Form}>
         <main>
@@ -100,11 +108,11 @@ class login extends Component {
                 value={this.state.name}
                 name="name"
                 onChange={this.onChangeHandler}
-                required
+
                 placeholder="Your name"
               ></input>
-              {errors.name.length > 0 && (
-                <span className={classes.error}>{errors.name}</span>
+              {this.state.errors.name.length > 0 && (
+                <span className={classes.error}>Name must be at least 5 characters long!</span>
               )}
             </div>
             <div>
@@ -113,7 +121,7 @@ class login extends Component {
                 value={this.state.username}
                 name="username"
                 onChange={this.onChangeHandler}
-                required
+
                 placeholder="user name"
               ></input>
             </div>
@@ -123,11 +131,10 @@ class login extends Component {
                 value={this.state.email}
                 name="email"
                 onChange={this.onChangeHandler}
-                required
                 placeholder="Your email"
               ></input>
-              {errors.email.length > 0 && (
-                <span className={classes.error}>{errors.email}</span>
+              {this.state.errors.email.length > 0 && (
+                <span className={classes.error}>{this.state.errors.email}</span>
               )}
             </div>
             <div>
@@ -138,8 +145,8 @@ class login extends Component {
                 onChange={this.onChangeHandler}
                 placeholder="password"
               ></input>
-              {errors.password.length > 0 && (
-                <span className={classes.error}>{errors.password}</span>
+              {this.state.errors.password.length > 0 && (
+                <span className={classes.error}>{this.state.errors.password}</span>
               )}
             </div>
             <div className={classes.submit}>
