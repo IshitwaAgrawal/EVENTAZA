@@ -44,7 +44,6 @@ public class EventController {
     event.setCategory(new CategoryModel(id, categoryName));
     UUID event_id = eventService.getEventId(eventName);
     eventService.updateExistingEvent(event_id, event);
-
     return eventName + " updated";
 
   }
@@ -54,6 +53,19 @@ public class EventController {
     eventService.deleteEvent(eventName);
     return eventName + " deleted";
   }
+
+  @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/{rating}")
+    public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating){
+    UUID id = eventService.getEventId(eventName);
+    Double rate = eventService.rateAnEvent(id, rating);
+    return eventName + " rated" + rate;
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/recommendedEvents")
+  public List<EventModel> getRecommendedEvents(){
+   return eventService.getRecommendedEvents();
+  }
+
 
   @RequestMapping(method = RequestMethod.GET, path = "/search/{location}")
   public List<EventModel> searchEventsByLocation(@PathVariable String location) {

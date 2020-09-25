@@ -37,10 +37,10 @@ public class EventService {
 
   public void updateExistingEvent(UUID id, EventModel eventModel){
     EventModel event = eventRepository.findById(id).get();
-    Integer rating = event.getRating();
+    Double rating = event.getAverageRating();
     Integer registrations = event.getRegistrations();
     eventRepository.deleteById(id);
-    eventModel.setRating(rating);
+    eventModel.setAverageRating(rating);
     eventModel.setRegistrations(registrations);
     eventRepository.save(eventModel);
   }
@@ -53,5 +53,20 @@ public class EventService {
     List<EventModel> events = new ArrayList<>();
     eventRepository.findByEventLocation(eventLocation).forEach(event -> events.add(event));
     return events;
+  }
+
+  public List<EventModel> getRecommendedEvents(){
+    List<EventModel> events = new ArrayList<>();
+    eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(event));
+    return events;
+
+  }
+
+  public Double rateAnEvent(UUID id, Integer rating) {
+    EventModel event = eventRepository.findById(id).get();
+    Integer ratingCounter = event.counter();
+    Integer prev_rating = event.getTotalRating();
+    eventRepository.setRatingForEventModule(id, (double)(prev_rating + rating)/ratingCounter, prev_rating + rating);
+    return event.getAverageRating();
   }
 }

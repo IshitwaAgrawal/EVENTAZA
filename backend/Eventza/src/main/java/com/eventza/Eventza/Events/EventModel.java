@@ -21,12 +21,15 @@ public class EventModel {
   private UUID id;
   private String eventName;
   private String organiserName;
-  private Date eventDate;
+  private Date eventStartDate;
+  private Date eventEndDate;
   private String eventLocation;
   private Integer price;
-  private Integer rating;
+  private Double averageRating = 0.0;
+  private Integer totalRating = 0;
+  private Integer ratingCounter = 0;
   private Integer totalTickets;
-  private Integer registrations;
+  private Integer registrations = 0;
   private String eventDescription;
   @ManyToOne
   private CategoryModel category;
@@ -34,20 +37,31 @@ public class EventModel {
   public EventModel() {
   }
 
-  public EventModel(String eventName, String organiserName, String eventDate,
-      String eventLocation, Integer price, Integer rating, Integer totalTickets,
-      Integer registrations, String eventDescription, String categoryName) throws ParseException {
+  public EventModel(String eventName, String organiserName, String eventStartDate,
+      String eventEndDate, String eventLocation, Integer price,
+      Integer totalTickets, String eventDescription, String categoryName) throws ParseException {
     this.eventName = eventName;
     this.organiserName = organiserName;
-    this.eventDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventDate);
+    this.eventStartDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventStartDate);
+    this.eventEndDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventEndDate);
     //Time************************************************************************************************
     this.eventLocation = eventLocation;
     this.price = price;
-    this.rating = rating;
     this.totalTickets = totalTickets;
-    this.registrations = registrations;
     this.eventDescription = eventDescription;
     this.category = new CategoryModel(category.getId(), categoryName);
+  }
+
+  public Integer counter(){
+    return ++ratingCounter;
+  }
+
+  public Integer getTotalRating(){
+    return totalRating;
+  }
+
+  public void setTotalRating(Integer rating){
+    this.totalRating += rating;
   }
 
   public UUID getId() {
@@ -71,12 +85,20 @@ public class EventModel {
     this.organiserName = organiserName;
   }
 
-  public Date getEventDate() {
-    return eventDate;
+  public Date getEventStartDate() {
+    return eventStartDate;
   }
 
-  public void setEventDate(String eventDate) throws ParseException {
-    this.eventDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventDate);
+  public void setEventStartDate(String eventStartDate) throws ParseException {
+    this.eventStartDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventStartDate);
+  }
+
+  public Date getEventEndDate() {
+    return eventEndDate;
+  }
+
+  public void setEventEndDate(String eventEndDate) throws ParseException {
+    this.eventEndDate = new SimpleDateFormat("dd/mm/yyyy").parse(eventEndDate);
   }
 
   public String getEventLocation() {
@@ -95,12 +117,12 @@ public class EventModel {
     this.price = price;
   }
 
-  public Integer getRating() {
-    return rating;
+  public Double getAverageRating() {
+    return averageRating;
   }
 
-  public void setRating(Integer rating) {
-    this.rating = rating;
+  public void setAverageRating(Double averageRating) {
+    this.averageRating = averageRating;
   }
 
   public Integer getTotalTickets() {
