@@ -11,6 +11,9 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   @Query("select e from EventModel e where e.eventName=?1")
   EventModel findByEventName(String eventName);
 
+  @Query("select e from EventModel e where e.id=?1")
+  EventModel getEventModelById(UUID id);
+
   List<EventModel> findByCategoryId(UUID categoryId);
   List<EventModel> findByEventLocation(String eventLocation);
 

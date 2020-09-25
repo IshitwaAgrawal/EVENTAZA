@@ -38,12 +38,15 @@
 
     @PostMapping("/categories/{categoryName}/events")
     public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
-      User user = userService.getUserByUsername(event.getUsername());
-      userService.increaseCreatedEvent(user);
-      UUID id = categoryService.getCategoryId(categoryName);
-      event.setCategory(categoryService.getRequestedCategory(id));
-      eventService.addNewEvent(event);
-      return "New event added";
+      try {
+        UUID id = categoryService.getCategoryId(categoryName);
+        event.setCategory(categoryService.getRequestedCategory(id));
+        eventService.addNewEvent(event);
+        return "New event added";
+      }
+      catch (Exception e){
+        return e.getMessage();
+      }
     }
 
     @PutMapping("/categories/{categoryName}/events/{eventName}")

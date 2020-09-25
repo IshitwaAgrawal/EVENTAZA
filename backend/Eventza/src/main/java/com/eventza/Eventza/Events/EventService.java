@@ -4,6 +4,9 @@ import com.eventza.Eventza.Categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.eventza.Eventza.Service.UserService;
+import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,9 @@ public class EventService {
   private EventRepository eventRepository;
   @Autowired
   private CategoryService categoryService;
+
+  @Autowired
+  private UserService userService;
 
   public EventModel getRequestedEvent(String eventName){
    return eventRepository.findByEventName(eventName);
@@ -31,6 +37,8 @@ public class EventService {
   }
 
   public void addNewEvent(EventModel eventModel){
+    User u = userService.getUserByUsername(eventModel.getUsername());
+    userService.increaseCreatedEvent(u);
     eventRepository.save(eventModel);
   }
 
@@ -46,5 +54,9 @@ public class EventService {
     List<EventModel> events = new ArrayList<>();
     eventRepository.findByEventLocation(eventLocation).forEach(event -> events.add(event));
     return events;
+  }
+
+  public EventModel getEventById(UUID id){
+    return eventRepository.getEventModelById(id);
   }
 }
