@@ -6,7 +6,7 @@ const header = (props) => {
     <nav>
       <div className={classes.Header1}>
         <div className={classes.Logo}>
-          <h1 style={{ display: "inline block" }}>Eventaza</h1>
+          <h1 style={{ display: "inline block" ,color: "white" }}>Eventaza</h1>
           {/* <h1>hello{props.name}</h1> */}
         </div>
         <div className={classes.Link}>

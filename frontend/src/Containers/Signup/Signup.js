@@ -3,7 +3,6 @@ import classes from "./Signup.module.css";
 import axios from "../../Components/axios";
 import { withRouter } from "react-router-dom";
 
-
 const validEmailRegex = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
@@ -19,13 +18,13 @@ class login extends Component {
     email: "",
     username: "",
     password: "",
-    roles:"",
+    roles: "",
     registered: false,
     errors: {
-      name: '',
-      email: '',
-      password: '',
-    }
+      name: "",
+      email: "",
+      password: "",
+    },
   };
   submit = (e) => {
     e.preventDefault();
@@ -34,62 +33,48 @@ class login extends Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      roles:"USER"
+      roles: "USER"
     };
-    // const header = {
-    //   headers: {
-    //       "Access-Control-Request-Method":"POST",
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": '*',
-    //   },
-    // };
-    // console.log(Data);
-    // axios.post("https://testsignup-88965.firebaseio.com/login.json",Data )
-    
-      axios.post("http://97dd75f68594.ngrok.io/user/registration",Data)
+    axios
+      .post("http://a6bf1655597f.ngrok.io/user/registration", Data)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ registered: true });
         }
       })
-      .catch(error => {
-          console.log(error);
+      .catch((error) => {
+        console.log(error);
       });
 
-     this.props.history.push("/login");
+    this.props.history.push("/login");
   };
   onChangeHandler = (event) => {
     const { name, value } = event.target;
     let errors = this.state.errors;
     this.setState({
-      [name]: value
+      [name]: value,
     });
 
     switch (name) {
-      case 'name': 
-        errors.name = 
-          value.length < 5
-            ? 'Name must be at least 5 characters long!'
-            : '';
+      case "name":
+        errors.name =
+          value.length < 5 ? "Name must be at least 5 characters long!" : "";
         break;
-      case 'email': 
-        errors.email = 
-          validEmailRegex.test(value)
-            ? ''
-            : 'Email is not valid!';
+      case "email":
+        errors.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
         break;
-      case 'password': 
-        errors.password = 
+      case "password":
+        errors.password =
           value.length < 6
-            ? 'Password must be at least 6 characters long!'
-            : '';
+            ? "Password must be at least 6 characters long!"
+            : "";
         break;
       default:
         break;
-  }
-  this.setState({errors, [name]: value});
-  //  this.passvalid();
-  }
+    }
+    this.setState({ errors, [name]: value });
+    //  this.passvalid();
+  };
   //  passwordvalidation='';
   //  passvalid = () =>{
   //   if(this.state.username.length<=5){
@@ -102,9 +87,8 @@ class login extends Component {
     this.props.history.push("/login");
   };
 
-
   render() {
-    const {errors} = this.state;
+    const { errors } = this.state;
     return (
       <div className={classes.Form}>
         <main>
@@ -119,8 +103,9 @@ class login extends Component {
                 required
                 placeholder="Your name"
               ></input>
-              {errors.name.length > 0 && 
-                <span className={classes.error}>{errors.name}</span>}
+              {errors.name.length > 0 && (
+                <span className={classes.error}>{errors.name}</span>
+              )}
             </div>
             <div>
               <input
@@ -131,7 +116,6 @@ class login extends Component {
                 required
                 placeholder="user name"
               ></input>
-              
             </div>
             <div>
               <input
@@ -142,8 +126,9 @@ class login extends Component {
                 required
                 placeholder="Your email"
               ></input>
-              {errors.email.length > 0 && 
-                <span className={classes.error}>{errors.email}</span>}
+              {errors.email.length > 0 && (
+                <span className={classes.error}>{errors.email}</span>
+              )}
             </div>
             <div>
               <input
@@ -153,8 +138,9 @@ class login extends Component {
                 onChange={this.onChangeHandler}
                 placeholder="password"
               ></input>
-               {errors.password.length > 0 && 
-                <span className={classes.error}>{errors.password}</span>}
+              {errors.password.length > 0 && (
+                <span className={classes.error}>{errors.password}</span>
+              )}
             </div>
             <div className={classes.submit}>
               <input
