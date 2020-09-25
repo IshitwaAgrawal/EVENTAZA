@@ -3,48 +3,37 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import classes from "./SlideShow.module.css";
-
+import Card from "../Card/Card"
 class slideShow extends Component {
   render() {
     var settings = {
+    focusOnSelect:false,
       arrows: false,
       dots: false,
       infinite: true,
       speed: 500,
-      slidesToShow: 4,
+      slidesToShow: 3,
       slidesToScroll: 3,
     };
     return (
       <Slider {...settings}>
         <div>
-          <div className={classes.cards}>
-            <h3>1</h3>
-          </div>
+            <Card></Card>
         </div>
         <div>
-          <div className={classes.cards}>
-            <h3>2</h3>
-          </div>
+          <Card></Card>
         </div>
         <div>
-          <div className={classes.cards}>
-            <h3>3</h3>
-          </div>
+          <Card></Card>
         </div>
         <div>
-          <div className={classes.cards}>
-            <h3>4</h3>
-          </div>
+          <Card></Card>
         </div>
         <div>
-          <div className={classes.cards}>
-            <h3>5</h3>
-          </div>
+          <Card></Card>
         </div>
         <div>
-          <div className={classes.cards}>
-            <h3>6</h3>
-          </div>
+          <Card></Card>
         </div>
       </Slider>
     );
