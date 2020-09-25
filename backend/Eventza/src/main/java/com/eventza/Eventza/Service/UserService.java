@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -84,6 +85,7 @@ public class UserService implements UserServiceI{
         return repo.getUserByUsername(username) != null;
     }
 
+
     public void increaseCreatedEvent(User user){
         int c = user.getCreated_events();
         user.setCreated_events(c+1);
@@ -120,4 +122,5 @@ public class UserService implements UserServiceI{
             throw new UsernameNotFoundException("Username not found!!");
         }
     }
+
 }

@@ -20,7 +20,6 @@ public class VerificationController {
 
     @GetMapping("/verify/{code}")
     public ResponseEntity<?> verify(@PathVariable String code){
-        System.out.println("Inside verify");
         User user = service.getUserByVerificationToken(code);
         if(user!=null){
             user.setVerified(true);
