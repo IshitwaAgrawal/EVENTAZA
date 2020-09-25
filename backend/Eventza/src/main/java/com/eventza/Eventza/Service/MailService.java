@@ -4,6 +4,7 @@ import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
@@ -14,6 +15,7 @@ public class MailService {
     @Autowired
     JavaMailSender mailSender;
 
+    @Async
     public void sendVerificationEmail(User user){
         String subject = "Please verify your registration.";
         String senderName = "EVENTAZA APP";
@@ -23,7 +25,7 @@ public class MailService {
         mailContent += "<p>Please click the link below to verify the registration</p>";
         // <a href="">VERIFY</a>
         mailContent += "<a href=\""+site+verifyUrl+"\">VERIFY</a><br>";
-        mailContent += site+verifyUrl+" , Please access this url!";
+        //mailContent += site+verifyUrl+" , Please access this url!";
 
         MimeMessage message = mailSender.createMimeMessage();
 

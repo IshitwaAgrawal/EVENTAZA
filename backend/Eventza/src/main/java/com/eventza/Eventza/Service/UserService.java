@@ -8,6 +8,7 @@ import com.eventza.Eventza.Repository.UserRepository;
 import com.eventza.Eventza.model.User;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +62,8 @@ public class UserService implements UserServiceI{
         user.setVerified(false);
         user.setEmail(userDTO.getEmail());
         user.setVerificationToken(k);
+        user.setCreated_events(0);
+        user.setRegister_in_events(0);
         mailService.sendVerificationEmail(user);
         return repo.save(user);
     }
@@ -77,7 +80,44 @@ public class UserService implements UserServiceI{
         return repo.getUserByVerificationToken(code);
     }
 
-    private boolean userExists(String username){
+    public boolean userExists(String username){
         return repo.getUserByUsername(username) != null;
+    }
+
+    public void increaseCreatedEvent(User user){
+        int c = user.getCreated_events();
+        user.setCreated_events(c+1);
+        repo.save(user);
+    }
+
+    public void deleteCreatedEvent(User user){
+        int c = user.getCreated_events();
+        if(c>0){
+            user.setCreated_events(c-1);
+            repo.save(user);
+        }
+    }
+
+    public void increaseRegisteredEvents(User user){
+        int c = user.getRegister_in_events();
+        user.setRegister_in_events(c+1);
+        repo.save(user);
+    }
+
+    public void decreaseRegisteredEvent(User user){
+        int c = user.getRegister_in_events();
+        if(c>0){
+            user.setRegister_in_events(c-1);
+            repo.save(user);
+        }
+    }
+
+    public User getUserByUsername(String username){
+        try{
+            return repo.getUserByUsername(username);
+        }
+        catch (Exception e){
+            throw new UsernameNotFoundException("Username not found!!");
+        }
     }
 }

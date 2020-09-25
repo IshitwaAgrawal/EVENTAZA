@@ -16,9 +16,26 @@ public class CategoryService {
   public CategoryModel getRequestedCategory(String categoryName){
   return categoryRepository.findByCategoryName(categoryName);
   }
+  public CategoryModel getRequestedCategory(UUID id){
+    try{
+      CategoryModel c = categoryRepository.getCategoryById(id);
+      return categoryRepository.getCategoryById(id);
+    }
+    catch (Exception e){
+      return null;
+    }
+  }
 
   public UUID getCategoryId(String categoryName){
-    return getRequestedCategory(categoryName).getId();
+    try {
+      System.out.println(getRequestedCategory(categoryName).getId());
+      return getRequestedCategory(categoryName).getId();
+    }
+    catch (Exception e){
+      CategoryModel c = new CategoryModel(categoryName);
+      categoryRepository.save(c);
+      return c.getId();
+    }
   }
 
   //method to fetch all available categories from the database
