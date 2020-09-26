@@ -26,7 +26,7 @@ class signup extends Component {
     };
 
     axios
-      .post("http://a6bf1655597f.ngrok.io/login", Data)
+      .post("http://b50cd3051760.ngrok.io/login", Data)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -44,9 +44,9 @@ class signup extends Component {
         console.log(error.response.status);
       });
   };
-  toHome =() =>{
+  toHome = () => {
     this.props.history.push("/");
-  }
+  };
   toRegister = () => {
     this.props.history.push("/Register");
   };

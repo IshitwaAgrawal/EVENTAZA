@@ -1,0 +1,12 @@
+.P{
+    height:100px;
+    width:100%;
+    background-color: darkgoldenrod;
+    color:white;
+    margin :auto;
+}
+
+*:focus {
+    outline: 0;
+    outline: none;
+  }

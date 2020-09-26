@@ -3,11 +3,6 @@ import classes from "./Signup.module.css";
 import axios from "../../Components/axios";
 import { withRouter } from "react-router-dom";
 
-const validEmailRegex = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-);
-
-
 class login extends Component {
   state = {
     name: "",
@@ -16,30 +11,21 @@ class login extends Component {
     password: "",
     roles: "",
     registered: false,
-    errors: {
-      name: "",
-      email: "",
-      password: "",
-    }
-  };
-  validateForm = errors => {
-    let valid = true;
-    Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-    return valid;
+    errors: {},
   };
   submit = (e) => {
     e.preventDefault();
-    console.log(this.state.errors.name)
-    if(this.validateForm(this.state.errors) === true) {
+    console.log(this.state.errors);
+    if (this.validate()) {
       const Data = {
         name: this.state.name,
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
-        roles: "USER"
+        roles: "USER",
       };
       axios
-        .post("http://a6bf1655597f.ngrok.io/user/registration", Data)
+        .post("http://b50cd3051760.ngrok.io/user/registration", Data)
         .then((response) => {
           if (response.status === 200) {
             this.setState({ registered: true });
@@ -48,40 +34,24 @@ class login extends Component {
         .catch((error) => {
           console.log(error);
         });
-  
+
       this.props.history.push("/login");
-    }else{
-      alert('Invalid Form')
     }
-    
   };
   onChangeHandler = (event) => {
     const { name, value } = event.target;
-    let errors = this.state.errors;
     this.setState({
-      [name]:value
+      [name]: value,
     });
-
-    switch (name) {
-      case "name":
-        errors.name =
-          value.length < 5 ? "Name must be at least 5 characters long!" : "";
-        break;
-      case "email":
-        errors.email = validEmailRegex.test(value) ? "" : "Email is not valid!";
-        break;
-      case "password":
-        errors.password =
-          value.length < 6
-            ? "Password must be at least 6 characters long!"
-            : "";
-        break;
-      default:
-        break;
-    }
-    this.setState({
-      errors:{[name]:value}
-    });
+    // if ([name] == 'email') {
+    //   let input = this.state;
+    // let errors = {};
+    // let isValid = true;
+    //   if (!input["email"]) {
+    //     isValid = false;
+    //     errors["email"] = "Please enter your email Address.";
+    //   }
+    // }
     //  this.passvalid();
   };
   //  passwordvalidation='';
@@ -92,6 +62,48 @@ class login extends Component {
   //   if(this.state.username.length>5)
   //   this.passwordvalidation=''
   //  }
+  validate() {
+    let input = this.state;
+    let errors = {};
+    let isValid = true;
+
+    if (!input["name"]) {
+      isValid = false;
+      errors["name"] = "Please enter your name.";
+    }
+
+    if (!input["username"]) {
+      isValid = false;
+      errors["username"] = "Please enter your Username.";
+    }
+
+    if (!input["email"]) {
+      isValid = false;
+      errors["email"] = "Please enter your email Address.";
+    }
+
+    if (typeof input["email"] !== "undefined") {
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      );
+      if (!pattern.test(input["email"])) {
+        isValid = false;
+        errors["email"] = "Please enter valid email address.";
+      }
+    }
+
+    if (input["password"].length < 6) {
+      isValid = false;
+      errors["password"] = "Please enter your Password.";
+    }
+
+    this.setState({
+      errors: errors,
+    });
+
+    return isValid;
+  }
+
   tologin = () => {
     this.props.history.push("/login");
   };
@@ -108,12 +120,11 @@ class login extends Component {
                 value={this.state.name}
                 name="name"
                 onChange={this.onChangeHandler}
-
                 placeholder="Your name"
               ></input>
-              {this.state.errors.name.length > 0 && (
-                <span className={classes.error}>Name must be at least 5 characters long!</span>
-              )}
+              <p style={{ color: "red", fontSize: "10px" }}>
+                {this.state.errors.name}
+              </p>
             </div>
             <div>
               <input
@@ -121,9 +132,11 @@ class login extends Component {
                 value={this.state.username}
                 name="username"
                 onChange={this.onChangeHandler}
-
                 placeholder="user name"
               ></input>
+              <p style={{ color: "red", fontSize: "10px" }}>
+                {this.state.errors.username}
+              </p>
             </div>
             <div>
               <input
@@ -133,9 +146,9 @@ class login extends Component {
                 onChange={this.onChangeHandler}
                 placeholder="Your email"
               ></input>
-              {this.state.errors.email.length > 0 && (
-                <span className={classes.error}>{this.state.errors.email}</span>
-              )}
+              <p style={{ color: "red", fontSize: "10px" }}>
+                {this.state.errors.email}
+              </p>
             </div>
             <div>
               <input
@@ -145,13 +158,17 @@ class login extends Component {
                 onChange={this.onChangeHandler}
                 placeholder="password"
               ></input>
-              {this.state.errors.password.length > 0 && (
-                <span className={classes.error}>{this.state.errors.password}</span>
-              )}
+              <p style={{ color: "red", fontSize: "10px" }}>
+                {this.state.errors.password}
+              </p>
             </div>
             <div className={classes.submit}>
               <input
-                style={{ background: "transparent", width: "100%" }}
+                style={{
+                  background: "transparent",
+                  width: "100%",
+                  color: "wheat",
+                }}
                 type="submit"
               ></input>
             </div>

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import classes from './SlideShow.module.css'
 import Slider from "react-slick";
-import classes from "./SlideShow.module.css";
 import Card from "../Card/Card"
 class slideShow extends Component {
   render() {
     var settings = {
-    focusOnSelect:false,
+      focusOnSelect:false,
       arrows: false,
       dots: false,
       infinite: true,

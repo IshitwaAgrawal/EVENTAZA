@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import Carousel from 'react-elastic-carousel';
 import classes from './Carousel.module.css';
-import img from '../../img/img1.jpg'
 class carousel extends Component {
   state = {
     items: [
@@ -19,7 +18,7 @@ class carousel extends Component {
     return (
       <div  >
       <Carousel itemsToShow={1} enableAutoPlay='true' autoPlaySpeed={5500}  >
-        {items.map(item => <div className={classes.Carousel} key={item.id}><img className={classes.brcpxa} height='350px' width='100%' src={item.src}></img></div>)}
+        {items.map(item => <div className={classes.Carousel} key={item.id}><img className={classes.brcpxa} height='350px' width='100%' alt='' src={item.src}></img></div>)}
       </Carousel>
       </div>
     )
