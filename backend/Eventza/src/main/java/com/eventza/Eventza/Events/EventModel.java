@@ -1,13 +1,16 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
+import com.eventza.Eventza.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -31,6 +34,7 @@ public class EventModel {
   private String eventDescription;
   @ManyToOne(cascade = CascadeType.ALL)
   private CategoryModel category;
+
 
   public EventModel() {
   }
@@ -68,6 +72,7 @@ public class EventModel {
       return null;
     }
   }
+
 
   public UUID getId() {
     return id;

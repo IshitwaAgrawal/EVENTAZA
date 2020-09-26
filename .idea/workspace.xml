@@ -23,21 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7075de6-312b-4007-813f-8c7a01318916" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/WishlistRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/WishlistService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/WishlistController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/Wishlist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/WishlistRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/WishlistResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/MailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/config/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Repository/WishlistRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/WishlistService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/WishlistController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/WishlistController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/Wishlist.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/WishlistRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/WishlistRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/model/WishlistResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/resources/eventza.mv.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/resources/eventza.trace.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +139,8 @@
       <workItem from="1600965526149" duration="8441000" />
       <workItem from="1601016896715" duration="1570000" />
       <workItem from="1601023301020" duration="3652000" />
-      <workItem from="1601029743135" duration="3674000" />
+      <workItem from="1601029743135" duration="6109000" />
+      <workItem from="1601107723789" duration="3800000" />
     </task>
     <servers />
   </component>
@@ -161,54 +160,58 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser" timestamp="1601026838866">
+    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser" timestamp="1601110435330">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1601026838866" />
+    <state x="962" y="116" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1601110435330" />
     <state x="1203" y="145" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1600804656135" />
     <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1600757300269">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="940" y="301" width="433" height="267" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.864@0.0.1536.864" timestamp="1600757300269" />
-    <state width="1493" height="197" key="GridCell.Tab.0.bottom" timestamp="1601033465646">
+    <state x="232" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601108171076">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state x="232" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1601108171076" />
+    <state width="1493" height="250" key="GridCell.Tab.0.bottom" timestamp="1601111417454">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="250" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.0.center" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.0.center" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.0.left" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.0.left" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.0.right" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.0.right" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.1.bottom" timestamp="1601033465647">
+    <state width="1493" height="250" key="GridCell.Tab.1.bottom" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1601033465647" />
+    <state width="1493" height="250" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239946" />
-    <state width="1493" height="197" key="GridCell.Tab.1.center" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.1.center" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.1.left" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.1.left" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
-    <state width="1493" height="197" key="GridCell.Tab.1.right" timestamp="1601033465646">
+    <state width="1493" height="250" key="GridCell.Tab.1.right" timestamp="1601111417454">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1601033465646" />
+    <state width="1493" height="250" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="1877" height="275" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1600807239938" />
     <state x="206" y="76" key="SettingsEditor" timestamp="1601017156977">
       <screen x="0" y="0" width="1536" height="864" />

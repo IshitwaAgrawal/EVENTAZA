@@ -1,7 +1,9 @@
 package com.eventza.Eventza.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.eventza.Eventza.Events.EventModel;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +20,8 @@ public class User {
     private String verificationToken;
     private int created_events;
     private int register_in_events;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<EventModel> wishlist;
 
     public String getVerificationToken() {
         return verificationToken;
@@ -105,5 +109,17 @@ public class User {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public List<EventModel> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(List<EventModel> wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public void addWish(EventModel event){
+        this.wishlist.add(event);
     }
 }
