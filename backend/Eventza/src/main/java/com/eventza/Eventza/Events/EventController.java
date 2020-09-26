@@ -19,6 +19,7 @@ import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 public class EventController {
 
@@ -28,6 +29,19 @@ public class EventController {
   private CategoryService categoryService;
   @Autowired
   private UserService userService;
+
+//    @PostMapping("/categories/{categoryName}/events")
+//    public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
+//        try {
+//            UUID id = categoryService.getCategoryId(categoryName);
+//            event.setCategory(categoryService.getRequestedCategory(id));
+//            eventService.addNewEvent(event);
+//            return "New event added";
+//        }
+//        catch (Exception e){
+//            return e.getMessage();
+//        }
+//    }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
   public EventModel getRequestedEvent(@PathVariable String eventName) {

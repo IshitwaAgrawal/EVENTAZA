@@ -38,7 +38,7 @@ public class UserService implements UserServiceI{
             throw new EmailAlreadyExists(userDTO.getEmail());
         }
 
-        if(userDTO.getPassword().length()<10){
+        if(userDTO.getPassword().length()<6){
             throw new PasswordException("Short password.Please add password with length > 10");
         }
 

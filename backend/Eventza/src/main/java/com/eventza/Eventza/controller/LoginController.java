@@ -27,16 +27,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> createLoginToken(@RequestBody LoginRequest request)throws Exception{
-//        System.out.println(request);
-//        try{
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword())
-//            );
-//        }
-//        catch(Exception e){
-//            System.out.println(e.getMessage());
+        System.out.println(request);
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword())
+            );
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(404).build();
 //            throw new Exception("Incorrect Username or password.");
-//        }
+        }
 
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(request.getUsername());

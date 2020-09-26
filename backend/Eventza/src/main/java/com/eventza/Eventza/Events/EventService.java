@@ -5,6 +5,9 @@ import com.eventza.Eventza.Categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.eventza.Eventza.Service.UserService;
+import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,10 @@ public class EventService {
   public UUID getEventId(String eventName){
     return eventRepository.findByEventName(eventName).getId();
   }
+
+  @Autowired
+  private UserService userService;
+
   public EventModel getRequestedEvent(String eventName){
    return eventRepository.findByEventName(eventName);
   }
@@ -36,6 +43,8 @@ public class EventService {
   }
 
   public void addNewEvent(EventModel eventModel){
+    User u = userService.getUserByUsername(eventModel.getUsername());
+    userService.increaseCreatedEvent(u);
     eventRepository.save(eventModel);
   }
 
@@ -63,6 +72,7 @@ public class EventService {
     return events;
   }
 
+
   public List<EventModel> getRecommendedEvents(){
     List<EventModel> events = new ArrayList<>();
     eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(event));
@@ -74,7 +84,10 @@ public class EventService {
     EventModel event = eventRepository.findById(id).get();
     Integer ratingCounter = event.counter();
     Integer prev_rating = event.getTotalRating();
-    eventRepository.setRatingForEventModule(id, (double)(prev_rating + rating)/ratingCounter, prev_rating + rating);
+    eventRepository.setRatingForEventModule(id, (double) (prev_rating + rating) / ratingCounter, prev_rating + rating);
     return event.getAverageRating();
+  }
+  public EventModel getEventById(UUID id){
+    return eventRepository.getEventModelById(id);
   }
 }

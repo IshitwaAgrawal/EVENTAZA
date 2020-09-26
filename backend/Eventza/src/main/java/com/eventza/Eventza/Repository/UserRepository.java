@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
+    @Query("select u from User u where u.username=?1")
     public User getUserByUsername(String username);
 
     @Query("select u from User u where u.verificationToken = ?1")
