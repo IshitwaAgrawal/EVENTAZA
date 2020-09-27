@@ -43,4 +43,31 @@ public class MailService {
             System.out.println(e.getMessage());
         }
     }
+
+    @Async
+    public void sendEventReminder(String eventName, User user){
+        String subject = "Event Reminder";
+        String senderName = "EVENTAZA APP";
+        String mailContent = "<p>Dear "+user.getName()+", </p>";
+        String site = "http://localhost:8000";
+        String verifyUrl = "/verify/"+user.getVerificationToken();
+        mailContent += "<p>You registered event " + eventName + " is 1 day away.</p>";
+        mailContent += "<p>Be ready!</p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try{
+            helper.setFrom("${spring.mail.username}",senderName);
+            helper.setTo(user.getEmail());
+            helper.setSubject(subject);
+            helper.setText(mailContent,true);
+
+            mailSender.send(message);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -100,7 +100,7 @@ public class EventController {
       Date d = new Date();
       List<EventModel> events = new ArrayList<>();
       List<EventModel> pastEvents = new ArrayList<>();
-      events = eventService.getAllEvents();
+      events = getAllEvents();
       for(EventModel event:events){
         Date endD = new SimpleDateFormat("yyyy-MM-dd").parse(event.getEndDate().substring(0,10));
         if(endD.before(d)){
@@ -109,5 +109,13 @@ public class EventController {
       }
       return pastEvents;
     }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/register")
+    public String registerUserInEvent(@PathVariable String eventName, @RequestBody User user){
+    UUID id = eventService.getEventId(eventName);
+    eventService.registerUserInEvent(id, user);
+    return "New User registered";
+    }
+
 
   }

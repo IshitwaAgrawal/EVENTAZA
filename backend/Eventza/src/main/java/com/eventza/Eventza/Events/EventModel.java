@@ -1,13 +1,11 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.text.DateFormat;
+import com.eventza.Eventza.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -31,10 +29,13 @@ public class EventModel {
   private String startDate;
   private String endDate;
   private String eventDescription;
+  @OneToMany
+  private List<User> registeredUsers;
   @ManyToOne(cascade = CascadeType.ALL)
   private CategoryModel category;
 
-  public EventModel() {
+  public EventModel(){
+
   }
 
   public EventModel(String eventName,
@@ -48,8 +49,8 @@ public class EventModel {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
     this.organiserName = organiserName;
-//    this.endDate = new Date(lastDate);
-//    this.startDate = new Date(startDate);
+//  this.endDate = new Date(lastDate);
+//  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
     this.startDate = parseDate(startDate);
     this.eventLocation = eventLocation;
@@ -90,6 +91,7 @@ public class EventModel {
   public void setUsername(String username) {
     this.username = username;
   }
+
 
   public void setStartDate(String eventDate) {
     this.startDate = eventDate;
@@ -173,6 +175,14 @@ public class EventModel {
 
   public void setEventDescription(String eventDescription) {
     this.eventDescription = eventDescription;
+  }
+
+  public List<User> getRegisteredUsers() {
+    return registeredUsers;
+  }
+
+  public void setRegisteredUsers(List<User> registeredUsers) {
+    this.registeredUsers = registeredUsers;
   }
 
   public CategoryModel getCategory() {
