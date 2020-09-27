@@ -122,4 +122,8 @@ public class User {
     public void addWish(EventModel event){
         this.wishlist.add(event);
     }
+
+    public boolean deleteWish(EventModel eventModel){
+        return this.wishlist.remove(eventModel);
+    }
 }

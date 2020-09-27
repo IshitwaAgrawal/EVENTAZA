@@ -5,7 +5,12 @@ import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.util.List;
 import java.util.UUID;
+
+import com.eventza.Eventza.Exception.EventNotFoundException;
+import com.eventza.Eventza.Service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,7 @@ import java.util.Date;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -29,6 +35,8 @@ public class EventController {
   private CategoryService categoryService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private FileUploadService fileUploadService;
 
 //    @PostMapping("/categories/{categoryName}/events")
 //    public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
@@ -44,7 +52,7 @@ public class EventController {
 //    }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
-  public EventModel getRequestedEvent(@PathVariable String eventName) {
+  public EventModel getRequestedEvent(@PathVariable String eventName)throws EventNotFoundException {
     return eventService.getRequestedEvent(eventName);
   }
 
@@ -54,13 +62,20 @@ public class EventController {
   }
 
   @PostMapping("/categories/{categoryName}/events")
-  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
+  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event,@RequestParam("file") MultipartFile file){
     User user = userService.getUserByUsername(event.getUsername());
     userService.increaseCreatedEvent(user);
     UUID id = categoryService.getCategoryId(categoryName);
     event.setCategory(categoryService.getRequestedCategory(id));
+      try {
+          fileUploadService.fileUpload(file,event);
+//          return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
+      }
+      catch (Exception e){
+          return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
+      }
     eventService.addNewEvent(event);
-    return "New event added";
+    return new ResponseEntity<>("New Event added",HttpStatus.OK);
   }
 
  /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")

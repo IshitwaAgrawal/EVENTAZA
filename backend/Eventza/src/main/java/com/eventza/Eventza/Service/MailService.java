@@ -20,7 +20,7 @@ public class MailService {
         String subject = "Please verify your registration.";
         String senderName = "EVENTAZA APP";
         String mailContent = "<p>Dear "+user.getName()+", </p>";
-        String site = "http://a6bf1655597f.ngrok.io";
+        String site = "http://db5e970c3b25.ngrok.io";
         String verifyUrl = "/verify/"+user.getVerificationToken();
         mailContent += "<p>Please click the link below to verify the registration</p>";
         // <a href="">VERIFY</a>

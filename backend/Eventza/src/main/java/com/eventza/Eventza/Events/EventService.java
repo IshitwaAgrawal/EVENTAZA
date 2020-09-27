@@ -1,11 +1,13 @@
 package com.eventza.Eventza.Events;
 
+import ch.qos.logback.core.boolex.EvaluationException;
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,13 @@ public class EventService {
   @Autowired
   private UserService userService;
 
-  public EventModel getRequestedEvent(String eventName){
-   return eventRepository.findByEventName(eventName);
+  public EventModel getRequestedEvent(String eventName)throws EventNotFoundException{
+    try {
+      return eventRepository.findByEventName(eventName);
+    }
+    catch(Exception e){
+      throw new EventNotFoundException();
+    }
   }
 
     public List<EventModel> getAllEventsFromRequestedCategory(String categoryName){

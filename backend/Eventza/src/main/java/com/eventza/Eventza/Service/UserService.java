@@ -69,6 +69,7 @@ public class UserService implements UserServiceI{
         return repo.save(user);
     }
 
+
     public User getUserByEmail(String email){
         return repo.getUserByEmail(email);
     }

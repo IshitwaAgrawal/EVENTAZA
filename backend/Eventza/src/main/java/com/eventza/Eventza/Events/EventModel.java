@@ -1,16 +1,10 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
-import com.eventza.Eventza.model.User;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -34,6 +28,7 @@ public class EventModel {
   private String startDate;
   private String endDate;
   private String eventDescription;
+  private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
   private CategoryModel category;
 
@@ -41,14 +36,7 @@ public class EventModel {
   public EventModel() {
   }
 
-  public EventModel(String eventName,
-                    String organiserName,
-                    String startDate,
-                    String lastDate,
-                    String eventLocation,
-                    Integer price,
-                    Integer totalTickets,
-                    String eventDescription ) throws ParseException {
+  public EventModel(String eventName, String organiserName, String startDate, String lastDate, String eventLocation, Integer price, Integer totalTickets, String eventDescription ) throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
     this.organiserName = organiserName;
@@ -60,6 +48,7 @@ public class EventModel {
     this.price = price;
     this.totalTickets = totalTickets;
     this.eventDescription = eventDescription;
+    this.brochure_name = null;
   }
 
   private static String parseDate(String date) {
@@ -185,5 +174,33 @@ public class EventModel {
 
   public void setCategory(CategoryModel category) {
     this.category = category;
+  }
+
+  public void setPrice(Integer price) {
+    this.price = price;
+  }
+
+  public Integer getRatingCounter() {
+    return ratingCounter;
+  }
+
+  public void setRatingCounter(Integer ratingCounter) {
+    this.ratingCounter = ratingCounter;
+  }
+
+  public void setTotalTickets(Integer totalTickets) {
+    this.totalTickets = totalTickets;
+  }
+
+  public void setRegistrations(Integer registrations) {
+    this.registrations = registrations;
+  }
+
+  public String getBrochure_name() {
+    return brochure_name;
+  }
+
+  public void setBrochure_name(String brochure_url) {
+    this.brochure_name = brochure_url;
   }
 }
