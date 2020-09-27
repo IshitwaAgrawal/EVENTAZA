@@ -16,17 +16,7 @@ public class MailService {
     JavaMailSender mailSender;
 
     @Async
-    public void sendVerificationEmail(User user){
-        String subject = "Please verify your registration.";
-        String senderName = "EVENTAZA APP";
-        String mailContent = "<p>Dear "+user.getName()+", </p>";
-        String site = "http://db5e970c3b25.ngrok.io";
-        String verifyUrl = "/verify/"+user.getVerificationToken();
-        mailContent += "<p>Please click the link below to verify the registration</p>";
-        // <a href="">VERIFY</a>
-        mailContent += "<a href=\""+site+verifyUrl+"\">VERIFY</a><br>";
-        //mailContent += site+verifyUrl+" , Please access this url!";
-
+    public void sendMail(User user,String subject,String senderName,String mailContent){
         MimeMessage message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message);

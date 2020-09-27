@@ -20,6 +20,7 @@ public class User {
     private String verificationToken;
     private int created_events;
     private int register_in_events;
+    private boolean newsletter_service;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<EventModel> wishlist;
 
@@ -125,5 +126,13 @@ public class User {
 
     public boolean deleteWish(EventModel eventModel){
         return this.wishlist.remove(eventModel);
+    }
+
+    public boolean isNewsletter_service() {
+        return newsletter_service;
+    }
+
+    public void setNewsletter_service(boolean newsletter_service) {
+        this.newsletter_service = newsletter_service;
     }
 }

@@ -2,6 +2,7 @@ package com.eventza.Eventza.controller;
 
 import com.eventza.Eventza.Service.MailService;
 import com.eventza.Eventza.Service.UserService;
+import com.eventza.Eventza.Service.VerificationMailService;
 import com.eventza.Eventza.model.LoginRequest;
 import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class ResendVerification {
     @Autowired
     UserService userService;
     @Autowired
-    MailService mailService;
+    VerificationMailService mailService;
 
     @PostMapping("/resendVerification")
     public String resend(@RequestBody LoginRequest loginRequest){

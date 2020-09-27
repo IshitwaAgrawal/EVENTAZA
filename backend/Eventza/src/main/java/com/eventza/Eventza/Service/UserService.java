@@ -25,7 +25,7 @@ public class UserService implements UserServiceI{
     private UserRepository repo;
 
     @Autowired
-    private MailService mailService;
+    private VerificationMailService mailService;
 
     @Transactional
     @Override
@@ -65,6 +65,7 @@ public class UserService implements UserServiceI{
         user.setVerificationToken(k);
         user.setCreated_events(0);
         user.setRegister_in_events(0);
+        user.setNewsletter_service(false);
         mailService.sendVerificationEmail(user);
         return repo.save(user);
     }

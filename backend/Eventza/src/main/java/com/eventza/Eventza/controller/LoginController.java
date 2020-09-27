@@ -2,11 +2,14 @@ package com.eventza.Eventza.controller;
 
 import com.eventza.Eventza.Service.MailService;
 import com.eventza.Eventza.Service.UserService;
+import com.eventza.Eventza.Service.VerificationMailService;
 import com.eventza.Eventza.config.JwtUtil;
 import com.eventza.Eventza.model.LoginRequest;
 import com.eventza.Eventza.model.LoginResponse;
 import com.eventza.Eventza.model.User;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +26,7 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -33,7 +37,7 @@ public class LoginController {
     private JwtUtil jwtTokenUtil;
 
     @Autowired
-    private MailService mailService;
+    private VerificationMailService mailService;
 
     @PostMapping("/login")
     public ResponseEntity<?> createLoginToken(@RequestBody LoginRequest request)throws Exception{
@@ -42,6 +46,8 @@ public class LoginController {
             User user = userService.getUserByUsername(request.getUsername());
             System.out.println(user.isVerified());
             if(!user.isVerified()){
+                String k = RandomString.make(64);
+                user.setVerificationToken(k);
                 mailService.sendVerificationEmail(user);
                 return new ResponseEntity<String>("User not verified!!",HttpStatus.NOT_ACCEPTABLE);
             }
