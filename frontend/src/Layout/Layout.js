@@ -7,6 +7,7 @@ import Signup from '../Containers/Signup/Signup'
 import Home from '../Containers/LandingPage/LandingPage'
 import Footer from '../Components/Footer/Footer'
 import CreateEvent from '../Containers/CreateEvent/CreateEvent' 
+import AllEvent from '../Containers/Allevents/Allevent'
 // import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -54,6 +55,7 @@ class Layout extends Component {
                 { token ===null ?
                     <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>:<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
                 <Route path='/createevent' exact render = {() => (<CreateEvent></CreateEvent>)}></Route>
+                <Route path='/events' exact render={()=>(<AllEvent></AllEvent>)} ></Route>
                 </Switch>
                 <Footer />
            </div>

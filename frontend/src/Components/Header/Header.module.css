@@ -75,7 +75,7 @@
     background-color: rgb(31,37,51);
     height:40px;
 }
-.Header2 h3{
+.Header2 a {
     float:left;
     margin:7px 10px;
     color:rgb(194,204,204); 
@@ -85,7 +85,7 @@
 
 .CreateEvent{
     float: right;
-    margin:8px 20px ;
+    margin:-3px 20px ;
 }
 
 .CreateEvent a {

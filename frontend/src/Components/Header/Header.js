@@ -47,10 +47,11 @@ class header extends Component {
                 </div> */}
         </div>
         <div className={classes.Header2}>
-          <div>
-            <h3>dummy</h3>
-            <h3>dummy</h3>
-            <h3>dummy</h3>
+          <div style={{display:'inline'}}>
+            <Link to='/events'>dummy</Link>
+            <Link to='/events'>dummy</Link>
+            <Link to='/events'>dummy</Link>
+            
           </div>
           <div className={classes.CreateEvent}>
           {auth === true? (
