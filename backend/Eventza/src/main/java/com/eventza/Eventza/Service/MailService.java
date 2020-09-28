@@ -34,13 +34,33 @@ public class MailService {
         }
     }
 
+    public void sentContactMail(String name, String email,String userMessage){
+
+        String mailContent = "<p>Dear Eventaza support team</p><br>";
+        mailContent += "<p>User-name: " + name + " </p>";
+        mailContent += "<p>User-email: " + email + " </p><br>";
+        mailContent += "<p>" + userMessage + "</p>";
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try{
+            helper.setFrom("${spring.mail.username}", name);
+            helper.setTo("eventaza076@gmail.com");
+            helper.setSubject("Client message");
+            helper.setText(mailContent, true);
+            mailSender.send(message);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
     @Async
     public void sendEventReminder(String eventName, User user){
         String subject = "Event Reminder";
         String senderName = "EVENTAZA APP";
         String mailContent = "<p>Dear "+user.getName()+", </p>";
-        String site = "http://localhost:8000";
-        String verifyUrl = "/verify/"+user.getVerificationToken();
         mailContent += "<p>You registered event " + eventName + " is 1 day away.</p>";
         mailContent += "<p>Be ready!</p>";
 
