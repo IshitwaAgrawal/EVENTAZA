@@ -1,10 +1,11 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
-
+import com.eventza.Eventza.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
 
@@ -16,6 +17,8 @@ public class EventModel {
   @Column(nullable = false)
   private UUID id;
   private String eventName;
+  private String imageName;
+  private byte[] imageByte;
   private String organiserName;
   private String eventLocation;
   private Integer price;
@@ -30,17 +33,21 @@ public class EventModel {
   private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
   private CategoryModel category;
+  @OneToMany
+  private List<User> registeredUsers;
+
 
 
   public EventModel() {
+
   }
 
   public EventModel(String eventName, String organiserName, String startDate, String lastDate, String eventLocation, Integer price, Integer totalTickets, String eventDescription ) throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
     this.organiserName = organiserName;
-//    this.endDate = new Date(lastDate);
-//    this.startDate = new Date(startDate);
+//  this.endDate = new Date(lastDate);
+//  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
     this.startDate = parseDate(startDate);
     this.eventLocation = eventLocation;
@@ -48,6 +55,12 @@ public class EventModel {
     this.totalTickets = totalTickets;
     this.eventDescription = eventDescription;
     this.brochure_name = null;
+  }
+
+  public EventModel(String imageName, byte[] imageByte) {
+
+    this.imageName = imageName;
+    this.imageByte = imageByte;
   }
 
   private static String parseDate(String date) {
@@ -74,6 +87,23 @@ public class EventModel {
   public UUID getId() {
     return id;
   }
+
+  public String getImageName() {
+    return imageName;
+  }
+
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
+  public byte[] getImageByte() {
+    return imageByte;
+  }
+
+  public void setImageByte(byte[] imageByte) {
+    this.imageByte = imageByte;
+  }
+
 
   public void setStartDate(String eventDate) {
     this.startDate = eventDate;
@@ -157,6 +187,14 @@ public class EventModel {
 
   public void setEventDescription(String eventDescription) {
     this.eventDescription = eventDescription;
+  }
+
+  public List<User> getRegisteredUsers() {
+    return registeredUsers;
+  }
+
+  public void setRegisteredUsers(List<User> registeredUsers) {
+    this.registeredUsers = registeredUsers;
   }
 
   public CategoryModel getCategory() {

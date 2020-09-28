@@ -1,7 +1,14 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryService;
+import com.eventza.Eventza.Service.MailService;
+import com.eventza.Eventza.model.User;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +16,7 @@ import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +28,7 @@ public class EventService {
   private CategoryService categoryService;
   @Autowired
   private UserService userService;
+  MailService mailService;
 
 
   public UUID getEventId(String eventName){
@@ -94,7 +103,29 @@ public class EventService {
     eventRepository.setRatingForEventModule(id, (double) (prev_rating + rating) / ratingCounter, prev_rating + rating);
     return event.getAverageRating();
   }
-  public EventModel getEventById(UUID id){
+  public EventModel getEventById(UUID id) {
     return eventRepository.getEventModelById(id);
+  }
+
+  public void registerUserInEvent(UUID id, User user){
+    EventModel event = eventRepository.findById(id).get();
+    event.getRegisteredUsers().add(user);
+  }
+
+
+  @Scheduled(fixedDelay = 2000)
+  public void sendEventReminder() throws ParseException {
+    LocalDate localDate = LocalDate.now().minusDays(1);
+    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    List<EventModel> events = getAllEvents();
+    for(EventModel event: events){
+     Date eventStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(event.getStartDate().substring(0,10));
+      if(date.equals(eventStartDate)){
+        for(User u : event.getRegisteredUsers()){
+          mailService.sendEventReminder(event.getEventName(), u);
+        }
+      }
+    }
+
   }
 }
