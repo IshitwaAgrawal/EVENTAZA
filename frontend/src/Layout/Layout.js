@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import classes from './Layout.module.css';
 import Header from '../Components/Header/Header'
-import { Link, Route, Switch,withRouter} from 'react-router-dom';
+import { Route, Switch,withRouter} from 'react-router-dom';
 import Login from '../Containers/Login/Login'
 import Signup from '../Containers/Signup/Signup'
 import Home from '../Containers/LandingPage/LandingPage'
+import Footer from '../Components/Footer/Footer'
+import CreateEvent from '../Containers/CreateEvent/CreateEvent' 
 // import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -35,18 +37,25 @@ class Layout extends Component {
         this.props.history.push('/login');
     }
     render () {
+        let token = localStorage.getItem('jwt');
         return (
            <div className={classes.Layout}>
+               <div style={{position:'sticky',top:0,zIndex:5}}>
                <Header name={this.state.name}></Header>
+               </div>
                {/* <Signup loginname={this.loginnameHandler}/> */}
                {this.state.name};
                <Switch>
               <Route path='/' exact render={() => <Home></Home>}></Route>
-                <Route path='/register'exact render={() => (<Signup />)} ></Route>
-                <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>
-                
+               { token ===null ?
+                <Route path='/register'exact render={() => (<Signup />)} ></Route>:
+                <Route path='/register' exact render ={ () => (<Home></Home>)}></Route>
+               }
+                { token ===null ?
+                    <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>:<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
+                <Route path='/createevent' exact render = {() => (<CreateEvent></CreateEvent>)}></Route>
                 </Switch>
-                
+                <Footer />
            </div>
         )
     }

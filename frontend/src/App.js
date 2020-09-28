@@ -1,19 +1,10 @@
-import React, { Component } from 'react';
-import './App.css';
-import Layout from './Layout/Layout'
+import React, { Component } from "react";
+import "./App.css";
+import Layout from "./Layout/Layout";
 
 class App extends Component {
- 
-  render(){
-    return (
-      
-              <Layout>
-            
-              
-              </Layout> 
-
-      
-    )
+  render() {
+    return <Layout></Layout>;
   }
 }
 

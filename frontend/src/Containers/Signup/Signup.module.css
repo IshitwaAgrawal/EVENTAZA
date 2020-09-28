@@ -1,7 +1,8 @@
 
 .Form{
     margin-top:30px ;
-    width: 100vw;
+    width: 100%;
+    margin-bottom: 30px;
 }
 .Form main{
     text-align: center;
