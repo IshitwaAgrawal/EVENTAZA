@@ -1,6 +1,7 @@
 package com.eventza.Eventza.Service;
 
 import com.eventza.Eventza.DTO.UserDTO;
+import com.eventza.Eventza.Events.EventModel;
 import com.eventza.Eventza.Exception.EmailAlreadyExists;
 import com.eventza.Eventza.Exception.PasswordException;
 import com.eventza.Eventza.Exception.UserAlreadyExists;
@@ -117,12 +118,37 @@ public class UserService implements UserServiceI{
     }
 
     public User getUserByUsername(String username){
-        try{
-            return repo.getUserByUsername(username);
-        }
-        catch (Exception e){
+        User u = repo.getUserByUsername(username);
+        if(u==null)
             throw new UsernameNotFoundException("Username not found!!");
-        }
+        else
+            return repo.getUserByUsername(username);
+    }
+
+    public void addHostedEvent(User user, EventModel eventModel){
+        user.addHostedEvents(eventModel);
+        this.updateUser(user);
+    }
+
+    public void registerEvent(User user,EventModel eventModel){
+        user.registerEvent(eventModel);
+        this.updateUser(user);
+    }
+
+    public boolean deleteHostedEvent(User user,EventModel eventModel){
+        boolean status = user.deleteHostedEvent(eventModel);
+        this.updateUser(user);
+        return status;
+    }
+
+    public boolean deleteRegisteredEvent(User user,EventModel eventModel){
+        boolean status = user.unregisterEvent(eventModel);
+        this.updateUser(user);
+        return status;
+    }
+
+    public void updateUser(User user){
+        repo.save(user);
     }
 
 }

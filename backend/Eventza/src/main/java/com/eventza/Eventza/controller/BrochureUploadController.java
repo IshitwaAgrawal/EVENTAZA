@@ -25,6 +25,8 @@ public class BrochureUploadController {
     public ResponseEntity<String> upload(@PathVariable String eventname , @RequestParam("file") MultipartFile file)throws Exception{
         try {
             EventModel eventModel = eventService.getRequestedEvent(eventname);
+            eventModel.setBrochure_name(file.getOriginalFilename());
+            eventService.updateExistingEvent(eventModel);
             fileUploadService.fileUpload(file,eventModel);
             return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
         }

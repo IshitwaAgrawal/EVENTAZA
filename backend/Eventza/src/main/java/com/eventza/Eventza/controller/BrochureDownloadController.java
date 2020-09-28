@@ -3,6 +3,7 @@ package com.eventza.Eventza.controller;
 import com.eventza.Eventza.Events.EventModel;
 import com.eventza.Eventza.Events.EventService;
 import com.eventza.Eventza.Exception.EventNotFoundException;
+import com.sun.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -40,7 +41,7 @@ public class BrochureDownloadController {
             try {
                 resource = new UrlResource(path.toUri());
             } catch (Exception e) {
-                e.getMessage();
+                return new ResponseEntity<String>("File not found!!",HttpStatus.NOT_FOUND);
             }
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_PDF)

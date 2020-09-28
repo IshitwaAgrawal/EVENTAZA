@@ -1,7 +1,5 @@
 package com.eventza.Eventza.Events;
 
-import ch.qos.logback.core.boolex.EvaluationException;
-import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +18,13 @@ public class EventService {
   private EventRepository eventRepository;
   @Autowired
   private CategoryService categoryService;
+  @Autowired
+  private UserService userService;
 
 
   public UUID getEventId(String eventName){
     return eventRepository.findByEventName(eventName).getId();
   }
-
-  @Autowired
-  private UserService userService;
 
   public EventModel getRequestedEvent(String eventName)throws EventNotFoundException{
     try {
@@ -38,7 +35,7 @@ public class EventService {
     }
   }
 
-    public List<EventModel> getAllEventsFromRequestedCategory(String categoryName){
+  public List<EventModel> getAllEventsFromRequestedCategory(String categoryName){
     List<EventModel> events = new ArrayList<>();
     UUID id = categoryService.getCategoryId(categoryName);
     eventRepository.findByCategoryId(id).forEach(event -> events.add(event));
@@ -50,8 +47,8 @@ public class EventService {
   }
 
   public void addNewEvent(EventModel eventModel){
-    User u = userService.getUserByUsername(eventModel.getUsername());
-    userService.increaseCreatedEvent(u);
+    User u = userService.getUserByUsername(eventModel.getOrganiserName());
+    userService.addHostedEvent(u,eventModel);
     eventRepository.save(eventModel);
   }
 
@@ -70,6 +67,9 @@ public class EventService {
   }
 
   public void deleteEvent(String eventName){
+    EventModel event = eventRepository.findByEventName(eventName);
+    User user = userService.getUserByUsername(event.getOrganiserName());
+    userService.deleteHostedEvent(user,event);
     eventRepository.deleteById(getEventId(eventName));
   }
 

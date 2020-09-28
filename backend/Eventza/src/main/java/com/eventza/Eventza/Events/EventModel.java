@@ -15,7 +15,6 @@ public class EventModel {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(nullable = false)
   private UUID id;
-  private String username;
   private String eventName;
   private String organiserName;
   private String eventLocation;
@@ -74,14 +73,6 @@ public class EventModel {
 
   public UUID getId() {
     return id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   public void setStartDate(String eventDate) {

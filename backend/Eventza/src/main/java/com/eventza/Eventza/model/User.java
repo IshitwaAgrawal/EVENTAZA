@@ -21,8 +21,14 @@ public class User {
     private int created_events;
     private int register_in_events;
     private boolean newsletter_service;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<EventModel> hostedEvents;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<EventModel> registeredEvents;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<EventModel> wishlist;
+
+    public User(){ }
 
     public String getVerificationToken() {
         return verificationToken;
@@ -134,5 +140,25 @@ public class User {
 
     public void setNewsletter_service(boolean newsletter_service) {
         this.newsletter_service = newsletter_service;
+    }
+
+    public void addHostedEvents(EventModel eventModel){
+        this.created_events++;
+        this.hostedEvents.add(eventModel);
+    }
+
+    public void registerEvent(EventModel eventModel){
+        this.register_in_events++;
+        this.registeredEvents.add(eventModel);
+    }
+
+    public boolean deleteHostedEvent(EventModel eventModel){
+        this.created_events--;
+        return this.hostedEvents.remove(eventModel);
+    }
+
+    public boolean unregisterEvent(EventModel eventModel){
+        this.register_in_events--;
+        return this.registeredEvents.remove(eventModel);
     }
 }

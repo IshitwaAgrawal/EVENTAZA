@@ -23,10 +23,16 @@ public class NewsLetterController {
     @Autowired
     NewsLetterService letterService;
 
-    @PostMapping
-    public ResponseEntity<String> addNewsLetterService(@RequestBody Map<String,String> user){
+    @PostMapping("/addNewsService")
+    public ResponseEntity<String> addNewsLetterService(@RequestBody Map<String,String> user)throws Exception{
         try {
             User u = userService.getUserByUsername(user.get("username"));
+            if(u.isVerified()) {
+                return new ResponseEntity<String>("Please verify first to subscribe the Newsletter.",HttpStatus.NOT_ACCEPTABLE);
+            }
+            if (u.isNewsletter_service()) {
+                return new ResponseEntity<String>("You have already subscribed for newsletter service.", HttpStatus.OK);
+            }
             u.setNewsletter_service(true);
             letterService.sendNewsLetter(u,true);
             return new ResponseEntity<String>("Successfully added newsletter service to user "+u.getUsername(),HttpStatus.OK);
@@ -34,9 +40,12 @@ public class NewsLetterController {
         catch (UsernameNotFoundException u){
             return new ResponseEntity<String>(u.getMessage(), HttpStatus.NOT_FOUND);
         }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @PostMapping
+    @PostMapping("removeNewsService")
     public ResponseEntity<String> removeNewsLetterService(@RequestBody Map<String,String> user){
         try {
             User u = userService.getUserByUsername(user.get("username"));
@@ -46,6 +55,9 @@ public class NewsLetterController {
         }
         catch (UsernameNotFoundException u){
             return new ResponseEntity<String>(u.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 }

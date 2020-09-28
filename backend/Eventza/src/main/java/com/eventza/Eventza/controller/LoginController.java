@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,11 +50,14 @@ public class LoginController {
                 String k = RandomString.make(64);
                 user.setVerificationToken(k);
                 mailService.sendVerificationEmail(user);
-                return new ResponseEntity<String>("User not verified!!",HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<String>("User not verified. Please check EMAIL.",HttpStatus.NOT_ACCEPTABLE);
             }
         }
-        catch (Exception e){
-            return new ResponseEntity<String>("Error",HttpStatus.NOT_FOUND);
+        catch (UsernameNotFoundException e){
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+        catch(Exception e){
+            return new ResponseEntity<String>("Some error occured!",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         try{
             authenticationManager.authenticate(
@@ -63,19 +67,20 @@ public class LoginController {
         catch(Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<String>("Username or password is wrong...", HttpStatus.NOT_FOUND);
-//            return ResponseEntity.status(404).build();
-//            throw new Exception("Incorrect Username or password.");
         }
 
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(request.getUsername());
 
         if(userDetails.isEnabled()){
+            User user = userService.getUserByUsername(request.getUsername());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
-            return ResponseEntity.ok(new LoginResponse(jwt));
+            return new ResponseEntity<LoginResponse>(new LoginResponse(jwt,user),HttpStatus.OK);
+//            return ResponseEntity.ok(new LoginResponse(jwt,user));
         }
         else{
-            return ResponseEntity.ok("Not Verified!");
+            return new ResponseEntity<String>("User is disabled by ADMIN.",HttpStatus.BAD_REQUEST);
+//            return ResponseEntity.ok("Not Enabled from Admin!");
         }
     }
 }

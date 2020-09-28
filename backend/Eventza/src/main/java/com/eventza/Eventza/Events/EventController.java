@@ -1,7 +1,6 @@
 
 package com.eventza.Eventza.Events;
 
-import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.util.List;
 import java.util.UUID;
@@ -62,18 +61,16 @@ public class EventController {
   }
 
   @PostMapping("/categories/{categoryName}/events")
-  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event,@RequestParam("file") MultipartFile file){
-    User user = userService.getUserByUsername(event.getUsername());
-    userService.increaseCreatedEvent(user);
+  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
     UUID id = categoryService.getCategoryId(categoryName);
     event.setCategory(categoryService.getRequestedCategory(id));
-      try {
-          fileUploadService.fileUpload(file,event);
-//          return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
-      }
-      catch (Exception e){
-          return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
-      }
+//      try {
+//          fileUploadService.fileUpload(file,event);
+////          return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
+//      }
+//      catch (Exception e){
+//          return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
+//      }
     eventService.addNewEvent(event);
     return new ResponseEntity<>("New Event added",HttpStatus.OK);
   }
