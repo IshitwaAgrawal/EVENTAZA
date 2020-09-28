@@ -3,9 +3,19 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
+import com.eventza.Eventza.Repository.ImageRepository;
+import com.eventza.Eventza.model.ImageModel;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +28,7 @@ import java.util.Date;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class EventController {
@@ -28,6 +39,8 @@ public class EventController {
   private CategoryService categoryService;
   @Autowired
   private UserService userService;
+  @Autowired
+  ImageRepository imageRepository;
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
   public EventModel getRequestedEvent(@PathVariable String eventName) {
@@ -40,13 +53,61 @@ public class EventController {
   }
 
   @PostMapping("/categories/{categoryName}/events")
-  public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
+  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event, @RequestParam("imageFile") MultipartFile imageFile)
+      throws IOException {
     User user = userService.getUserByUsername(event.getUsername());
     userService.increaseCreatedEvent(user);
     UUID id = categoryService.getCategoryId(categoryName);
     event.setCategory(categoryService.getRequestedCategory(id));
     eventService.addNewEvent(event);
-    return "New event added";
+    ImageModel img = new ImageModel(event.getId(),imageFile.getOriginalFilename(),compressBytes(imageFile.getBytes()));
+    imageRepository.save(img);
+    return new ResponseEntity<String>("image uploaded", HttpStatus.OK);
+  }
+
+  public static byte[] compressBytes(byte[] data) {
+    Deflater deflater = new Deflater();
+    deflater.setInput(data);
+    deflater.finish();
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+    byte[] buffer = new byte[1024];
+    while (!deflater.finished()) {
+      int count = deflater.deflate(buffer);
+      outputStream.write(buffer, 0, count);
+    }
+
+    try {
+      outputStream.close();
+    } catch (IOException e) {
+
+    }
+    return outputStream.toByteArray();
+  }
+
+  @GetMapping(path = { "/get/{eventId}" })
+  public ImageModel getImage(@PathVariable("eventId") UUID eventId) throws IOException {
+    final Optional<ImageModel> image = imageRepository.findById(eventId);
+    ImageModel img = new ImageModel(image.get().getId(),image.get().getImageName(),
+        decompressBytes(image.get().getImageByte()));
+    return img;
+  }
+
+
+  public static byte[] decompressBytes(byte[] data) {
+    Inflater inflater = new Inflater();
+    inflater.setInput(data);
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
+    byte[] buffer = new byte[1024];
+    try {
+      while (!inflater.finished()) {
+        int count = inflater.inflate(buffer);
+        outputStream.write(buffer, 0, count);
+      }
+      outputStream.close();
+    } catch (IOException ioe) {
+    } catch (DataFormatException e) {
+    }
+    return outputStream.toByteArray();
   }
 
  /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")

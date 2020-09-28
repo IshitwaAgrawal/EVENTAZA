@@ -18,6 +18,8 @@ public class EventModel {
   private UUID id;
   private String username;
   private String eventName;
+  private String imageName;
+  private byte[] imageByte;
   private String organiserName;
   private String eventLocation;
   private Integer price;
@@ -59,6 +61,12 @@ public class EventModel {
     this.eventDescription = eventDescription;
   }
 
+  public EventModel(String imageName, byte[] imageByte) {
+
+    this.imageName = imageName;
+    this.imageByte = imageByte;
+  }
+
   private static String parseDate(String date) {
     try {
       Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -92,6 +100,21 @@ public class EventModel {
     this.username = username;
   }
 
+  public String getImageName() {
+    return imageName;
+  }
+
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
+  public byte[] getImageByte() {
+    return imageByte;
+  }
+
+  public void setImageByte(byte[] imageByte) {
+    this.imageByte = imageByte;
+  }
 
   public void setStartDate(String eventDate) {
     this.startDate = eventDate;
