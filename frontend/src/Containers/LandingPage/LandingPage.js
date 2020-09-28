@@ -8,12 +8,12 @@ class home extends Component {
       <div>
         <Carousel></Carousel>
         {/* <div className={classes.fade}></div> */}
-        <h1 style={{color:'white'}}>Trending</h1>
-        <Slideshow></Slideshow><br></br><br></br>
-        <h1 style={{color:'white'}}>Past events</h1>
-        <Slideshow></Slideshow><br></br><br></br>
-        <h1 style={{color:'white'}}>Upcoming events</h1>
-        <Slideshow></Slideshow><br></br><br></br>
+        <h1 style={{color:'white',margin:'20px',fontSize:'30px'}}>Trending</h1>
+        <Slideshow eventtype='getAllEvents'></Slideshow><br></br><br></br>
+        <h1 style={{color:'white',margin:'20px',fontSize:'30px'}}>Past events</h1>
+        <Slideshow eventtype='getPastEvents' ></Slideshow><br></br><br></br>
+        <h1 style={{color:'white',margin:'20px',fontSize:'30px'}}>Upcoming events</h1>
+        <Slideshow eventtype='getAllEvents'></Slideshow><br></br><br></br>
       </div>
     );
   }

@@ -15,7 +15,6 @@ class login extends Component {
   };
   submit = (e) => {
     e.preventDefault();
-    console.log(this.state.errors);
     if (this.validate()) {
       const Data = {
         name: this.state.name,
@@ -25,17 +24,21 @@ class login extends Component {
         roles: "USER",
       };
       axios
-        .post("http://b50cd3051760.ngrok.io/user/registration", Data)
+        .post("user/registration", Data)
         .then((response) => {
+
           if (response.status === 200) {
-            this.setState({ registered: true });
+              this.setState({ registered: true });
+            this.props.history.push("/login");
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
+          alert(error.response);
+
         });
 
-      this.props.history.push("/login");
+      
     }
   };
   onChangeHandler = (event) => {

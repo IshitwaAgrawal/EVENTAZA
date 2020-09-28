@@ -1,6 +1,6 @@
 import classes from './Footer.module.css';
 import React from 'react';
-
+import {Link} from 'react-router-dom'
 const footer = () =>{
      return(
         <div className={classes.Footer}>
@@ -8,9 +8,9 @@ const footer = () =>{
                 <h1>LOGO</h1>
             </div>
             <div className={classes.Links}>
-                <a href='#'><i style={{color:'white', fontSize:'20px', padding:'7px'}} class="fab fa-instagram"></i>Instagram</a>
-                <a href='#'><i style={{color:'white', fontSize:'20px', padding:'7px'}} class="fab fa-facebook-square"></i>facebook</a>
-                <a href='#'><i style={{color:'white', fontSize:'20px', padding:'7px'}} class="fab fa-twitter"></i>twitter</a>
+                <Link href='#' to=''><i style={{color:'white', fontSize:'20px', padding:'7px'}} className="fab fa-instagram"></i>Instagram</Link>
+                <Link href='#' to=''><i style={{color:'white', fontSize:'20px', padding:'7px'}} className="fab fa-facebook-square"></i>facebook</Link>
+                <Link href='#' to=''><i style={{color:'white', fontSize:'20px', padding:'7px'}} className="fab fa-twitter"></i>twitter</Link>
             </div>
         </div>
      ) ;

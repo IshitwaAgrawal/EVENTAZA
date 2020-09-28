@@ -19,7 +19,7 @@ class header extends Component {
       <nav>
         <div className={classes.Header1}>
           <div className={classes.Logo}>
-            <h1 style={{ display: "inline block", color: "white" }}>
+            <h1 style={{ display: "inline-block", color: "white", fontSize:'20px' }}>
               Eventaza
             </h1>
             {/* <h1>hello{props.name}</h1> */}
@@ -33,7 +33,7 @@ class header extends Component {
               {auth === false ? (
                 <Link to="/login">Login</Link>
               ) : (
-                <Link onClick={logoutHandler}>Logout</Link>
+                <Link to='' onClick={logoutHandler}>Logout</Link>
               )}
             </div>
             <div className={classes.Toggle}>
@@ -51,11 +51,14 @@ class header extends Component {
             <h3>dummy</h3>
             <h3>dummy</h3>
             <h3>dummy</h3>
-            <h3>dummy</h3>
-            <h3>dummy</h3>
           </div>
           <div className={classes.CreateEvent}>
-            <Link to="">Create Event</Link>
+          {auth === true? (
+                <Link to="/createevent">Create Event</Link>
+              ) : (
+                <Link to="/createevent" >Create Event</Link>
+              )}
+            
           </div>
         </div>
       </nav>

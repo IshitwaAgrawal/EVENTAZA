@@ -1,11 +1,6 @@
-.P{
-    height:100px;
-    width:100%;
-    background-color: darkgoldenrod;
-    color:white;
-    margin :auto;
+.SlideShow{
+    
 }
-
 *:focus {
     outline: 0;
     outline: none;

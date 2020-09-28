@@ -4,7 +4,7 @@ import HoverCard from "react-png-hovercard";
 class card extends Component {
 
     clickedHandler =() =>{
-
+        
     }
 
 
@@ -21,7 +21,7 @@ class card extends Component {
             ></img> */}
           </div>
           <div style={{zIndex:5 }}>
-          <p style={{color:'white', margin:'10px'}}>test heading</p>
+          <p style={{color:'white', margin:'10px'}}>{this.props.event.eventName}</p>
         </div>
         </div>
         }

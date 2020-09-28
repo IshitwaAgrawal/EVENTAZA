@@ -17,7 +17,7 @@ class carousel extends Component {
     const { items } = this.state;
     return (
       <div  >
-      <Carousel itemsToShow={1} enableAutoPlay='true' autoPlaySpeed={5500}  >
+      <Carousel itemsToShow={1} enableAutoPlay= {true} autoPlaySpeed={5500}  >
         {items.map(item => <div className={classes.Carousel} key={item.id}><img className={classes.brcpxa} height='350px' width='100%' alt='' src={item.src}></img></div>)}
       </Carousel>
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./Login.module.css";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
+import axios from "../../Components/axios";
 class signup extends Component {
   state = {
     name: "",
@@ -26,7 +26,7 @@ class signup extends Component {
     };
 
     axios
-      .post("http://b50cd3051760.ngrok.io/login", Data)
+      .post("login", Data)
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -38,10 +38,14 @@ class signup extends Component {
         this.props.loginname(this.state.username);
       })
       .catch((error) => {
-        if (error.response.status === 404) {
-          this.setState({ wrongpass: true });
+        if(error.response.status === 406)
+        {
+          this.setState({ wrongpass: error.response.data });
         }
-        console.log(error.response.status);
+        if (error.response.status === 404) {
+          this.setState({ wrongpass:"*wrong credentials*" });
+        }
+        console.log(error.response.data);
       });
   };
   toHome = () => {
@@ -53,8 +57,8 @@ class signup extends Component {
 
   render() {
     let wrongpassview = "";
-    if (this.state.wrongpass === true) {
-      wrongpassview = "*wrong credentials*";
+    if (this.state.wrongpass != null) {
+      wrongpassview = this.state.wrongpass;
     }
     return (
       <div className={classes.Login}>
