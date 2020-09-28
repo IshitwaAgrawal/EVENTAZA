@@ -1,0 +1,42 @@
+.Form{
+    margin-top:30px ;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.Form main form{
+    width:80%;
+    margin: auto;
+    min-height:300px;
+    background-color: white;
+    padding:30px 20px;
+    border-radius: 20px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.Left{
+    padding:40px;
+}
+
+.Right{
+ padding:20px 40px;
+}
+.Heading{
+    color:rgb(195,7,63);
+    background-color: white;
+    margin-bottom: none;
+    font-size:40px;
+    text-align: center;
+    display: inline-block;
+    width:80%;
+    margin-left: 10%;
+    border-radius: 25px;
+}
+.Form main input ,textarea{
+    border:none;
+    background-color: rgb(218,224,230);
+    border-radius: 5px;
+}
+.Submit {
+    margin:20px 20px 20px 0px;
+}
