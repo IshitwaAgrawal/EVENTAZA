@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class EventModel {
@@ -17,7 +18,7 @@ public class EventModel {
   @Column(nullable = false)
   private UUID id;
   private String eventName;
-  private String imageName;
+  @Lob
   private byte[] imageByte;
   private String organiserName;
   private String eventLocation;
@@ -37,14 +38,16 @@ public class EventModel {
   private List<User> registeredUsers;
 
 
-
   public EventModel() {
 
   }
 
-  public EventModel(String eventName, String organiserName, String startDate, String lastDate, String eventLocation, Integer price, Integer totalTickets, String eventDescription ) throws ParseException {
+  public EventModel(String eventName, String organiserName, String startDate, String lastDate,
+      String eventLocation, Integer price, Integer totalTickets, String eventDescription)
+      throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
+    this.imageByte = null;
     this.organiserName = organiserName;
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);
@@ -57,30 +60,24 @@ public class EventModel {
     this.brochure_name = null;
   }
 
-  public EventModel(String imageName, byte[] imageByte) {
-
-    this.imageName = imageName;
-    this.imageByte = imageByte;
-  }
-
   private static String parseDate(String date) {
     try {
       Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-      return new SimpleDateFormat("yyyy-MM-dd").format(d).substring(0,10);
+      return new SimpleDateFormat("yyyy-MM-dd").format(d).substring(0, 10);
     } catch (ParseException e) {
       return null;
     }
   }
 
-  public Integer counter(){
+  public Integer counter() {
     return ++ratingCounter;
   }
 
-  public Integer getTotalRating(){
+  public Integer getTotalRating() {
     return totalRating;
   }
 
-  public void setTotalRating(Integer rating){
+  public void setTotalRating(Integer rating) {
     this.totalRating += rating;
   }
 
@@ -88,13 +85,6 @@ public class EventModel {
     return id;
   }
 
-  public String getImageName() {
-    return imageName;
-  }
-
-  public void setImageName(String imageName) {
-    this.imageName = imageName;
-  }
 
   public byte[] getImageByte() {
     return imageByte;
@@ -138,7 +128,7 @@ public class EventModel {
   }
 
   public String getStartDate() {
-    return startDate ;
+    return startDate;
   }
 
   public String getEventLocation() {

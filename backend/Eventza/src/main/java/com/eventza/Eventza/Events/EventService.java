@@ -56,8 +56,6 @@ public class EventService {
   }
 
   public void addNewEvent(EventModel eventModel){
-    User u = userService.getUserByUsername(eventModel.getOrganiserName());
-    userService.addHostedEvent(u,eventModel);
     eventRepository.save(eventModel);
   }
 
