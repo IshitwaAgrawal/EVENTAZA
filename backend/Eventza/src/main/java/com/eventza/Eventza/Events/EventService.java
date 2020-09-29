@@ -1,5 +1,6 @@
 package com.eventza.Eventza.Events;
 
+import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import com.eventza.Eventza.Service.MailService;
 import com.eventza.Eventza.model.User;
@@ -125,5 +126,14 @@ public class EventService {
       }
     }
 
+  }
+
+  public List<EventModel> getFeaturedEvents() {
+    List<CategoryModel> categories = categoryService.getAllCategories();
+    List<EventModel> featuredEvents = new ArrayList<>();
+    for(CategoryModel category: categories){
+        featuredEvents.add(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId()));
+    }
+    return featuredEvents;
   }
 }

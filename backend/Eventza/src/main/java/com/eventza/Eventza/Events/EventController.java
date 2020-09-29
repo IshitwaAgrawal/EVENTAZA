@@ -148,5 +148,9 @@ public class EventController {
     return "New User registered";
   }
 
+  @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
+  public List<EventModel> getFeaturedEvents(){
+    return eventService.getFeaturedEvents();
+  }
 
 }

@@ -18,6 +18,7 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   List<EventModel> findByCategoryId(UUID categoryId);
   List<EventModel> findByEventLocation(String eventLocation);
   List<EventModel> findByAverageRatingGreaterThanEqual(Double cutoffRating);
+  EventModel findFirstByCategoryIdOrderByAverageRatingDesc(UUID id);
 
   @Transactional
   @Modifying
