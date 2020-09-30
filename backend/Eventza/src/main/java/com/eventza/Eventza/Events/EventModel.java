@@ -2,6 +2,7 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.model.User;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +30,9 @@ public class EventModel {
   private Integer totalTickets;
   private Integer registrations = 0;
   private String startDate;
+  private String startTime;
   private String endDate;
+  private String endTime;
   private String eventDescription;
   private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
@@ -42,7 +45,8 @@ public class EventModel {
 
   }
 
-  public EventModel(String eventName, String organiserName, String startDate, String lastDate,
+  public EventModel(String eventName, String organiserName, String startDate, String startTime,
+      String lastDate, String endTime,
       String eventLocation, Integer price, Integer totalTickets, String eventDescription)
       throws ParseException {
     this.id = UUID.randomUUID();
@@ -52,7 +56,9 @@ public class EventModel {
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
+    this.endTime = parseTime(endTime);
     this.startDate = parseDate(startDate);
+    this.startTime = parseTime(startTime);
     this.eventLocation = eventLocation;
     this.price = price;
     this.totalTickets = totalTickets;
@@ -67,6 +73,14 @@ public class EventModel {
     } catch (ParseException e) {
       return null;
     }
+  }
+
+  private static String parseTime(String time) throws ParseException {
+
+    DateFormat sdf = new SimpleDateFormat("HH:mm");
+    Date date = sdf.parse(time);
+    String t = sdf.format(date);
+    return t;
   }
 
   public Integer counter() {
@@ -105,6 +119,22 @@ public class EventModel {
 
   public void setEndDate(String endDate) {
     this.endDate = endDate;
+  }
+
+  public String getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(String startTime) {
+    this.startTime = startTime;
+  }
+
+  public String getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(String endTime) {
+    this.endTime = endTime;
   }
 
   public Integer getRemainingTickets() {
