@@ -25,6 +25,7 @@ public class EventModel {
   @Lob
   private byte[] imageByte;
   private String organiserName;
+  private String organiserEmail;
   private String eventLocation;
   private Integer price;
   private Double averageRating = 0.0;
@@ -48,14 +49,23 @@ public class EventModel {
 
   }
 
-  public EventModel(String eventName, String organiserName, String startDate, String startTime,
-      String lastDate, String endTime,
-      String eventLocation, Integer price, Integer totalTickets, String eventDescription)
+  public EventModel(String eventName,
+      String organiserName,
+      String organiserEmail,
+      String startDate,
+      String startTime,
+      String lastDate,
+      String endTime,
+      String eventLocation,
+      Integer price,
+      Integer totalTickets,
+      String eventDescription)
       throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
     this.imageByte = null;
     this.organiserName = organiserName;
+    this.organiserEmail = organiserEmail;
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
@@ -104,6 +114,17 @@ public class EventModel {
     return id;
   }
 
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public String getOrganiserEmail() {
+    return organiserEmail;
+  }
+
+  public void setOrganiserEmail(String organiserEmail) {
+    this.organiserEmail = organiserEmail;
+  }
 
   public byte[] getImageByte() {
     return imageByte;

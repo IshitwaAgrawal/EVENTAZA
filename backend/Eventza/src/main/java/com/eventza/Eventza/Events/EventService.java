@@ -145,20 +145,54 @@ public class EventService {
     return featuredEvents;
   }
 
+  private Date convertToDateAndTime(String date, String time){
+    LocalDate datePart = LocalDate.parse(date);
+    LocalTime timePart = LocalTime.parse(time);
+    LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+    Date combinedDateAndTime = java.sql.Timestamp.valueOf(dt);
+    return combinedDateAndTime;
+  }
+
+  public List<EventModel> getPastEvents(){
+    Date d = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> pastEvents = new ArrayList<>();
+    for (EventModel event : events) {
+      Date endDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
+
+      if (endDateTime.before(d)) {
+        pastEvents.add(event);
+      }
+    }
+    return pastEvents;
+  }
+
   public List<EventModel> getUpcomingEvents(){
     Date currentDateTime = new Date();
     List<EventModel> events = getAllEvents();
     List<EventModel> upcomingEvents = new ArrayList<>();
     for(EventModel event : events){
-      LocalDate datePart = LocalDate.parse(event.getStartDate());
-      LocalTime timePart = LocalTime.parse(event.getStartTime());
-      LocalDateTime dt = LocalDateTime.of(datePart, timePart);
-      Date eventStartDateTime = java.sql.Timestamp.valueOf(dt);
+      Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
 
       if(eventStartDateTime.after(currentDateTime)){
         upcomingEvents.add(event);
       }
     }
     return upcomingEvents;
+  }
+
+  public List<EventModel> getOngoingEvents() {
+    Date currentDateTime = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> ongoingEvents = new ArrayList<>();
+    for(EventModel event : events){
+      Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
+      Date eventEndDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
+
+      if(eventStartDateTime.before(currentDateTime) && eventEndDateTime.after(currentDateTime)){
+        ongoingEvents.add(event);
+      }
+    }
+    return ongoingEvents;
   }
 }

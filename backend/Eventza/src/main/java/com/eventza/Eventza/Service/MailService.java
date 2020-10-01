@@ -15,15 +15,16 @@ public class MailService {
     @Autowired
     JavaMailSender mailSender;
 
+
     @Async
-    public void sendMail(User user,String subject,String senderName,String mailContent){
+    public void sendMail(String userEmail,String subject,String senderName,String mailContent){
         MimeMessage message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try{
             helper.setFrom("${spring.mail.username}",senderName);
-            helper.setTo(user.getEmail());
+            helper.setTo(userEmail);
             helper.setSubject(subject);
             helper.setText(mailContent,true);
 
@@ -34,11 +35,12 @@ public class MailService {
         }
     }
 
-    public void sentContactMail(String name, String email,String userMessage){
+    @Async
+    public void sendContactMail(String name, String email,String userMessage){
 
         String mailContent = "<p>Dear Eventaza support team</p><br>";
-        mailContent += "<p>User-name: " + name + " </p>";
-        mailContent += "<p>User-email: " + email + " </p><br>";
+        mailContent += "<p>User's name: " + name + " </p>";
+        mailContent += "<p>User's email: " + email + " </p><br>";
         mailContent += "<p>" + userMessage + "</p>";
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

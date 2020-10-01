@@ -22,6 +22,6 @@ public class ReminderMail {
    mailContent += "<p>Your registered event " + eventName + " is 1 day away.</p>";
    mailContent += "<p> Get ready to roll on! </p>";
 
-   mailService.sendMail(user,subject,senderName,mailContent);
+   mailService.sendMail(user.getEmail(),subject,senderName,mailContent);
  }
 }

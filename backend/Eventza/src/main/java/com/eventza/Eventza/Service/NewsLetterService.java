@@ -20,7 +20,7 @@ public class NewsLetterService {
             content = "<h1>You have successfully unsubscribed from EVENTAZA newsletter.</h1>";
         }
 
-        mailService.sendMail(user,subject,senderName,content);
+        mailService.sendMail(user.getEmail(),subject,senderName,content);
     }
 
 }

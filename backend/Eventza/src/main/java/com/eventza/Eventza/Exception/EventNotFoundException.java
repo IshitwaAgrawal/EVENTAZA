@@ -1,9 +1,10 @@
 package com.eventza.Eventza.Exception;
 
-public class EventNotFoundException extends Exception{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public EventNotFoundException(){
-        super("The event queried is not found in the database");
-    }
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Event not found.")
+public class EventNotFoundException extends RuntimeException{
+
 
 }
