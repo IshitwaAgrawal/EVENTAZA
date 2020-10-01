@@ -1,0 +1,55 @@
+.bm-item {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    color: #d1d1d1;
+    transition: color 0.2s;
+    border-bottom: 2px solid white;
+  }
+  
+  .bm-item:hover {
+    color: white;
+  }
+  
+  .bm-burger-button {
+    position: fixed;
+    width: 30px;
+    height: 26px;
+    left: 96%;
+    top: 10px;
+  }
+  .Usernamedisplay{
+      color: white;
+      background-color: rgb(31,37,51);
+      border-radius: 25px;
+  }
+  .bm-burger-bars {
+    background:white;
+  }
+  
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .bm-cross {
+    background: #bdc3c7;
+  }
+  
+  .bm-menu {
+    background: rgb(51,53,69);
+    padding: 2.5em 0.8em 0;
+    font-size: 1.15em;
+  }
+  
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  .bm-item-list {
+    color: #b8b7ad;
+  }
+  
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }

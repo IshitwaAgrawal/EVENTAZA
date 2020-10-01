@@ -1,4 +1,13 @@
+.link:hover{
+color: black;
+text-decoration: none;
+}
 .Card{
+    color:black;
     width: 15rem;
     margin: 10px 
+}
+.Card:hover{
+color:black;
+text-decoration: none;
 }

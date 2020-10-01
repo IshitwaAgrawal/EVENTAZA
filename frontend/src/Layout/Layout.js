@@ -8,6 +8,7 @@ import Home from '../Containers/LandingPage/LandingPage'
 import Footer from '../Components/Footer/Footer'
 import CreateEvent from '../Containers/CreateEvent/CreateEvent' 
 import AllEvent from '../Containers/Allevents/Allevent'
+import Eventpage from '../Components/Eventpage/Eventpage'
 // import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -15,7 +16,8 @@ class Layout extends Component {
     state={
             name:'',
             showSideDrawer: false,
-            loginstatus:false
+            loginstatus:false,
+            selectedcity:''
           };
       loginnameHandler = (newname)=>{
         this.setState({
@@ -24,25 +26,22 @@ class Layout extends Component {
         })
         console.log(this.state.name);
       }
-    
-    sideDrawerClosedHandler = () => {
-        this.setState( { showSideDrawer: false } );
-    }
-
-    sideDrawerToggleHandler = () => {
-        this.setState( ( prevState ) => {
-            return { showSideDrawer: !prevState.showSideDrawer };
-        } );
-    }
+      SelectedCityHandler = (city) =>{
+          this.setState({
+            selectedcity:city
+          })
+          
+      }
     toggle =()=>{
         this.props.history.push('/login');
     }
     render () {
+        console.log(this.state.selectedcity)
         let token = localStorage.getItem('jwt');
         return (
            <div className={classes.Layout}>
                <div style={{position:'sticky',top:0,zIndex:5}}>
-               <Header name={this.state.name}></Header>
+               <Header name={this.state.name} selectedcity={this.SelectedCityHandler}></Header>
                </div>
                {/* <Signup loginname={this.loginnameHandler}/> */}
                {this.state.name};
@@ -56,6 +55,7 @@ class Layout extends Component {
                     <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>:<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
                 <Route path='/createevent' exact render = {() => (<CreateEvent></CreateEvent>)}></Route>
                 <Route path='/events' exact render={()=>(<AllEvent></AllEvent>)} ></Route>
+                <Route path='/:id' exact render= {() => (<Eventpage></Eventpage>)}></Route>
                 </Switch>
                 <Footer />
            </div>

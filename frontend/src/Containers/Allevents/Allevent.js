@@ -1,4 +1,4 @@
-import Axios from 'axios'
+
 import React, { Component } from 'react'
 import EventCard from '../../Containers/Card/EventCard'
 import classes from './Allevent.module.css'

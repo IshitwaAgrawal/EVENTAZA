@@ -1,0 +1,22 @@
+.Button{
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    color: white;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.Button i{
+    margin:5px ;
+}
+.modaldata{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    height: 200px;
+    align-items: center;
+}
+.Modal{
+    width: 80vh;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Carousel from "../Carousel/Carousel";
 import Slideshow from '../SlideShow/SlideShow'
-
+import {withRouter} from 'react-router-dom'
 class home extends Component {
   render() {
     return (
@@ -19,4 +19,4 @@ class home extends Component {
   }
 }
 
-export default home;
+export default withRouter(home);

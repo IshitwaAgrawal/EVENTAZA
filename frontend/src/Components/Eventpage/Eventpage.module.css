@@ -1,0 +1,95 @@
+
+.Container{
+    width:60vw;
+    margin:auto;
+    background-color: white;
+}
+.Container img{
+    width:100%;
+    height: 300px;
+}
+.Heading{
+    margin:20px;
+    display: flex;
+    justify-content: space-between;
+}
+.Heading h1{
+    display: inline-block;
+    font-size: 26.26px;
+    font-weight: 600;
+}
+.Heading span{
+    color:goldenrod;
+    font-size: 24px;
+}
+.datetime{
+    font-size: 20px;
+    margin: 0 20px;
+    display: inline-block;
+}
+.datetime i{
+    margin: 8px;
+    color:rgb(119,29,53);
+}
+.price{
+    font-size: 20px;
+    margin: 0 20px;
+    display: inline-flex;
+    
+}
+.price i{
+    color:rgb(119,29,53);
+    margin-top:4px;
+    margin-right:8px
+}
+.discription{
+    margin:20px ;
+}
+.discription p{
+     height:185px;
+    overflow: scroll;
+    line-break: strict;
+}
+.discription p::-webkit-scrollbar{
+    display: none;
+}
+.register{
+    margin:40px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.register h3{
+    font-size:20px; 
+}
+.registerbutton{
+    font-weight: 450;
+  border:2px solid white;
+    padding:5px 8px;
+    text-decoration: none;
+    border-radius: 25px;
+    color:white;
+    background-image: linear-gradient(#6f2232,#950740,#c3073f);
+    cursor: pointer;
+}
+@media (max-width:530px)
+{
+    .Container{
+        width: 100vw;
+    }
+    .Container img{
+        width:100%;
+        height:200px;
+    }
+    .Heading{
+        margin:8px;
+    }
+    .datetime{
+        margin: 0 8px;
+    }
+    .discription{
+        margin:8px ;
+    }
+    .register{
+        margin:8px
+    }
+}

@@ -1,7 +1,17 @@
 .SlideShow{
-    
+    width:100%;
+    margin:auto;
 }
 *:focus {
     outline: 0;
     outline: none;
   }
+
+  /* the slides */
+.slick-slide {
+  margin: 0 10px;
+}
+/* the parent */
+.slick-list {
+  margin: 0 -10px;
+}
