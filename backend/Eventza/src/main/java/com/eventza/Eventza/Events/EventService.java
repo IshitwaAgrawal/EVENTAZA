@@ -8,6 +8,8 @@ import com.eventza.Eventza.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -118,7 +120,7 @@ public class EventService {
   }
 
 
-  @Scheduled(fixedDelay = 2000)
+  @Scheduled(cron = "0 0 12 * * ?")
   public void sendEventReminder() throws ParseException {
     LocalDate localDate = LocalDate.now().plusDays(1);
     Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -141,5 +143,22 @@ public class EventService {
         featuredEvents.add(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId()));
     }
     return featuredEvents;
+  }
+
+  public List<EventModel> getUpcomingEvents(){
+    Date currentDateTime = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> upcomingEvents = new ArrayList<>();
+    for(EventModel event : events){
+      LocalDate datePart = LocalDate.parse(event.getStartDate());
+      LocalTime timePart = LocalTime.parse(event.getStartTime());
+      LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+      Date eventStartDateTime = java.sql.Timestamp.valueOf(dt);
+
+      if(eventStartDateTime.after(currentDateTime)){
+        upcomingEvents.add(event);
+      }
+    }
+    return upcomingEvents;
   }
 }

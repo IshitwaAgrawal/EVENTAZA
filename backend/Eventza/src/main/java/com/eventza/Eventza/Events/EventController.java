@@ -3,6 +3,9 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryService;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import com.eventza.Eventza.Exception.EventNotFoundException;
@@ -48,7 +51,7 @@ public class EventController {
 //            return e.getMessage();
 //        }
 //    }
-
+  
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
   public EventModel getRequestedEvent(@PathVariable String eventName)
       throws EventNotFoundException {
@@ -133,8 +136,12 @@ public class EventController {
     List<EventModel> pastEvents = new ArrayList<>();
     events = getAllEvents();
     for (EventModel event : events) {
-      Date endD = new SimpleDateFormat("yyyy-MM-dd").parse(event.getEndDate().substring(0, 10));
-      if (endD.before(d)) {
+     // Date endD = new SimpleDateFormat("yyyy-MM-dd").parse(event.getEndDate().substring(0, 10));
+      LocalDate datePart = LocalDate.parse(event.getEndDate());
+      LocalTime timePart = LocalTime.parse(event.getEndTime());
+      LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+      Date endDate = java.sql.Timestamp.valueOf(dt);
+      if (endDate.before(d)) {
         pastEvents.add(event);
       }
     }
@@ -151,6 +158,11 @@ public class EventController {
   @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
   public List<EventModel> getFeaturedEvents(){
     return eventService.getFeaturedEvents();
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/upcomingEvents")
+  public List<EventModel> getUpcomingEvents(){
+    return eventService.getUpcomingEvents();
   }
 
 }

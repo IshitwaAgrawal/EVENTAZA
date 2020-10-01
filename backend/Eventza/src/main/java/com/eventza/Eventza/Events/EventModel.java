@@ -5,6 +5,9 @@ import com.eventza.Eventza.model.User;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -72,6 +75,7 @@ public class EventModel {
       return new SimpleDateFormat("yyyy-MM-dd").format(d).substring(0, 10);
     } catch (ParseException e) {
       return null;
+
     }
   }
 
@@ -82,6 +86,7 @@ public class EventModel {
     String t = sdf.format(date);
     return t;
   }
+
 
   public Integer counter() {
     return ++ratingCounter;
@@ -160,6 +165,8 @@ public class EventModel {
   public String getStartDate() {
     return startDate;
   }
+
+
 
   public String getEventLocation() {
     return eventLocation;
