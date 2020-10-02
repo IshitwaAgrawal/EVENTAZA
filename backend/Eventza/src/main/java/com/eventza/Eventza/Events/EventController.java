@@ -3,9 +3,6 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryService;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 
 import com.eventza.Eventza.Exception.EventNotFoundException;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
@@ -53,10 +49,18 @@ public class EventController {
 //        }
 //    }
 
+
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventId}")
-  public EventModel getRequestedEvent(@PathVariable UUID eventId)
+  public EventModel getRequestedEvent(@PathVariable String eventId)
       throws EventNotFoundException {
-    return eventRepository.findByEventId(eventId);
+    try{
+      UUID id = UUID.fromString(eventId);
+      return eventService.getEventById(id);
+    }
+    catch(Exception e){
+      System.out.println(e.getMessage());
+      return null;
+    }
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")

@@ -111,7 +111,15 @@ public class EventService {
     return event.getAverageRating();
   }
   public EventModel getEventById(UUID id) {
-    return eventRepository.getEventModelById(id);
+
+    try{
+      return eventRepository.getEventModelById(id);
+    }
+    catch(Exception e){
+      System.out.println(e.getMessage());
+      return null;
+    }
+
   }
 
   public void registerUserInEvent(UUID id, User user){
