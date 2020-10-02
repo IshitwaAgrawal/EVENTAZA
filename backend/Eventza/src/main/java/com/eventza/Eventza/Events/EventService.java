@@ -120,7 +120,7 @@ public class EventService {
   }
 
 
-  @Scheduled(cron = "0 0 12 * * ?")
+  @Scheduled(cron = "0 0 0 * * ?")
   public void sendEventReminder() throws ParseException {
     LocalDate localDate = LocalDate.now().plusDays(1);
     Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -129,7 +129,7 @@ public class EventService {
      Date eventStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(event.getStartDate().substring(0,10));
       if(date.equals(eventStartDate)){
         for(User u : event.getRegisteredUsers()){
-          reminderMail.sendReminderMail(event.getEventName(), u);
+          reminderMail.sendReminderMail(event.getEventName(), u.getEmail());
         }
       }
     }

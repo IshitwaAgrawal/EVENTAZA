@@ -38,6 +38,8 @@ public class EventController {
   private UserService userService;
   @Autowired
   private FileUploadService fileUploadService;
+  @Autowired
+  private EventRepository eventRepository;
 
   //    @PostMapping("/categories/{categoryName}/events")
 //    public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
@@ -154,6 +156,11 @@ public class EventController {
   @RequestMapping(method = RequestMethod.GET, path = "/ongoingEvents")
   public List<EventModel> getOngoingEvents(){
     return eventService.getOngoingEvents();
+  }
+
+  @GetMapping("/searchfor/{keyword}")
+  public List<EventModel> searchFor(@RequestParam String keyword){
+      return eventRepository.search(keyword);
   }
 
 }

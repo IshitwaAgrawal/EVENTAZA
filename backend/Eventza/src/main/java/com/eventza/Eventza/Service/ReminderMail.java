@@ -13,15 +13,15 @@ public class ReminderMail {
   MailService mailService;
 
 
- public void sendReminderMail(String eventName, User user) {
+ public void sendReminderMail(String eventName, String userEmail) {
    String subject = "Event Reminder";
 
    String senderName = "EVENTAZA APP";
 
-   String mailContent = "<p>Dear "+user.getName()+", </p>";
+   String mailContent = "<p>Dear "+userEmail+", </p>";
    mailContent += "<p>Your registered event " + eventName + " is 1 day away.</p>";
    mailContent += "<p> Get ready to roll on! </p>";
 
-   mailService.sendMail(user.getEmail(),subject,senderName,mailContent);
+   mailService.sendMail(userEmail,subject,senderName,mailContent);
  }
 }

@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface EventRepository extends CrudRepository<EventModel, UUID> {
@@ -22,6 +21,10 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   List<EventModel> findByAverageRatingGreaterThanEqual(Double cutoffRating);
   EventModel findFirstByCategoryIdOrderByAverageRatingDesc(UUID id);
 
+  @Query("Select e from EventModel e where concat(e.eventName, ' ', e.eventLocation, ' ', e.organiserName, ' ', e.category.categoryName) like %?1%")
+  List<EventModel> search(String keyword);
+
+
   @Transactional
   @Modifying
   @Query("update EventModel event set event.averageRating = ?2, event.totalRating = ?3 where event.id = ?1")
@@ -31,4 +34,6 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   @Modifying
   @Query("update EventModel event set event.imageByte = ?2 where event.id = ?1")
   void setImageByteForEventModule(UUID id, byte[] imageByte);
+
+
 }
