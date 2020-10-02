@@ -152,11 +152,13 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/{eventId}/register")
-  public String registerUserInEvent(@PathVariable String eventId, @RequestBody Map<String,String> username) {
+  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventId, @RequestBody Map<String,String> username) {
     UUID id = UUID.fromString(eventId);
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
-    return "New User registered";
+    user.registerEvent(eventService.getEventById(id));
+    userService.updateUser(user);
+    return new ResponseEntity<User>(user,HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
