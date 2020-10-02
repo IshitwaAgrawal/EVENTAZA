@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.web.bind.annotation.*;
@@ -137,8 +136,9 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/register")
-  public String registerUserInEvent(@PathVariable String eventName, @RequestBody User user) {
+  public String registerUserInEvent(@PathVariable String eventName, @RequestBody Map<String,String> username) {
     UUID id = eventService.getEventId(eventName);
+    User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     return "New User registered";
   }
