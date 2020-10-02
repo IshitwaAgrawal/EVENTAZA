@@ -3,6 +3,7 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryService;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 
 import com.eventza.Eventza.Exception.EventNotFoundException;
@@ -48,21 +49,24 @@ public class EventController {
 //            return e.getMessage();
 //        }
 //    }
-/*
 
-  @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventId}")
+
+  @RequestMapping(method = RequestMethod.GET, path = "/events/{eventId}")
   public EventModel getRequestedEvent(@PathVariable String eventId)
       throws EventNotFoundException {
-    try{
-      UUID id = UUID.fromString(eventId);
+    try {
+     // UUID uuid = new UUID(
+       //   new BigInteger(eventId.substring(0, 16), 16).longValue(),
+      //    new BigInteger(eventId.substring(16), 16).longValue());
+     UUID id = UUID.fromString(eventId);
       return eventService.getEventById(id);
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       System.out.println(e.getMessage());
       return null;
     }
-    */
+  }
 
+  /*
   @GetMapping("/categories/{categoryName}/events")
   public EventModel getRequestedEvent(@RequestBody Map<String,String> event_id)
       throws EventNotFoundException {
@@ -70,7 +74,7 @@ public class EventController {
     System.out.println(id);
     return eventService.getEventById(id);
   }
-
+*/
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
   public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName) {
     return eventService.getAllEventsFromRequestedCategory(categoryName);
@@ -147,9 +151,9 @@ public class EventController {
     return eventService.getPastEvents();
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/register")
-  public String registerUserInEvent(@PathVariable String eventName, @RequestBody Map<String,String> username) {
-    UUID id = eventService.getEventId(eventName);
+  @RequestMapping(method = RequestMethod.POST, path = "/{eventId}/register")
+  public String registerUserInEvent(@PathVariable String eventId, @RequestBody Map<String,String> username) {
+    UUID id = UUID.fromString(eventId);
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     return "New User registered";
