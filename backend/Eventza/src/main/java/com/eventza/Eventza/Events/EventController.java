@@ -52,9 +52,10 @@ public class EventController {
 //    }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
-  public EventModel getRequestedEvent(@PathVariable String eventName)
+  public EventModel getRequestedEvent(@PathVariable String event_id)
       throws EventNotFoundException {
-    return eventService.getRequestedEvent(eventName);
+    UUID id = UUID.fromString(event_id);
+    return eventService.getEventById(id);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
