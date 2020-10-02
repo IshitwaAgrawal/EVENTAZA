@@ -48,7 +48,7 @@ public class EventController {
 //            return e.getMessage();
 //        }
 //    }
-
+/*
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventId}")
   public EventModel getRequestedEvent(@PathVariable String eventId)
@@ -61,6 +61,14 @@ public class EventController {
       System.out.println(e.getMessage());
       return null;
     }
+    */
+
+  @GetMapping("/categories/{categoryName}/events")
+  public EventModel getRequestedEvent(@RequestBody Map<String,String> event_id)
+      throws EventNotFoundException {
+    UUID id = UUID.fromString(event_id.get("id"));
+    System.out.println(id);
+    return eventService.getEventById(id);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
