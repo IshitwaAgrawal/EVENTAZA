@@ -14,6 +14,9 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   EventModel findByEventName(String eventName);
 
   @Query("select e from EventModel e where e.id=?1")
+  EventModel findByEventId(UUID eventId);
+
+  @Query("select e from EventModel e where e.id=?1")
   EventModel getEventModelById(UUID id);
 
   List<EventModel> findByCategoryId(UUID categoryId);
@@ -21,8 +24,8 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   List<EventModel> findByAverageRatingGreaterThanEqual(Double cutoffRating);
   EventModel findFirstByCategoryIdOrderByAverageRatingDesc(UUID id);
 
-  @Query("Select e from EventModel e where concat(e.eventName, ' ', e.eventLocation, ' ', e.organiserName, ' ', e.category.categoryName) like %?1%")
-  List<EventModel> search(String keyword);
+  @Query("Select e from EventModel e where e.eventName like %?1%" + " or e.eventLocation like %?1%")
+  List<EventModel> findAll(String keyword);
 
 
   @Transactional

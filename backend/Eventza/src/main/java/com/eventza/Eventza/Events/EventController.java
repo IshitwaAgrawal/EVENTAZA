@@ -53,10 +53,10 @@ public class EventController {
 //        }
 //    }
 
-  @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
-  public EventModel getRequestedEvent(@PathVariable String eventName)
+  @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventId}")
+  public EventModel getRequestedEvent(@PathVariable UUID eventId)
       throws EventNotFoundException {
-    return eventService.getRequestedEvent(eventName);
+    return eventRepository.findByEventId(eventId);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
@@ -158,9 +158,9 @@ public class EventController {
     return eventService.getOngoingEvents();
   }
 
-  @GetMapping("/searchfor/{keyword}")
+ @GetMapping("/search")
   public List<EventModel> searchFor(@RequestParam String keyword){
-      return eventRepository.search(keyword);
+      return eventRepository.findAll(keyword);
   }
 
 }
