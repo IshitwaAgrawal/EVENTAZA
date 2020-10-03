@@ -17,7 +17,7 @@ class Layout extends Component {
             name:'',
             showSideDrawer: false,
             loginstatus:false,
-            selectedcity:''
+            selectedcity:null
           };
       loginnameHandler = (newname)=>{
         this.setState({
@@ -36,7 +36,7 @@ class Layout extends Component {
         this.props.history.push('/login');
     }
     render () {
-        console.log(this.state.selectedcity)
+        // console.log(this.state.selectedcity)
         let token = localStorage.getItem('jwt');
         return (
            <div className={classes.Layout}>
@@ -46,7 +46,7 @@ class Layout extends Component {
                {/* <Signup loginname={this.loginnameHandler}/> */}
                {this.state.name};
                <Switch>
-              <Route path='/' exact render={() => <Home></Home>}></Route>
+              <Route path='/' exact render={() => <Home city={this.state.selectedcity}></Home>}></Route>
                { token ===null ?
                 <Route path='/register'exact render={() => (<Signup />)} ></Route>:
                 <Route path='/register' exact render ={ () => (<Home></Home>)}></Route>
@@ -54,7 +54,7 @@ class Layout extends Component {
                 { token ===null ?
                     <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>:<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
                 <Route path='/createevent' exact render = {() => (<CreateEvent></CreateEvent>)}></Route>
-                <Route path='/events' exact render={()=>(<AllEvent></AllEvent>)} ></Route>
+                <Route path='/events/:name' exact render={()=>(<AllEvent></AllEvent>)} ></Route>
                 <Route path='/:id' exact render= {() => (<Eventpage></Eventpage>)}></Route>
                 </Switch>
                 <Footer />

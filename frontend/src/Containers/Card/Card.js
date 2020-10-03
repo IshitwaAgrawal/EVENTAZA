@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from "./Card.module.css";
 import HoverCard from "react-png-hovercard";
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 class card extends Component {
 
     clickedHandler =() =>{
@@ -11,7 +11,8 @@ class card extends Component {
 
   render() {
     return (
-      <Link to='/2'style={{padding:'20px'}}>
+      <div style={{padding:'20px'}}>
+      <NavLink to={'/' + this.props.event.id}>
       <HoverCard 
         front={
           <div className={classes.Front} >
@@ -22,15 +23,18 @@ class card extends Component {
         }
         back={
           <div className={classes.Back} onClick={this.clickedHandler}>
-            <p> test discription</p>
-          </div>
+            <p>Location : {this.props.event.eventLocation}</p>
+            <p>Date : {this.props.event.startDate}</p>
+            <p>Time : {this.props.event.startTime}</p>
+            </div>
         }
         maxWidth={280}
         animationSpeed={1000}
         height={150}
         margin={20}
       />
-      </Link>
+      </NavLink>
+      </div>
     );
   }
 }

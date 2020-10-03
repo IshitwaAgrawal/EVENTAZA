@@ -12,6 +12,7 @@ class login extends Component {
     roles: "",
     registered: false,
     errors: {},
+    error:'',
   };
   submit = (e) => {
     e.preventDefault();
@@ -33,8 +34,10 @@ class login extends Component {
           }
         })
         .catch((error) => {
-          console.log(error.response);
-          alert(error.response);
+          console.log(error.response.data);
+          this.setState({
+            error:error.response.data
+                    })
 
         });
 
@@ -177,6 +180,7 @@ class login extends Component {
             </div>
           </form>
           <p onClick={this.tologin}>Already registered?</p>
+              <p style={{color:'red', fontSize:'12px'}}>{this.state.error}</p>
         </main>
       </div>
     );

@@ -62,10 +62,11 @@ class header extends Component {
         </div>
         <div className={classes.Header2}>
           <div style={{display:'inline'}}>
-            <Link to='/events'>dummy</Link>
-            <Link to='/events'>dummy</Link>
-            <Link to='/events'>dummy</Link>
-            <Link to='/eventpage'>dummy</Link>
+            <Link to='/events/Music'>Music</Link>
+            <Link to='/events/Dance'>Dance</Link>
+            <Link to='/events/Sports'>Sports</Link>
+            <Link to='/events/virtual'>Virtual</Link>
+            <Link to='/events/Others'>Others</Link>
             
           </div>
           <div className={classes.CreateEvent}>
