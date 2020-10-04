@@ -2,6 +2,7 @@ package com.eventza.Eventza.Repository;
 
 import com.eventza.Eventza.DTO.UserDTO;
 import com.eventza.Eventza.model.User;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
