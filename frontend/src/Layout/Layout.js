@@ -9,6 +9,7 @@ import Footer from '../Components/Footer/Footer'
 import CreateEvent from '../Containers/CreateEvent/CreateEvent' 
 import AllEvent from '../Containers/Allevents/Allevent'
 import Eventpage from '../Components/Eventpage/Eventpage'
+import Dashboard from '../Containers/Dashboard/Dashboard'
 // import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -44,7 +45,7 @@ class Layout extends Component {
                <Header name={this.state.name} selectedcity={this.SelectedCityHandler}></Header>
                </div>
                {/* <Signup loginname={this.loginnameHandler}/> */}
-               {this.state.name};
+               {/* {this.state.name}; */}
                <Switch>
               <Route path='/' exact render={() => <Home city={this.state.selectedcity}></Home>}></Route>
                { token ===null ?
@@ -52,9 +53,16 @@ class Layout extends Component {
                 <Route path='/register' exact render ={ () => (<Home></Home>)}></Route>
                }
                 { token ===null ?
-                    <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>:<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
+                    <Route path='/login' exact render ={ () => (<Login loginname={this.loginnameHandler} ></Login>)}></Route>
+                    :<Route path='/login' exact render ={ () => (<Home></Home>)}></Route>}
                 <Route path='/createevent' exact render = {() => (<CreateEvent></CreateEvent>)}></Route>
                 <Route path='/events/:name' exact render={()=>(<AllEvent></AllEvent>)} ></Route>
+                {
+                    token !==null ?
+                <Route path='/dashboard/:username' exact render={() => (<Dashboard />)}></Route>:
+                <Route path='/dashboard/:username' exact render={() => (<Login></Login>)}></Route>
+
+                }
                 <Route path='/:id' exact render= {() => (<Eventpage></Eventpage>)}></Route>
                 </Switch>
                 <Footer />

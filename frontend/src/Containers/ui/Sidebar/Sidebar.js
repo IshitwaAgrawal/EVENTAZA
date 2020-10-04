@@ -2,15 +2,17 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import './Sidebar.css'
+import {Link} from 'react-router-dom'
 export default props => {
+  let username = localStorage.getItem('Userdata')
   return (
     <Menu>
         <h3 className="Usernamedisplay">
-        Hey! Name 
+        Hey! {username}
       </h3>
-      <a className="menu-item" href="/">
+      <Link className="menu-item" to={"/dashboard/" + username} >
         Dashboard
-      </a>
+      </Link>
 
       <a className="menu-item" href="/">
         Wishlist

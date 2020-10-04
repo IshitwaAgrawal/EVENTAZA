@@ -32,11 +32,13 @@ class eventcard extends Component {
           </Card.Text>
           </div>
           <div className={classes.star}>
-          &#9733;
-          &#9733;
-          &#9733;
-          &#9733; 
-          &#9733; 
+          {
+                       Array(this.props.event.avgRating)
+                       .fill()
+                       .map((_) =>(
+                        <span>&#9733;</span>
+                       ))
+                   }
           </div>
           </div>
         </Card.Body>

@@ -73,7 +73,7 @@ class header extends Component {
           {auth === true? (
                 <Link to="/createevent">Create Event</Link>
               ) : (
-                <Link to="/createevent" >Create Event</Link>
+                <Link to="/login" >Create Event</Link>
               )}
             
           </div>

@@ -1,0 +1,25 @@
+.Organizedcard{
+    position: relative;
+    padding: 5px 20px;
+    color:rgb(31,31,31);
+    background-color: rgb(253,253,254);
+    height:100px
+}
+.Datetime i {
+    color:rgb(28, 50, 102);
+}
+.Price{
+    position: absolute;
+    right:20px;
+    bottom:10px;
+}
+.Cancel{
+    font-size: 12px;
+    color:white;
+    background-color: rgb(165, 7, 7);
+    position: absolute;
+    top:20px;
+    right:20px;
+    padding: 5px 12px;
+    border-radius: 5px;
+}

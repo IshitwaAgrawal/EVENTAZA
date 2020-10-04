@@ -47,7 +47,7 @@
     margin:20px ;
 }
 .discription p{
-     height:185px;
+     max-height:185px;
     overflow: scroll;
     line-break: strict;
 }
@@ -71,6 +71,14 @@
     background-image: linear-gradient(#6f2232,#950740,#c3073f);
     cursor: pointer;
 }
+.rating input[type='radio']{
+    display: none;
+}
+.star{
+    cursor: pointer;
+    transition: color 200ms ;
+}
+
 @media (max-width:530px)
 {
     .Container{
