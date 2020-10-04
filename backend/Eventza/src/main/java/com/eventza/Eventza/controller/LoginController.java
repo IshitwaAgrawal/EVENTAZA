@@ -6,6 +6,7 @@ import com.eventza.Eventza.Service.VerificationMailService;
 import com.eventza.Eventza.config.JwtUtil;
 import com.eventza.Eventza.model.LoginRequest;
 import com.eventza.Eventza.model.LoginResponse;
+import com.eventza.Eventza.model.ResponseUser;
 import com.eventza.Eventza.model.User;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class LoginController {
                 user.setVerificationToken(k);
                 userService.updateUser(user);
                 mailService.sendVerificationEmail(user);
+                userService.updateUser(user);
                 return new ResponseEntity<String>("User not verified. Please check EMAIL.",HttpStatus.NOT_ACCEPTABLE);
             }
         }
@@ -75,8 +77,9 @@ public class LoginController {
 
         if(userDetails.isEnabled()){
             User user = userService.getUserByUsername(request.getUsername());
+            ResponseUser r_user = new ResponseUser(user.getId(),user.getUsername(),user.getName(),user.getEmail(),user.getRoles(),user.isNewsletter_service(),user.getRegisteredEvents(),user.getHostedEvents(),user.getWishlist());
             final String jwt = jwtTokenUtil.generateToken(userDetails);
-            return new ResponseEntity<LoginResponse>(new LoginResponse(jwt,user),HttpStatus.OK);
+            return new ResponseEntity<LoginResponse>(new LoginResponse(jwt,r_user),HttpStatus.OK);
 //            return ResponseEntity.ok(new LoginResponse(jwt,user));
         }
         else{

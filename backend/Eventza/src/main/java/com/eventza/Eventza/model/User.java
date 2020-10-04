@@ -22,10 +22,13 @@ public class User {
     private int created_events;
     private int register_in_events;
     private boolean newsletter_service;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<EventModel> hostedEvents;
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<EventModel> registeredEvents;
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<EventModel> wishlist;
 
@@ -127,6 +130,22 @@ public class User {
 
     public void setWishlist(List<EventModel> wishlist) {
         this.wishlist = wishlist;
+    }
+
+    public List<EventModel> getHostedEvents() {
+        return hostedEvents;
+    }
+
+    public void setHostedEvents(List<EventModel> hostedEvents) {
+        this.hostedEvents = hostedEvents;
+    }
+
+    public List<EventModel> getRegisteredEvents() {
+        return registeredEvents;
+    }
+
+    public void setRegisteredEvents(List<EventModel> registeredEvents) {
+        this.registeredEvents = registeredEvents;
     }
 
     public void addWish(EventModel event){
