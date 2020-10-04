@@ -38,10 +38,11 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
   @Query("update EventModel event set event.averageRating = ?2, event.totalRating = ?3 where event.id = ?1")
   void setRatingForEventModule(UUID id, Double rating, Integer total_rating);
 
-  @Transactional
+
+  /*@Transactional
   @Modifying
   @Query("update EventModel event set event.imageByte = ?2 where event.id = ?1")
   void setImageByteForEventModule(UUID id, byte[] imageByte);
-
+*/
 
 }

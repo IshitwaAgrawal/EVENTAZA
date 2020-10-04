@@ -23,33 +23,33 @@ import java.util.Map;
 @RestController
 public class BrochureDownloadController {
 
-    @Autowired
-    EventService eventService;
+  @Autowired
+  EventService eventService;
 
-    @GetMapping("/download")
-    public ResponseEntity<?> downloadFile(@RequestBody Map<String,String> event){
-        try {
-            EventModel eventModel = eventService.getRequestedEvent(event.get("eventName"));
-            String filename = eventModel.getBrochure_name();
-            if(filename == null){
-                return new ResponseEntity<String>("Brochure not found!",HttpStatus.NOT_FOUND);
-            }
-            System.out.println(filename);
-            String filebase = "C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files\\";
-            Path path = Paths.get(filebase + filename);
-            Resource resource = null;
-            try {
-                resource = new UrlResource(path.toUri());
-            } catch (Exception e) {
-                return new ResponseEntity<String>("File not found!!",HttpStatus.NOT_FOUND);
-            }
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = \"" + resource.getFilename() + "\"")
-                    .body(resource);
-        }
-        catch(EventNotFoundException e){
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
-        }
+  @GetMapping("/download")
+  public ResponseEntity<?> downloadFile(@RequestBody Map<String, String> event) {
+    try {
+      EventModel eventModel = eventService.getRequestedEvent(event.get("eventName"));
+      String filename = eventModel.getBrochure_name();
+      if (filename == null) {
+        return new ResponseEntity<String>("Brochure not found!", HttpStatus.NOT_FOUND);
+      }
+      System.out.println(filename);
+      String filebase = "C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files\\";
+      Path path = Paths.get(filebase + filename);
+      Resource resource = null;
+      try {
+        resource = new UrlResource(path.toUri());
+      } catch (Exception e) {
+        return new ResponseEntity<String>("File not found!!", HttpStatus.NOT_FOUND);
+      }
+      return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_PDF)
+          .header(HttpHeaders.CONTENT_DISPOSITION,
+              "attachment; filename = \"" + resource.getFilename() + "\"")
+          .body(resource);
+    } catch (EventNotFoundException e) {
+      return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+  }
 }

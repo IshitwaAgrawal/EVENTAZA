@@ -3,6 +3,7 @@ package com.eventza.Eventza.controller;
 import com.eventza.Eventza.Events.EventModel;
 import com.eventza.Eventza.Events.EventRepository;
 import com.eventza.Eventza.Events.EventService;
+import com.eventza.Eventza.Service.FileUploadService;
 import com.eventza.Eventza.Service.ImageCompressorService;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,10 @@ public class ImageUploader {
   @Autowired
   EventRepository eventRepository;
 
-  @PostMapping("/image/{eventName}")
+  @Autowired
+  FileUploadService fileUploadService;
+
+  /*@PostMapping("/image/{eventName}")
   public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file,
       @PathVariable String eventName) throws Exception {
 
@@ -41,6 +45,20 @@ public class ImageUploader {
     }
     catch (Exception e) {
       return new ResponseEntity<String>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+    }
+  }
+  */
+
+  @PostMapping("/{eventName}/imageUpload")
+  public ResponseEntity<String> uploadImage(@PathVariable String eventName,
+      @RequestParam("image") MultipartFile image) throws Exception {
+    try {
+      EventModel event = eventService.getRequestedEvent(eventName);
+      fileUploadService.imageUpload(image,event);
+      return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
+    }
+    catch (Exception e){
+      return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
     }
   }
 }

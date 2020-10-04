@@ -21,7 +21,7 @@ public class ImageRetriever {
   @Autowired
   ImageDecompressorService imageDecompressorService;
 
-  @GetMapping(path = "/{eventName}/image")
+ /* @GetMapping(path = "/{eventName}/image")
   public String retrieveImage(@PathVariable("eventName") String eventName)
       throws IOException, EventNotFoundException, DataFormatException {
     EventModel event = eventService.getRequestedEvent(eventName);
@@ -29,4 +29,6 @@ public class ImageRetriever {
     String image = Base64.getEncoder().encodeToString(imageByte);
     return image;
   }
+ */
+
 }

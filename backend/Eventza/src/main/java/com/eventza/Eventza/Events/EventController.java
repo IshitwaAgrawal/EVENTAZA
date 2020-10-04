@@ -55,10 +55,10 @@ public class EventController {
   public EventModel getRequestedEvent(@PathVariable String eventId)
       throws EventNotFoundException {
     try {
-     // UUID uuid = new UUID(
-       //   new BigInteger(eventId.substring(0, 16), 16).longValue(),
+      // UUID uuid = new UUID(
+      //   new BigInteger(eventId.substring(0, 16), 16).longValue(),
       //    new BigInteger(eventId.substring(16), 16).longValue());
-     UUID id = UUID.fromString(eventId);
+      UUID id = UUID.fromString(eventId);
       return eventService.getEventById(id);
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -90,9 +90,9 @@ public class EventController {
       return new ResponseEntity<String>("New Event added", HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(
-        e.getMessage(), HttpStatus.BAD_REQUEST);
-      }
+          e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+  }
 
 
 
@@ -123,9 +123,11 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/{rating}")
-  public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating) {
+  public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating,
+      @RequestBody Map<String, String> username) {
     UUID id = eventService.getEventId(eventName);
-    Double rate = eventService.rateAnEvent(id, rating);
+    User user = userService.getUserByUsername(username.get("username"));
+    Double rate = eventService.rateAnEvent(id, rating, user);
     return eventName + " rated" + rate;
   }
 
@@ -152,33 +154,34 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/{eventId}/register")
-  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventId, @RequestBody Map<String,String> username) {
+  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventId,
+      @RequestBody Map<String, String> username) {
     UUID id = UUID.fromString(eventId);
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     user.registerEvent(eventService.getEventById(id));
     userService.updateUser(user);
-    return new ResponseEntity<User>(user,HttpStatus.OK);
+    return new ResponseEntity<User>(user, HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
-  public List<EventModel> getFeaturedEvents(){
+  public List<EventModel> getFeaturedEvents() {
     return eventService.getFeaturedEvents();
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/upcomingEvents")
-  public List<EventModel> getUpcomingEvents(){
+  public List<EventModel> getUpcomingEvents() {
     return eventService.getUpcomingEvents();
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/ongoingEvents")
-  public List<EventModel> getOngoingEvents(){
+  public List<EventModel> getOngoingEvents() {
     return eventService.getOngoingEvents();
   }
 
- @GetMapping("/search")
-  public List<EventModel> searchFor(@RequestParam String keyword){
-     return eventRepository.findAll(keyword);
+  @GetMapping("/search")
+  public List<EventModel> searchFor(@RequestParam String keyword) {
+    return eventRepository.findAll(keyword);
   }
 
 }

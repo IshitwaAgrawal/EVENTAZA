@@ -23,7 +23,8 @@ public class EventModel {
   private UUID id;
   private String eventName;
   @Lob
-  private byte[] imageByte;
+  //private byte[] imageByte;
+  private String imageName;
   private String organiserName;
   private String organiserEmail;
   private String eventLocation;
@@ -43,7 +44,8 @@ public class EventModel {
   private CategoryModel category;
   @OneToMany
   private List<User> registeredUsers;
-
+  @OneToMany
+  private List<User> ratedByUsers;
 
   public EventModel() {
 
@@ -63,7 +65,8 @@ public class EventModel {
       throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
-    this.imageByte = null;
+    //this.imageByte = null;
+    this.imageName = null;
     this.organiserName = organiserName;
     this.organiserEmail = organiserEmail;
 //  this.endDate = new Date(lastDate);
@@ -126,14 +129,13 @@ public class EventModel {
     this.organiserEmail = organiserEmail;
   }
 
-  public byte[] getImageByte() {
-    return imageByte;
+  public String getImageName() {
+    return imageName;
   }
 
-  public void setImageByte(byte[] imageByte) {
-    this.imageByte = imageByte;
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
   }
-
 
   public void setStartDate(String eventDate) {
     this.startDate = eventDate;
@@ -186,7 +188,6 @@ public class EventModel {
   public String getStartDate() {
     return startDate;
   }
-
 
 
   public String getEventLocation() {
@@ -243,6 +244,14 @@ public class EventModel {
 
   public void setRegisteredUsers(List<User> registeredUsers) {
     this.registeredUsers = registeredUsers;
+  }
+
+  public List<User> getRatedByUsers() {
+    return ratedByUsers;
+  }
+
+  public void setRatedByUsers(List<User> ratedByUsers) {
+    this.ratedByUsers = ratedByUsers;
   }
 
   public CategoryModel getCategory() {
