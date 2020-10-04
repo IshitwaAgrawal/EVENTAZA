@@ -3,26 +3,34 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Card from "../Card/Card"
-import classes from './SlideShow.module.css'
+import classes from './Cityslideshow.module.css'
 import axios from '../../Components/axios';
-class slideShow extends Component {
+class cityslideShow extends Component {
   state={
     events:[],
+    city:''
   }
-  
-  componentDidMount(){
-    axios.get(this.props.eventtype).then(response => {
-      this.setState({
-        events:[...response.data]
+  componentDidUpdate(){
+      if(this.state.city !== this.props.city){
+      axios.get('search/'+this.props.city)
+      .then(response =>{
+          this.setState({
+              events:[...response.data],
+              city:this.props.city
+          })
       })
-      // console.log(response.data);
-      // console.log(this.state.events)
-    });
+    }
   }
-
-  
+  componentDidMount(){
+    axios.get('search/'+this.props.city)
+    .then(response =>{
+        this.setState({
+            events:[...response.data]
+        })
+    })
+}
   render() {
-    let event = this.state.events.map( event => <Card style={{padding:'20px',width:'80%'}} key={event} event={event} ></Card>)
+    let event = this.state.events.map( event => <Card sstyle={{padding:'20px',width:'80%'}} key={event.id} event={event} ></Card>)
     var settings = {
       focusOnSelect:false,
       arrows: true,
@@ -50,4 +58,4 @@ class slideShow extends Component {
   }
 }
 
-export default slideShow;
+export default cityslideShow;

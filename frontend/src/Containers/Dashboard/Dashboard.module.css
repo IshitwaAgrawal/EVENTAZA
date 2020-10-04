@@ -1,0 +1,24 @@
+.Userdetails{
+    position: relative;
+    background-image: url('https://in.bmscdn.com/webin/profile/user-profile.png');
+    height:227px;
+    padding: 20px;
+    color: whitesmoke;
+}
+.Deleteaccount {
+    position: absolute;
+    right:20px;
+    bottom:20px;
+    border: whitesmoke;
+    padding: 8px 12px ;
+}
+.Registeredevents{
+    color:white;
+    padding:20px;
+
+}
+.Showevents{
+    padding :20px;
+    background-color: rgb(31,37,51);
+    min-height: 200px;
+}

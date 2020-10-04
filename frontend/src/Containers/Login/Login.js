@@ -31,8 +31,7 @@ class signup extends Component {
         console.log(response);
         if (response.status === 200) {
           localStorage.setItem("jwt", response.data.jwt);
-          console.log(response.data.jwt);
-          console.log(localStorage.getItem("jwt"));
+          localStorage.setItem("Userdata",response.data.user.username);
           this.toHome();
         }
         this.props.loginname(this.state.username);

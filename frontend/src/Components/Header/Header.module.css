@@ -10,13 +10,27 @@
 }
 
 .Logo{
-    display: inline;
+    display: flex;
+    flex-direction:row ;
     font-size: 20px;
 }
 .Link{
     display: flex;
     flex-direction: row;
+    margin-right:-10px;
 
+}
+.Logo form{
+    padding:5px 20px;
+    margin-left:20px;
+}
+.Logo form input{
+    border-radius:25px ;
+    padding-left: 10px;
+}
+.Logo i{
+    color:white;
+    margin-top: 15px;
 }
 .CitySelect{
     display: flex;
@@ -75,7 +89,7 @@
     background-color: rgb(31,37,51);
     height:40px;
 }
-.Header2 h3{
+.Header2 a {
     float:left;
     margin:7px 10px;
     color:rgb(194,204,204); 
@@ -85,12 +99,12 @@
 
 .CreateEvent{
     float: right;
-    margin:8px 20px ;
+    margin:-3px 20px ;
 }
 
 .CreateEvent a {
     border:2px solid white;
-    padding:3px 5px;
+    padding:3px 8px;
     text-decoration: none;
     border-radius: 25px;
     color:white;
@@ -102,4 +116,29 @@
     font-size: 110%;
     text-decoration: none;
     transition: all 0.2s ease-in-out;
+}
+@media (max-width:752px)
+{
+     .Logo form{
+        display: none;
+    }
+    
+    .Logo i{
+        display: none;
+    }
+    /*
+    .Link{
+        display: none;
+    }
+    .Toggle{
+        display: none;
+    } */
+}
+
+@media (max-width:500px)
+{
+    .CreateEvent{
+         display: none;
+    }
+   
 }

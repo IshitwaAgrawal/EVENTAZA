@@ -2,5 +2,6 @@
   margin:0;
 }
 .App {
+  scroll-behavior: smooth;
   text-align: center;
 }
