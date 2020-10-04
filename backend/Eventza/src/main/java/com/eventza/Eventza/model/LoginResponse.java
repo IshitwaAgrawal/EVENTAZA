@@ -3,9 +3,9 @@ package com.eventza.Eventza.model;
 public class LoginResponse {
 
     private final String jwt;
-    private User user;
+    private ResponseUser user;
 
-    public LoginResponse(String jwt,User user){
+    public LoginResponse(String jwt,ResponseUser user){
         this.user = user;
         this.jwt = jwt;
     }
@@ -14,7 +14,7 @@ public class LoginResponse {
         return jwt;
     }
 
-    public User getUser(){
+    public ResponseUser getUser(){
         return user;
     }
 }

@@ -2,12 +2,17 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.model.User;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 public class EventModel {
@@ -17,9 +22,10 @@ public class EventModel {
   @Column(nullable = false)
   private UUID id;
   private String eventName;
-  private String imageName;
+  @Lob
   private byte[] imageByte;
   private String organiserName;
+  private String organiserEmail;
   private String eventLocation;
   private Integer price;
   private Double averageRating = 0.0;
@@ -28,7 +34,9 @@ public class EventModel {
   private Integer totalTickets;
   private Integer registrations = 0;
   private String startDate;
+  private String startTime;
   private String endDate;
+  private String endTime;
   private String eventDescription;
   private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
@@ -37,19 +45,33 @@ public class EventModel {
   private List<User> registeredUsers;
 
 
-
   public EventModel() {
 
   }
 
-  public EventModel(String eventName, String organiserName, String startDate, String lastDate, String eventLocation, Integer price, Integer totalTickets, String eventDescription ) throws ParseException {
+  public EventModel(String eventName,
+      String organiserName,
+      String organiserEmail,
+      String startDate,
+      String startTime,
+      String lastDate,
+      String endTime,
+      String eventLocation,
+      Integer price,
+      Integer totalTickets,
+      String eventDescription)
+      throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
+    this.imageByte = null;
     this.organiserName = organiserName;
+    this.organiserEmail = organiserEmail;
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
+    this.endTime = parseTime(endTime);
     this.startDate = parseDate(startDate);
+    this.startTime = parseTime(startTime);
     this.eventLocation = eventLocation;
     this.price = price;
     this.totalTickets = totalTickets;
@@ -57,30 +79,34 @@ public class EventModel {
     this.brochure_name = null;
   }
 
-  public EventModel(String imageName, byte[] imageByte) {
-
-    this.imageName = imageName;
-    this.imageByte = imageByte;
-  }
-
   private static String parseDate(String date) {
     try {
       Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-      return new SimpleDateFormat("yyyy-MM-dd").format(d).substring(0,10);
+      return new SimpleDateFormat("yyyy-MM-dd").format(d).substring(0, 10);
     } catch (ParseException e) {
       return null;
+
     }
   }
 
-  public Integer counter(){
+  private static String parseTime(String time) throws ParseException {
+
+    DateFormat sdf = new SimpleDateFormat("HH:mm");
+    Date date = sdf.parse(time);
+    String t = sdf.format(date);
+    return t;
+  }
+
+
+  public Integer counter() {
     return ++ratingCounter;
   }
 
-  public Integer getTotalRating(){
+  public Integer getTotalRating() {
     return totalRating;
   }
 
-  public void setTotalRating(Integer rating){
+  public void setTotalRating(Integer rating) {
     this.totalRating += rating;
   }
 
@@ -88,12 +114,16 @@ public class EventModel {
     return id;
   }
 
-  public String getImageName() {
-    return imageName;
+  public void setId(UUID id) {
+    this.id = id;
   }
 
-  public void setImageName(String imageName) {
-    this.imageName = imageName;
+  public String getOrganiserEmail() {
+    return organiserEmail;
+  }
+
+  public void setOrganiserEmail(String organiserEmail) {
+    this.organiserEmail = organiserEmail;
   }
 
   public byte[] getImageByte() {
@@ -117,6 +147,22 @@ public class EventModel {
     this.endDate = endDate;
   }
 
+  public String getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(String startTime) {
+    this.startTime = startTime;
+  }
+
+  public String getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(String endTime) {
+    this.endTime = endTime;
+  }
+
   public Integer getRemainingTickets() {
     return totalTickets - registrations;
   }
@@ -138,8 +184,10 @@ public class EventModel {
   }
 
   public String getStartDate() {
-    return startDate ;
+    return startDate;
   }
+
+
 
   public String getEventLocation() {
     return eventLocation;

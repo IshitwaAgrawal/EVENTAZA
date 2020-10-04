@@ -26,10 +26,10 @@ public class BrochureDownloadController {
     @Autowired
     EventService eventService;
 
-    @GetMapping("/download")
-    public ResponseEntity<?> downloadFile(@RequestBody Map<String,String> event){
+    @GetMapping("/download/{eventName}")
+    public ResponseEntity<?> downloadFile(@PathVariable String eventName){
         try {
-            EventModel eventModel = eventService.getRequestedEvent(event.get("eventName"));
+            EventModel eventModel = eventService.getRequestedEvent(eventName);
             String filename = eventModel.getBrochure_name();
             if(filename == null){
                 return new ResponseEntity<String>("Brochure not found!",HttpStatus.NOT_FOUND);

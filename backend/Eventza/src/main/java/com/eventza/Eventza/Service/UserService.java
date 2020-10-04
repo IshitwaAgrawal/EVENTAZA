@@ -7,6 +7,7 @@ import com.eventza.Eventza.Exception.PasswordException;
 import com.eventza.Eventza.Exception.UserAlreadyExists;
 import com.eventza.Eventza.Repository.UserRepository;
 import com.eventza.Eventza.model.User;
+import com.eventza.Eventza.model.UserSignUp;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,7 @@ import java.util.regex.PatternSyntaxException;
 
 @Service
 public class UserService implements UserServiceI{
+
     @Autowired
     private UserRepository repo;
 
@@ -30,22 +32,22 @@ public class UserService implements UserServiceI{
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDTO userDTO) throws Exception {
-        if(userExists(userDTO.getUsername())){
-            throw new UserAlreadyExists(userDTO.getUsername());
+    public User registerNewUserAccount(UserSignUp userSignUp) throws Exception {
+        if(userExists(userSignUp.getUsername())){
+            throw new UserAlreadyExists(userSignUp.getUsername());
         }
 
-        if(emailExists(userDTO.getEmail())){
-            throw new EmailAlreadyExists(userDTO.getEmail());
+        if(emailExists(userSignUp.getEmail())){
+            throw new EmailAlreadyExists(userSignUp.getEmail());
         }
 
-        if(userDTO.getPassword().length()<6){
+        if(userSignUp.getPassword().length()<6){
             throw new PasswordException("Short password.Please add password with length > 10");
         }
 
         String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
         Pattern pattern = Pattern.compile(regex);
-        String email = userDTO.getEmail();
+        String email = userSignUp.getEmail();
 
         Matcher m = pattern.matcher(email);
 
@@ -53,22 +55,26 @@ public class UserService implements UserServiceI{
             throw new PatternSyntaxException("not a valid address.",regex,0);
         }
 
-        User user = new User();
+        User new_user = new User();
+
         String k = RandomString.make(64);
-        user.setName(userDTO.getName());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(new BCryptPasswordEncoder().encode(userDTO.getPassword()));
-        user.setId(UUID.randomUUID());
-        user.setRoles(userDTO.getRoles());
-        user.setEnabled(true);
-        user.setVerified(false);
-        user.setEmail(userDTO.getEmail());
-        user.setVerificationToken(k);
-        user.setCreated_events(0);
-        user.setRegister_in_events(0);
-        user.setNewsletter_service(false);
-        mailService.sendVerificationEmail(user);
-        return repo.save(user);
+
+        new_user.setName(userSignUp.getName());
+        new_user.setUsername(userSignUp.getUsername());
+        new_user.setPassword(new BCryptPasswordEncoder().encode(userSignUp.getPassword()));
+        new_user.setId(UUID.randomUUID());
+        new_user.setRoles(userSignUp.getRoles());
+        new_user.setEnabled(true);
+        new_user.setVerified(false);
+        new_user.setEmail(userSignUp.getEmail());
+        new_user.setVerificationToken(k);
+        new_user.setCreated_events(0);
+        new_user.setRegister_in_events(0);
+        new_user.setNewsletter_service(false);
+        mailService.sendVerificationEmail(new_user);
+        repo.save(new_user);
+
+        return new_user;
     }
 
 

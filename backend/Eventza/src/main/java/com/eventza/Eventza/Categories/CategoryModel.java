@@ -13,6 +13,7 @@ public class CategoryModel {
 
   @Id
   @Column(nullable = false)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
   private String categoryName;
 

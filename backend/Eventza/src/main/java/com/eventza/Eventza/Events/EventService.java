@@ -1,11 +1,15 @@
 package com.eventza.Eventza.Events;
 
+import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import com.eventza.Eventza.Service.MailService;
+import com.eventza.Eventza.Service.ReminderMail;
 import com.eventza.Eventza.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,11 +28,16 @@ public class EventService {
 
   @Autowired
   private EventRepository eventRepository;
+
   @Autowired
   private CategoryService categoryService;
+
   @Autowired
   private UserService userService;
-  MailService mailService;
+
+  @Autowired
+  private ReminderMail reminderMail;
+
 
 
   public UUID getEventId(String eventName){
@@ -56,8 +65,6 @@ public class EventService {
   }
 
   public void addNewEvent(EventModel eventModel){
-    User u = userService.getUserByUsername(eventModel.getOrganiserName());
-    userService.addHostedEvent(u,eventModel);
     eventRepository.save(eventModel);
   }
 
@@ -104,7 +111,15 @@ public class EventService {
     return event.getAverageRating();
   }
   public EventModel getEventById(UUID id) {
-    return eventRepository.getEventModelById(id);
+
+    try{
+      return eventRepository.getEventModelById(id);
+    }
+    catch(Exception e){
+      System.out.println(e.getMessage());
+      return null;
+    }
+
   }
 
   public void registerUserInEvent(UUID id, User user){
@@ -113,19 +128,79 @@ public class EventService {
   }
 
 
-  @Scheduled(fixedDelay = 2000)
+  @Scheduled(cron = "0 0 0 * * ?")
   public void sendEventReminder() throws ParseException {
-    LocalDate localDate = LocalDate.now().minusDays(1);
+    LocalDate localDate = LocalDate.now().plusDays(1);
     Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     List<EventModel> events = getAllEvents();
     for(EventModel event: events){
      Date eventStartDate = new SimpleDateFormat("yyyy-MM-dd").parse(event.getStartDate().substring(0,10));
       if(date.equals(eventStartDate)){
         for(User u : event.getRegisteredUsers()){
-          mailService.sendEventReminder(event.getEventName(), u);
+          reminderMail.sendReminderMail(event.getEventName(), u.getEmail());
         }
       }
     }
 
+  }
+
+  public List<EventModel> getFeaturedEvents() {
+    List<CategoryModel> categories = categoryService.getAllCategories();
+    List<EventModel> featuredEvents = new ArrayList<>();
+    for(CategoryModel category: categories){
+        featuredEvents.add(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId()));
+    }
+    return featuredEvents;
+  }
+
+  private Date convertToDateAndTime(String date, String time){
+    LocalDate datePart = LocalDate.parse(date);
+    LocalTime timePart = LocalTime.parse(time);
+    LocalDateTime dt = LocalDateTime.of(datePart, timePart);
+    Date combinedDateAndTime = java.sql.Timestamp.valueOf(dt);
+    return combinedDateAndTime;
+  }
+
+  public List<EventModel> getPastEvents(){
+    Date d = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> pastEvents = new ArrayList<>();
+    for (EventModel event : events) {
+      Date endDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
+
+      if (endDateTime.before(d)) {
+        pastEvents.add(event);
+      }
+    }
+    return pastEvents;
+  }
+
+  public List<EventModel> getUpcomingEvents(){
+    Date currentDateTime = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> upcomingEvents = new ArrayList<>();
+    for(EventModel event : events){
+      Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
+
+      if(eventStartDateTime.after(currentDateTime)){
+        upcomingEvents.add(event);
+      }
+    }
+    return upcomingEvents;
+  }
+
+  public List<EventModel> getOngoingEvents() {
+    Date currentDateTime = new Date();
+    List<EventModel> events = getAllEvents();
+    List<EventModel> ongoingEvents = new ArrayList<>();
+    for(EventModel event : events){
+      Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
+      Date eventEndDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
+
+      if(eventStartDateTime.before(currentDateTime) && eventEndDateTime.after(currentDateTime)){
+        ongoingEvents.add(event);
+      }
+    }
+    return ongoingEvents;
   }
 }

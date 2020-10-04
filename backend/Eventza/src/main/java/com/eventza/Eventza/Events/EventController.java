@@ -2,18 +2,12 @@
 package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryService;
-import com.eventza.Eventza.Repository.ImageRepository;
-import com.eventza.Eventza.model.ImageModel;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.math.BigInteger;
+import java.util.*;
+
 import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.FileUploadService;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -43,8 +34,10 @@ public class EventController {
   private UserService userService;
   @Autowired
   private FileUploadService fileUploadService;
+  @Autowired
+  private EventRepository eventRepository;
 
-//    @PostMapping("/categories/{categoryName}/events")
+  //    @PostMapping("/categories/{categoryName}/events")
 //    public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
 //        try {
 //            UUID id = categoryService.getCategoryId(categoryName);
@@ -56,88 +49,54 @@ public class EventController {
 //            return e.getMessage();
 //        }
 //    }
-  ImageRepository imageRepository;
 
-  @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events/{eventName}")
-  public EventModel getRequestedEvent(@PathVariable String eventName)throws EventNotFoundException {
-    return eventService.getRequestedEvent(eventName);
+
+  @RequestMapping(method = RequestMethod.GET, path = "/events/{eventId}")
+  public EventModel getRequestedEvent(@PathVariable String eventId)
+      throws EventNotFoundException {
+    try {
+     // UUID uuid = new UUID(
+       //   new BigInteger(eventId.substring(0, 16), 16).longValue(),
+      //    new BigInteger(eventId.substring(16), 16).longValue());
+     UUID id = UUID.fromString(eventId);
+      return eventService.getEventById(id);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return null;
+    }
   }
 
+  /*
+  @GetMapping("/categories/{categoryName}/events")
+  public EventModel getRequestedEvent(@RequestBody Map<String,String> event_id)
+      throws EventNotFoundException {
+    UUID id = UUID.fromString(event_id.get("id"));
+    System.out.println(id);
+    return eventService.getEventById(id);
+  }
+*/
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
   public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName) {
     return eventService.getAllEventsFromRequestedCategory(categoryName);
   }
 
-  @PostMapping("/categories/{categoryName}/events")/*
-  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
-=======
-  public ResponseEntity<?> addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event, @RequestParam("imageFile") MultipartFile imageFile)
-      throws IOException {
-    User user = userService.getUserByUsername(event.getUsername());
-    userService.increaseCreatedEvent(user);
->>>>>>> Reminder
-    UUID id = categoryService.getCategoryId(categoryName);
-    event.setCategory(categoryService.getRequestedCategory(id));
-//      try {
-//          fileUploadService.fileUpload(file,event);
-////          return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
-//      }
-//      catch (Exception e){
-//          return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
-//      }
-    eventService.addNewEvent(event);
-<<<<<<< HEAD
-    return new ResponseEntity<>("New Event added",HttpStatus.OK);
-=======
-    ImageModel img = new ImageModel(event.getId(),imageFile.getOriginalFilename(),compressBytes(imageFile.getBytes()));
-    imageRepository.save(img);
-    return new ResponseEntity<String>("image uploaded", HttpStatus.OK);
-  }
-*/
-  public static byte[] compressBytes(byte[] data) {
-    Deflater deflater = new Deflater();
-    deflater.setInput(data);
-    deflater.finish();
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-    byte[] buffer = new byte[1024];
-    while (!deflater.finished()) {
-      int count = deflater.deflate(buffer);
-      outputStream.write(buffer, 0, count);
-    }
-
+  @PostMapping("/categories/{categoryName}/events")
+  public ResponseEntity<String> addNewEvent(@PathVariable String categoryName,
+      @RequestBody EventModel event) throws IOException {
     try {
-      outputStream.close();
-    } catch (IOException e) {
-
-    }
-    return outputStream.toByteArray();
-  }
-
-  @GetMapping(path = { "/get/{eventId}" })
-  public ImageModel getImage(@PathVariable("eventId") UUID eventId) throws IOException {
-    final Optional<ImageModel> image = imageRepository.findById(eventId);
-    ImageModel img = new ImageModel(image.get().getId(),image.get().getImageName(),
-        decompressBytes(image.get().getImageByte()));
-    return img;
-  }
-
-
-  public static byte[] decompressBytes(byte[] data) {
-    Inflater inflater = new Inflater();
-    inflater.setInput(data);
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-    byte[] buffer = new byte[1024];
-    try {
-      while (!inflater.finished()) {
-        int count = inflater.inflate(buffer);
-        outputStream.write(buffer, 0, count);
+      UUID id = categoryService.getCategoryId(categoryName);
+      event.setCategory(categoryService.getRequestedCategory(id));
+      eventService.addNewEvent(event);
+      return new ResponseEntity<String>("New Event added", HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<String>(
+        e.getMessage(), HttpStatus.BAD_REQUEST);
       }
-      outputStream.close();
-    } catch (IOException ioe) {
-    } catch (DataFormatException e) {
     }
-    return outputStream.toByteArray();
-  }
+
+
+
+
 
  /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
   public String updateExistingEvent(@PathVariable String categoryName,
@@ -149,8 +108,10 @@ public class EventController {
     return eventName + " updated";
   }
   */
+
+
   @PutMapping("/categories/{categoryName}/events/{eventName}")
-  public String updateExistingEvent(@PathVariable String eventName, @RequestBody EventModel event){
+  public String updateExistingEvent(@PathVariable String eventName, @RequestBody EventModel event) {
     eventService.updateExistingEvent(event);
     return eventName + " updated";
   }
@@ -161,16 +122,16 @@ public class EventController {
     return eventName + " deleted";
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/{rating}")
-    public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating){
+  @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/{rating}")
+  public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating) {
     UUID id = eventService.getEventId(eventName);
     Double rate = eventService.rateAnEvent(id, rating);
     return eventName + " rated" + rate;
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/recommendedEvents")
-  public List<EventModel> getRecommendedEvents(){
-   return eventService.getRecommendedEvents();
+  public List<EventModel> getRecommendedEvents() {
+    return eventService.getRecommendedEvents();
   }
 
 
@@ -180,32 +141,44 @@ public class EventController {
   }
 
 
-    @GetMapping("/categories/getAllEvents")
-    public List<EventModel> getAllEvents(){
-      return eventService.getAllEvents();
-    }
-
-    @GetMapping("/getPastEvents")
-    public List<EventModel> getPastEvents()throws ParseException {
-      Date d = new Date();
-      List<EventModel> events = new ArrayList<>();
-      List<EventModel> pastEvents = new ArrayList<>();
-      events = getAllEvents();
-      for(EventModel event:events){
-        Date endD = new SimpleDateFormat("yyyy-MM-dd").parse(event.getEndDate().substring(0,10));
-        if(endD.before(d)){
-          pastEvents.add(event);
-        }
-      }
-      return pastEvents;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/register")
-    public String registerUserInEvent(@PathVariable String eventName, @RequestBody User user){
-    UUID id = eventService.getEventId(eventName);
-    eventService.registerUserInEvent(id, user);
-    return "New User registered";
-    }
-
-
+  @GetMapping("/categories/getAllEvents")
+  public List<EventModel> getAllEvents() {
+    return eventService.getAllEvents();
   }
+
+  @GetMapping("/getPastEvents")
+  public List<EventModel> getPastEvents() throws ParseException {
+    return eventService.getPastEvents();
+  }
+
+  @RequestMapping(method = RequestMethod.POST, path = "/{eventId}/register")
+  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventId, @RequestBody Map<String,String> username) {
+    UUID id = UUID.fromString(eventId);
+    User user = userService.getUserByUsername(username.get("username"));
+    eventService.registerUserInEvent(id, user);
+    user.registerEvent(eventService.getEventById(id));
+    userService.updateUser(user);
+    return new ResponseEntity<User>(user,HttpStatus.OK);
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
+  public List<EventModel> getFeaturedEvents(){
+    return eventService.getFeaturedEvents();
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/upcomingEvents")
+  public List<EventModel> getUpcomingEvents(){
+    return eventService.getUpcomingEvents();
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/ongoingEvents")
+  public List<EventModel> getOngoingEvents(){
+    return eventService.getOngoingEvents();
+  }
+
+ @GetMapping("/search")
+  public List<EventModel> searchFor(@RequestParam String keyword){
+     return eventRepository.findAll(keyword);
+  }
+
+}

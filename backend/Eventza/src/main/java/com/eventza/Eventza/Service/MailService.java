@@ -15,15 +15,16 @@ public class MailService {
     @Autowired
     JavaMailSender mailSender;
 
+
     @Async
-    public void sendMail(User user,String subject,String senderName,String mailContent){
+    public void sendMail(String userEmail,String subject,String senderName,String mailContent){
         MimeMessage message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try{
             helper.setFrom("${spring.mail.username}",senderName);
-            helper.setTo(user.getEmail());
+            helper.setTo(userEmail);
             helper.setSubject(subject);
             helper.setText(mailContent,true);
 
@@ -35,29 +36,26 @@ public class MailService {
     }
 
     @Async
-    public void sendEventReminder(String eventName, User user){
-        String subject = "Event Reminder";
-        String senderName = "EVENTAZA APP";
-        String mailContent = "<p>Dear "+user.getName()+", </p>";
-        String site = "http://localhost:8000";
-        String verifyUrl = "/verify/"+user.getVerificationToken();
-        mailContent += "<p>You registered event " + eventName + " is 1 day away.</p>";
-        mailContent += "<p>Be ready!</p>";
+    public void sendContactMail(String name, String email,String userMessage){
 
+        String mailContent = "<p>Dear Eventaza support team</p><br>";
+        mailContent += "<p>User's name: " + name + " </p>";
+        mailContent += "<p>User's email: " + email + " </p><br>";
+        mailContent += "<p>" + userMessage + "</p>";
         MimeMessage message = mailSender.createMimeMessage();
-
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try{
-            helper.setFrom("${spring.mail.username}",senderName);
-            helper.setTo(user.getEmail());
-            helper.setSubject(subject);
-            helper.setText(mailContent,true);
-
+            helper.setFrom("${spring.mail.username}", name);
+            helper.setTo("eventaza076@gmail.com");
+            helper.setSubject("Client message");
+            helper.setText(mailContent, true);
             mailSender.send(message);
         }
-        catch (Exception e){
+        catch (Exception e)
+        {
             System.out.println(e.getMessage());
         }
     }
+
 }
