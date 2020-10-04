@@ -20,7 +20,7 @@ public class VerificationMailService {
         String userEmail = user.getEmail();
         String mailContent = "<p>Dear "+user.getName()+", </p>";
 
-        String site = "{app.hostUrl}";
+        String site = "http://aabefbcceae8.ngrok.io";
 
         String verifyUrl = "/verify/"+user.getVerificationToken();
         mailContent += "<p>Please click the link below to verify the registration</p>";

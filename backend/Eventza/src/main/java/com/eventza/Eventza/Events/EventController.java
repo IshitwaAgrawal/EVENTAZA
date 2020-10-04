@@ -122,7 +122,7 @@ public class EventController {
     return eventName + " deleted";
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/categories/{categoryName}/events/{eventName}/{rating}")
+  @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/{rating}")
   public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating) {
     UUID id = eventService.getEventId(eventName);
     Double rate = eventService.rateAnEvent(id, rating);
@@ -178,7 +178,7 @@ public class EventController {
 
  @GetMapping("/search")
   public List<EventModel> searchFor(@RequestParam String keyword){
-      return eventRepository.findAll(keyword);
+     return eventRepository.findAll(keyword);
   }
 
 }
