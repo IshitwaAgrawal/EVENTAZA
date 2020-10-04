@@ -50,6 +50,7 @@ public class LoginController {
             if(!user.isVerified()){
                 String k = RandomString.make(64);
                 user.setVerificationToken(k);
+                userService.updateUser(user);
                 mailService.sendVerificationEmail(user);
                 userService.updateUser(user);
                 return new ResponseEntity<String>("User not verified. Please check EMAIL.",HttpStatus.NOT_ACCEPTABLE);

@@ -2,6 +2,7 @@ package com.eventza.Eventza.model;
 
 import com.eventza.Eventza.Events.EventModel;
 
+import java.util.ArrayList;
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -32,6 +33,7 @@ public class User {
     private List<EventModel> wishlist;
 
     public User(){
+        this.registeredEvents = new ArrayList<>();
     }
 
     public String getVerificationToken() {
