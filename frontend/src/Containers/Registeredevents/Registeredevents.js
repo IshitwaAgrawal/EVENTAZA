@@ -12,7 +12,7 @@ class registeredevents extends Component{
                   <span>|</span>
                   <span>&nbsp;date</span>
                 </div>
-                <span>seats : 5</span>
+                <span>seats : 5</span><br></br><br></br>
                 <span className={classes.Cancel}>Cancel and Refund</span>
             </div>
         );

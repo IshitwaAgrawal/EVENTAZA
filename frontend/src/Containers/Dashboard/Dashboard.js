@@ -12,9 +12,9 @@ class dashboard extends Component {
     return (
       <div>
         <div className={classes.Userdetails}>
-          <h1>
+          <h2>
             <i className="far fa-user"></i>&nbsp;&nbsp;Manas Saxena
-          </h1>
+          </h2>
           <p>
             &nbsp;&nbsp;<i className="far fa-envelope"></i>
             &nbsp;&nbsp;manassaxena160601@gmail.com

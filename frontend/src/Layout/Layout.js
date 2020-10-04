@@ -10,6 +10,7 @@ import CreateEvent from '../Containers/CreateEvent/CreateEvent'
 import AllEvent from '../Containers/Allevents/Allevent'
 import Eventpage from '../Components/Eventpage/Eventpage'
 import Dashboard from '../Containers/Dashboard/Dashboard'
+import Wishlist from '../Containers/Wishlist/Wishlist'
 // import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 // import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -61,6 +62,12 @@ class Layout extends Component {
                     token !==null ?
                 <Route path='/dashboard/:username' exact render={() => (<Dashboard />)}></Route>:
                 <Route path='/dashboard/:username' exact render={() => (<Login></Login>)}></Route>
+
+                }
+                {
+                    token !==null ?
+                <Route path='/wishlist/:username' exact render={() => (<Wishlist />)}></Route>:
+                <Route path='/wishlist/:username' exact render={() => (<Login></Login>)}></Route>
 
                 }
                 <Route path='/:id' exact render= {() => (<Eventpage></Eventpage>)}></Route>

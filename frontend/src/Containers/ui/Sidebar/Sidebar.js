@@ -14,9 +14,9 @@ export default props => {
         Dashboard
       </Link>
 
-      <a className="menu-item" href="/">
+      <Link className="menu-item" to={'/wishlist/' + username}>
         Wishlist
-      </a>
+      </Link>
       <a className="menu-item" href="/">
         Newsletter
       </a>

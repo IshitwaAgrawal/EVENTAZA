@@ -12,8 +12,8 @@ class registeredevents extends Component{
                   <span>|</span>
                   <span>&nbsp;date</span>
                 </div>
-                <span> Total seats : 5 | Seats Booked : 2</span>
-                <span className={classes.Price}>Price : Rs1500</span>
+                <span> Total seats : 5 | Seats Booked : 2</span><br></br>
+                <span className={classes.Price}>Price : Rs1500</span> <br></br><br></br>
                 <span className={classes.Cancel}>Cancel Event</span>
             </div>
         );

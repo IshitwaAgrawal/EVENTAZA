@@ -1,10 +1,25 @@
+.Wishlist{
+    color:white;
+    padding :20px;
+    text-align: center;
+}
+.showitem{
+    padding: 20px;
+    height:400px;
+    background-image: url('https://in.bmscdn.com/webin/profile/user-profile.png');
+}
 
 .Registeredcard{
+    text-align: left;
     position: relative;
     padding: 5px 20px;
+    margin-bottom: 20px;
     color:rgb(31,31,31);
     background-color: rgb(253,253,254);
-    height:100px
+    height:110px
+}
+.Link:hover{
+   text-decoration: none;
 }
 .Datetime i {
     color:rgb(28, 50, 102);
@@ -19,6 +34,7 @@
     padding: 5px 12px;
     border-radius: 5px;
 }
+
 @media(max-width:500px)
 {
     .Cancel{

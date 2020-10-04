@@ -22,3 +22,15 @@
     background-color: rgb(31,37,51);
     min-height: 200px;
 }
+@media (max-width:500px)
+{
+    .Userdetails{
+        text-align: center;
+        padding: 2px;
+    }
+    .Deleteaccount {
+        position:unset;
+        border: whitesmoke;
+        padding: 8px 12px ;
+    }
+}
