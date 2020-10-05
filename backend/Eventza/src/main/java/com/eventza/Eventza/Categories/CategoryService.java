@@ -14,8 +14,15 @@ public class CategoryService {
 
   //method to fetch a category by its name from the database
   public CategoryModel getRequestedCategory(String categoryName){
-  return categoryRepository.findByCategoryName(categoryName);
+    CategoryModel c = categoryRepository.findByCategoryName(categoryName);
+    if(c==null){
+      CategoryModel categoryModel = new CategoryModel(categoryName);
+      categoryRepository.save(categoryModel);
+      return categoryModel;
+    }
+    return c;
   }
+
   public CategoryModel getRequestedCategory(UUID id){
     try{
       CategoryModel c = categoryRepository.getCategoryById(id);
