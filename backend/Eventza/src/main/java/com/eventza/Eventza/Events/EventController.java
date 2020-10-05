@@ -94,10 +94,6 @@ public class EventController {
     }
   }
 
-
-
-
-
  /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
   public String updateExistingEvent(@PathVariable String categoryName,
       @PathVariable String eventName, @RequestBody EventModel event) {
@@ -185,6 +181,56 @@ public class EventController {
   @GetMapping("/search")
   public List<EventModel> searchFor(@RequestParam String keyword) {
     return eventRepository.findAll(keyword);
+  }
+
+  @PutMapping("/update")
+  public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data){
+    if(data.get("id")!=null) {
+      UUID id;
+      try {
+        id = UUID.fromString(data.get("id"));
+      } catch (IllegalArgumentException e) {
+        id = new UUID(
+                new BigInteger(data.get("id").substring(0, 16), 16).longValue(),
+                new BigInteger(data.get("id").substring(16), 16).longValue());
+      }
+      if (data.get("price") != null) {
+        int price = Integer.parseInt(data.get("price"));
+        eventRepository.updatePrice(id, price);
+      }
+      if (data.get("eventLocation") != null) {
+        eventRepository.updateLocation(id, data.get("eventLocation"));
+      }
+      if (data.get("eventName") != null) {
+        eventRepository.updateName(id, data.get("eventName"));
+      }
+      if (data.get("totalTickets") != null) {
+        eventRepository.updateTickets(id, Integer.parseInt(data.get("totalTickets")));
+      }
+      if (data.get("startDate") != null) {
+        eventRepository.updateStartDate(id, data.get("startDate"));
+      }
+      if (data.get("endDate") != null) {
+        eventRepository.updateEndDate(id, data.get("endDate"));
+      }
+      if (data.get("startTime") != null) {
+        eventRepository.updateStartTime(id, data.get("startTime"));
+      }
+      if (data.get("endTime") != null) {
+        eventRepository.updateEndTime(id, data.get("endTime"));
+      }
+      if (data.get("eventDescription") != null) {
+        eventRepository.updateDescription(id, data.get("eventDescription"));
+      }
+      if (data.get("category") != null) {
+        String name = data.get("category");
+        EventModel eventModel = eventRepository.getEventModelById(id);
+        eventModel.setCategory(categoryService.getRequestedCategory(name));
+      }
+      EventModel e = eventService.getEventById(id);
+      return new ResponseEntity<EventModel>(e, HttpStatus.OK);
+    }
+    return new ResponseEntity<String>("Please provide the UUID of the event.",HttpStatus.BAD_REQUEST);
   }
 
 }
