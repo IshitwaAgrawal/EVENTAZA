@@ -125,6 +125,7 @@ public class EventController {
   @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/{rating}")
   public String rateAnEvent(@PathVariable String eventName, @PathVariable Integer rating,
       @RequestBody Map<String, String> username) {
+
     UUID id = eventService.getEventId(eventName);
     User user = userService.getUserByUsername(username.get("username"));
     Double rate = eventService.rateAnEvent(id, rating, user);
@@ -153,10 +154,12 @@ public class EventController {
     return eventService.getPastEvents();
   }
 
-  @RequestMapping(method = RequestMethod.POST, path = "/{eventId}/register")
-  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventId,
+
+  @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/register")
+  public ResponseEntity<?> registerUserInEvent(@PathVariable String eventName,
       @RequestBody Map<String, String> username) {
-    UUID id = UUID.fromString(eventId);
+   // UUID id = UUID.fromString(eventId);
+    UUID id = eventService.getEventId(eventName);
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     user.registerEvent(eventService.getEventById(id));

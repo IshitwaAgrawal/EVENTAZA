@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -42,10 +43,10 @@ public class EventModel {
   private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
   private CategoryModel category;
-  @OneToMany
-  private List<User> registeredUsers;
-  @OneToMany
-  private List<User> ratedByUsers;
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Set<User> registeredUsers;
+  @ManyToMany(cascade = CascadeType.ALL)
+  private Set<User> ratedByUsers;
 
   public EventModel() {
 
@@ -238,19 +239,19 @@ public class EventModel {
     this.eventDescription = eventDescription;
   }
 
-  public List<User> getRegisteredUsers() {
+  public Set<User> getRegisteredUsers() {
     return registeredUsers;
   }
 
-  public void setRegisteredUsers(List<User> registeredUsers) {
+  public void setRegisteredUsers(Set<User> registeredUsers) {
     this.registeredUsers = registeredUsers;
   }
 
-  public List<User> getRatedByUsers() {
+  public Set<User> getRatedByUsers() {
     return ratedByUsers;
   }
 
-  public void setRatedByUsers(List<User> ratedByUsers) {
+  public void setRatedByUsers(Set<User> ratedByUsers) {
     this.ratedByUsers = ratedByUsers;
   }
 

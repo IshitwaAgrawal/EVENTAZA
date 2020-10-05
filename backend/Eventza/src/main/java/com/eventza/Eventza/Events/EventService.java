@@ -22,6 +22,7 @@ import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -112,7 +113,8 @@ public class EventService {
     if (!event.getRatedByUsers().contains(user)) {
       event.getRatedByUsers().add(user);
       Integer ratingCounter = event.counter();
-      new Ratings(event.getId(), user.getId(), rating);
+      Ratings rate = new Ratings(event.getId(), user.getId(), rating);
+      ratingRepository.save(rate);
       eventRepository.setRatingForEventModule(id, (double) (previousTotalRating + rating) / ratingCounter,
           previousTotalRating + rating);
     } else {
@@ -144,22 +146,7 @@ public class EventService {
   }
 
 
-  @Scheduled(cron = "0 0 0 * * ?")
-  public void sendEventReminder() throws ParseException {
-    LocalDate localDate = LocalDate.now().plusDays(1);
-    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    List<EventModel> events = getAllEvents();
-    for (EventModel event : events) {
-      Date eventStartDate = new SimpleDateFormat("yyyy-MM-dd")
-          .parse(event.getStartDate().substring(0, 10));
-      if (date.equals(eventStartDate)) {
-        for (User u : event.getRegisteredUsers()) {
-          reminderMail.sendReminderMail(event.getEventName(), u.getEmail());
-        }
-      }
-    }
 
-  }
 
   public List<EventModel> getFeaturedEvents() {
     List<CategoryModel> categories = categoryService.getAllCategories();
