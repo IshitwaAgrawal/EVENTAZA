@@ -44,7 +44,8 @@ public class WishlistController {
                 user.addWish(event);
                 userRepository.save(user);
                 eventRepository.save(event);
-
+                System.out.println("Event added to wishlist"
+                    + "");
             }
             catch(Exception e){
                 System.out.println("Error!! in getting user or event!");

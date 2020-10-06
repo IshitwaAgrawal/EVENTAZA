@@ -159,6 +159,9 @@ public class EventController {
       @RequestBody Map<String, String> username) {
    // UUID id = UUID.fromString(eventId);
     UUID id = eventService.getEventId(eventName);
+    if(eventService.getEventById(id).getRemainingTickets() == 0){
+      return new ResponseEntity<String>("No tickets available", HttpStatus.EXPECTATION_FAILED);
+    }
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     user.registerEvent(eventService.getEventById(id));

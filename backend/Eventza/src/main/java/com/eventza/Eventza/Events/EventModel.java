@@ -35,11 +35,13 @@ public class EventModel {
   private Integer totalRating = 0;
   private Integer ratingCounter = 0;
   private Integer totalTickets;
+  private Integer remainingTickets;
   private Integer registrations = 0;
   private String startDate;
   private String startTime;
   private String endDate;
   private String endTime;
+  @Size(min = 50)
   private String eventDescription;
   private String brochure_name;
   @ManyToOne(cascade = CascadeType.ALL)
@@ -106,6 +108,14 @@ public class EventModel {
     return ++ratingCounter;
   }
 
+  public Integer registrationCounter() {
+    return ++registrations;
+  }
+
+  public void updateRemainingTickets(){
+    --remainingTickets;
+  }
+
   public Integer getTotalRating() {
     return totalRating;
   }
@@ -166,8 +176,12 @@ public class EventModel {
     this.endTime = endTime;
   }
 
+  public void setRemainingTickets(Integer remainingTickets) {
+    this.remainingTickets = remainingTickets;
+  }
+
   public Integer getRemainingTickets() {
-    return totalTickets - registrations;
+    return remainingTickets;
   }
 
   public String getEventName() {

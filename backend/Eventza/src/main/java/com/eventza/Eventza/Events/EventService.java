@@ -3,7 +3,9 @@ package com.eventza.Eventza.Events;
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.Categories.CategoryService;
 import com.eventza.Eventza.Repository.RatingRepository;
+import com.eventza.Eventza.Repository.UserRepository;
 import com.eventza.Eventza.Service.MailService;
+import com.eventza.Eventza.Service.NewsletterMail;
 import com.eventza.Eventza.Service.ReminderMail;
 import com.eventza.Eventza.model.Ratings;
 import com.eventza.Eventza.model.User;
@@ -45,6 +47,12 @@ public class EventService {
   private RatingRepository ratingRepository;
 
   @Autowired
+  UserRepository userRepository;
+
+  @Autowired
+  NewsletterMail newsletterMail;
+
+  @Autowired
   private MailService mailService;
 
 
@@ -79,6 +87,13 @@ public class EventService {
     String mailContent = "Event succesfully added.";
     mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
     eventRepository.updateOrganiserMail(eventModel.getId(), user.getEmail());
+    eventRepository.setRemainingTickets(eventModel.getId(), eventModel.getTotalTickets());
+    List<User> users = userRepository.findAll();
+    for(User u : users){
+      if(u.isNewsletter_service()){
+        newsletterMail.sendNewsletterMail(u, eventModel);
+      }
+    }
   }
 
   /*public void updateExistingEvent(UUID id, EventModel eventModel){
@@ -153,6 +168,8 @@ public class EventService {
   public void registerUserInEvent(UUID id, User user) {
     EventModel event = eventRepository.findById(id).get();
     event.getRegisteredUsers().add(user);
+    event.registrationCounter();
+    event.updateRemainingTickets();
     String subject = "Successfully registered";
     String mailContent = "Successfully registered in " + event.getEventName();
     mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
