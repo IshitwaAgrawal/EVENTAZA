@@ -36,10 +36,10 @@ public class MailService {
     }
 
     @Async
-    public void sendContactMail(String name, String email,String userMessage){
+    public void sendContactMail(String name, String email, String role, String userMessage){
 
-        String mailContent = "<p>Dear Eventaza support team</p><br>";
-        mailContent += "<p>User's name: " + name + " </p>";
+        String subject = role + " message";
+        String mailContent = "<p>User's name: " + name + " </p>";
         mailContent += "<p>User's email: " + email + " </p><br>";
         mailContent += "<p>" + userMessage + "</p>";
         MimeMessage message = mailSender.createMimeMessage();
@@ -48,7 +48,7 @@ public class MailService {
         try{
             helper.setFrom("${spring.mail.username}", name);
             helper.setTo("eventaza076@gmail.com");
-            helper.setSubject("Client message");
+            helper.setSubject(subject);
             helper.setText(mailContent, true);
             mailSender.send(message);
         }

@@ -2,6 +2,7 @@ package com.eventza.Eventza.Events;
 
 import com.eventza.Eventza.Categories.CategoryModel;
 import com.eventza.Eventza.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +54,6 @@ public class EventModel {
   }
 
   public EventModel(String eventName,
-      String organiserName,
       String organiserEmail,
       String startDate,
       String startTime,
@@ -68,7 +68,7 @@ public class EventModel {
     this.eventName = eventName;
     //this.imageByte = null;
     this.imageName = null;
-    this.organiserName = organiserName;
+    this.organiserName = null;
     this.organiserEmail = organiserEmail;
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);

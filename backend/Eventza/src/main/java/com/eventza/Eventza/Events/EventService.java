@@ -44,6 +44,9 @@ public class EventService {
   @Autowired
   private RatingRepository ratingRepository;
 
+  @Autowired
+  private MailService mailService;
+
 
   public UUID getEventId(String eventName) {
     return eventRepository.findByEventName(eventName).getId();
@@ -65,11 +68,17 @@ public class EventService {
   }
 
   public List<EventModel> getAllEvents() {
+
     return (List<EventModel>) eventRepository.findAll();
   }
 
-  public void addNewEvent(EventModel eventModel) {
+  public void addNewEvent(EventModel eventModel, User user) {
+
     eventRepository.save(eventModel);
+    String subject = "Event Added";
+    String mailContent = "Event succesfully added.";
+    mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
+    eventRepository.updateOrganiserMail(eventModel.getId(), user.getEmail());
   }
 
   /*public void updateExistingEvent(UUID id, EventModel eventModel){
@@ -115,8 +124,9 @@ public class EventService {
       Integer ratingCounter = event.counter();
       Ratings rate = new Ratings(event.getId(), user.getId(), rating);
       ratingRepository.save(rate);
-      eventRepository.setRatingForEventModule(id, (double) (previousTotalRating + rating) / ratingCounter,
-          previousTotalRating + rating);
+      eventRepository
+          .setRatingForEventModule(id, (double) (previousTotalRating + rating) / ratingCounter,
+              previousTotalRating + rating);
     } else {
       Integer ratingCounter = event.getRatingCounter();
       Ratings rate = ratingRepository.getRating(event.getId(), user.getId());
@@ -143,9 +153,10 @@ public class EventService {
   public void registerUserInEvent(UUID id, User user) {
     EventModel event = eventRepository.findById(id).get();
     event.getRegisteredUsers().add(user);
+    String subject = "Successfully registered";
+    String mailContent = "Successfully registered in " + event.getEventName();
+    mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
   }
-
-
 
 
   public List<EventModel> getFeaturedEvents() {

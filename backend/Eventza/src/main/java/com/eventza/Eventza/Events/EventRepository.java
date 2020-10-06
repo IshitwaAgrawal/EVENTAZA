@@ -32,6 +32,10 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
       + " or lower(e.category.categoryName) like lower(concat('%', ?1, '%'))")
   List<EventModel> findAll(String keyword);
 
+  @Transactional
+  @Modifying
+  @Query("UPDATE EventModel event set event.organiserEmail = ?2 where event.id=?1")
+  void updateOrganiserMail(UUID id,String email);
 
   @Transactional
   @Modifying
