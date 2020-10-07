@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EventService {
@@ -76,23 +77,30 @@ public class EventService {
   }
 
   public List<EventModel> getAllEvents() {
-
     return (List<EventModel>) eventRepository.findAll();
   }
 
-  public void addNewEvent(EventModel eventModel, User user) {
 
-    eventRepository.save(eventModel);
-    String subject = "Event Added";
-    String mailContent = "Event succesfully added.";
-    mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
-    eventRepository.updateOrganiserMail(eventModel.getId(), user.getEmail());
-    eventRepository.setRemainingTickets(eventModel.getId(), eventModel.getTotalTickets());
-    List<User> users = userRepository.findAll();
-    for(User u : users){
-      if(u.isNewsletter_service()){
-        newsletterMail.sendNewsletterMail(u, eventModel);
+  public void addNewEvent(EventModel eventModel, User user) {
+    try {
+//      eventRepository.save(eventModel);
+      String subject = "Event Added";
+      String mailContent = "Event succesfully added.";
+      mailService.sendMail(user.getEmail(), subject, user.getName(), mailContent);
+//      eventRepository.updateOrganiserMail(eventModel.getId(), user.getEmail());
+//      eventRepository.setRemainingTickets(eventModel.getId(), eventModel.getTotalTickets());
+//      user.addHostedEvents(eventModel);
+//      userService.updateUser(user);
+      userService.addHostedEvent(user,eventModel);
+      List<User> users = userRepository.findAll();
+      for (User u : users) {
+        if (u.isNewsletter_service()) {
+          newsletterMail.sendNewsletterMail(u, eventModel);
+        }
       }
+    }
+    catch (Exception e){
+      System.out.println(e.getMessage());
     }
   }
 
@@ -110,11 +118,31 @@ public class EventService {
     eventRepository.save(eventModel);
   }
 
-  public void deleteEvent(String eventName) {
-    EventModel event = eventRepository.findByEventName(eventName);
-    User user = userService.getUserByUsername(event.getOrganiserName());
-    userService.deleteHostedEvent(user, event);
-    eventRepository.deleteById(getEventId(eventName));
+//  public void deleteEvent(String eventName) {
+//    EventModel event = eventRepository.findByEventName(eventName);
+//    this.deleteWishlistEvents(event);
+//    eventRepository.deleteById(getEventId(eventName));
+//  }
+
+  public void deleteEvent(UUID uuid) {
+    try {
+      EventModel event = eventRepository.findById(uuid).orElse(null);
+      User user = userService.getUserByEmail(event.getOrganiserEmail());
+      user.deleteHostedEvent(event);
+      userService.updateUser(user);
+      List<User> users = userService.getAllUsers();
+      for (User u : users) {
+        u.getWishlist().remove(event);
+      }
+      userService.deleteHostedEvent(user, event);
+      eventRepository.deleteById(uuid);
+    }
+    catch (Exception e){
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void deleteWishlistEvents(EventModel event){
   }
 
   public List<EventModel> searchEventsByLocation(String eventLocation) {

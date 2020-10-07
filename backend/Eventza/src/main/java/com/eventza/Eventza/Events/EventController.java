@@ -10,6 +10,8 @@ import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.FileUploadService;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+
+import com.eventza.Eventza.model.NewEventRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,13 +85,13 @@ public class EventController {
   }
 
   @PostMapping("/categories/{categoryName}/events/{username}")
-  public ResponseEntity<String> addNewEvent(@PathVariable String categoryName,
-      @RequestBody EventModel event, @PathVariable String username) throws IOException {
+  public ResponseEntity<String> addNewEvent(@PathVariable String categoryName, @RequestBody NewEventRequest event, @PathVariable String username) throws IOException {
     try {
       UUID id = categoryService.getCategoryId(categoryName);
       User user = userService.getUserByUsername(username);
-      event.setCategory(categoryService.getRequestedCategory(id));
-      eventService.addNewEvent(event, user);
+      event.setCategoryModel(categoryService.getRequestedCategory(id));
+      EventModel new_event = new EventModel(event.getEventName(),user.getName(),user.getEmail(),event.getStartDate(),event.getStartTime(),event.getEndDate(),event.getEndTime(),event.getLocation(),event.getPrice(),event.getTotalTickets(),event.getEventDescription());
+      eventService.addNewEvent(new_event, user);
       return new ResponseEntity<String>("New Event added", HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<String>(
@@ -115,10 +117,24 @@ public class EventController {
     return eventName + " updated";
   }
 
-  @RequestMapping(method = RequestMethod.DELETE, path = "/categories/{categoryName}/events/{eventName}")
-  public String deleteEvent(@PathVariable String eventName) {
-    eventService.deleteEvent(eventName);
-    return eventName + " deleted";
+//  @RequestMapping(method = RequestMethod.DELETE, path = "/categories/{categoryName}/events/{eventName}")
+//  public String deleteEvent(@PathVariable String eventName) {
+//    eventService.deleteEvent(eventName);
+//    return eventName + " deleted";
+//  }
+
+  @RequestMapping(method = RequestMethod.DELETE, path = "/events/{eventId}")
+  public String delete_Event(@PathVariable String eventId) {
+    UUID id;
+    try {
+      id = UUID.fromString(eventId);
+    } catch (Exception e) {
+      id = new UUID(
+              new BigInteger(eventId.substring(0, 16), 16).longValue(),
+              new BigInteger(eventId.substring(16), 16).longValue());
+    }
+    eventService.deleteEvent(id);
+    return "deleted";
   }
 
   @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/{rating}")

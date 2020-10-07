@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
@@ -34,6 +35,29 @@ public class UserRegistration {
     }
 
     public ResponseEntity<?> registerUserAccount(UserSignUp user){
+        List<String> err = new ArrayList<>();
+        if(user.getName()==null){
+            err.add("Please enter the name.");
+//            return new ResponseEntity<String>("Please enter the name.",HttpStatus.NOT_FOUND);
+        }
+        if(user.getUsername()==null){
+            err.add("Please enter the username.");
+//            return new ResponseEntity<String>("Please enter the username.",HttpStatus.NOT_FOUND);
+        }
+        if(user.getEmail()==null){
+            err.add("Please enter the email.");
+//            return new ResponseEntity<String>("Please enter the email.",HttpStatus.NOT_FOUND);
+        }
+        if(user.getPassword()==null){
+            err.add("Please enter the password.");
+//            return new ResponseEntity<String>("Please enter the password.",HttpStatus.NOT_FOUND);
+        }
+        if(!err.isEmpty()){
+            return new ResponseEntity<>(err,HttpStatus.NOT_FOUND);
+        }
+        if(user.getRoles()==null){
+            user.setRoles("USER");
+        }
         try{
             User registered = userService.registerNewUserAccount(user);
             ResponseUser r_user = new ResponseUser(registered.getId(),registered.getUsername(),registered.getName(),registered.getEmail(),registered.getRoles(),registered.isNewsletter_service(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>());

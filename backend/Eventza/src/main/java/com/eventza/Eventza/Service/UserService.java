@@ -30,6 +30,10 @@ public class UserService implements UserServiceI{
     @Autowired
     private VerificationMailService mailService;
 
+    public List<User> getAllUsers(){
+        return (List<User>)repo.findAll();
+    }
+
     @Transactional
     @Override
     public User registerNewUserAccount(UserSignUp userSignUp) throws Exception {
@@ -143,13 +147,13 @@ public class UserService implements UserServiceI{
 
     public boolean deleteHostedEvent(User user,EventModel eventModel){
         boolean status = user.deleteHostedEvent(eventModel);
-        this.updateUser(user);
+        repo.save(user);
         return status;
     }
 
     public boolean deleteRegisteredEvent(User user,EventModel eventModel){
         boolean status = user.unregisterEvent(eventModel);
-        this.updateUser(user);
+        repo.save(user);
         return status;
     }
 

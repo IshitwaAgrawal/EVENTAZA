@@ -57,7 +57,6 @@ public class WishlistController {
     @GetMapping("/getWishlist")
     public ResponseEntity<?> getWishes(@RequestBody Map<String,String> username){
         try{
-            System.out.println(username);
             User user = userService.getUserByUsername(username.get("username"));
             return ResponseEntity.ok(user.getWishlist());
         }
@@ -74,6 +73,7 @@ public class WishlistController {
             EventModel e = eventService.getRequestedEvent(eventname);
             User u = userService.getUserByUsername(username);
             u.deleteWish(e);
+            userService.updateUser(u);
             return new ResponseEntity<String>("Event deleted",HttpStatus.FOUND);
         }
         catch (EventNotFoundException e){

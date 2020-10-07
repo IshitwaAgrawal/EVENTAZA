@@ -56,6 +56,7 @@ public class EventModel {
   }
 
   public EventModel(String eventName,
+      String organiserName,
       String organiserEmail,
       String startDate,
       String startTime,
@@ -70,7 +71,7 @@ public class EventModel {
     this.eventName = eventName;
     //this.imageByte = null;
     this.imageName = null;
-    this.organiserName = null;
+    this.organiserName = organiserName;
     this.organiserEmail = organiserEmail;
 //  this.endDate = new Date(lastDate);
 //  this.startDate = new Date(startDate);
@@ -83,6 +84,7 @@ public class EventModel {
     this.totalTickets = totalTickets;
     this.eventDescription = eventDescription;
     this.brochure_name = null;
+    this.remainingTickets = totalTickets;
   }
 
   private static String parseDate(String date) {
@@ -102,6 +104,8 @@ public class EventModel {
     String t = sdf.format(date);
     return t;
   }
+
+
 
 
   public Integer counter() {
