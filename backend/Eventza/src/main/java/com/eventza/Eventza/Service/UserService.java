@@ -1,6 +1,5 @@
 package com.eventza.Eventza.Service;
 
-import com.eventza.Eventza.DTO.UserDTO;
 import com.eventza.Eventza.Events.EventModel;
 import com.eventza.Eventza.Exception.EmailAlreadyExists;
 import com.eventza.Eventza.Exception.PasswordException;

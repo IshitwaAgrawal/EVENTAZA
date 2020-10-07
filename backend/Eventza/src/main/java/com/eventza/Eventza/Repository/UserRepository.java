@@ -1,6 +1,5 @@
 package com.eventza.Eventza.Repository;
 
-import com.eventza.Eventza.DTO.UserDTO;
 import com.eventza.Eventza.model.User;
 import java.util.List;
 import org.springframework.context.annotation.Bean;

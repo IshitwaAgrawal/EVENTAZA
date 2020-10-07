@@ -65,7 +65,8 @@ public class EventModel {
       String eventLocation,
       Integer price,
       Integer totalTickets,
-      String eventDescription)
+      String eventDescription,
+                    CategoryModel categoryModel)
       throws ParseException {
     this.id = UUID.randomUUID();
     this.eventName = eventName;
@@ -85,6 +86,7 @@ public class EventModel {
     this.eventDescription = eventDescription;
     this.brochure_name = null;
     this.remainingTickets = totalTickets;
+    this.category = categoryModel;
   }
 
   private static String parseDate(String date) {
