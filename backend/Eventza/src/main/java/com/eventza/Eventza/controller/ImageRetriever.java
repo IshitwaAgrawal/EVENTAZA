@@ -4,6 +4,9 @@ import com.eventza.Eventza.Events.EventModel;
 import com.eventza.Eventza.Events.EventService;
 import com.eventza.Eventza.Exception.EventNotFoundException;
 import com.eventza.Eventza.Service.ImageDecompressorService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.zip.DataFormatException;
@@ -30,5 +33,21 @@ public class ImageRetriever {
     return image;
   }
  */
+
+  @GetMapping("/{eventName}/image")
+  public byte[] retrieveImage(@PathVariable("eventName") String eventName)
+      throws IOException {
+    String filePath = "D:\\eventImages\\";
+    String eventId = eventService.getEventId(eventName).toString();
+    File file = new File(filePath + eventId);
+
+    byte[] buffer = new byte[(int) file.length()];
+    FileInputStream fileInputStream = new FileInputStream(file);
+
+    fileInputStream.read(buffer);
+    fileInputStream.close();
+    
+    return buffer;
+  }
 
 }

@@ -1,7 +1,6 @@
 package com.eventza.Eventza.Categories;
 
 import java.util.UUID;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

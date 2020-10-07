@@ -17,9 +17,10 @@ public class CategoryModel {
   private UUID id;
   private String categoryName;
 
-  public CategoryModel() { }
+  public CategoryModel() {
+  }
 
-  public CategoryModel(String categoryName){
+  public CategoryModel(String categoryName) {
     this.id = UUID.randomUUID();
     this.categoryName = categoryName;
   }

@@ -12,10 +12,11 @@ public class CategoryService {
   @Autowired
   private CategoryRepository categoryRepository;
 
+
   //method to fetch a category by its name from the database
-  public CategoryModel getRequestedCategory(String categoryName){
+  public CategoryModel getRequestedCategory(String categoryName) {
     CategoryModel c = categoryRepository.findByCategoryName(categoryName);
-    if(c==null){
+    if (c == null) {
       CategoryModel categoryModel = new CategoryModel(categoryName);
       categoryRepository.save(categoryModel);
       return categoryModel;
@@ -23,22 +24,20 @@ public class CategoryService {
     return c;
   }
 
-  public CategoryModel getRequestedCategory(UUID id){
-    try{
+  public CategoryModel getRequestedCategory(UUID id) {
+    try {
       CategoryModel c = categoryRepository.getCategoryById(id);
       return categoryRepository.getCategoryById(id);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       return null;
     }
   }
 
-  public UUID getCategoryId(String categoryName){
+  public UUID getCategoryId(String categoryName) {
     try {
       System.out.println(getRequestedCategory(categoryName).getId());
       return getRequestedCategory(categoryName).getId();
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       CategoryModel c = new CategoryModel(categoryName);
       categoryRepository.save(c);
       return c.getId();
@@ -46,24 +45,24 @@ public class CategoryService {
   }
 
   //method to fetch all available categories from the database
-  public List<CategoryModel> getAllCategories(){
+  public List<CategoryModel> getAllCategories() {
     List<CategoryModel> categoryList = new ArrayList<>();
     categoryRepository.findAll().forEach(category -> categoryList.add(category));
     return categoryList;
   }
 
   //method to add a new category in the database
-  public void addNewCategory(CategoryModel category){
-  categoryRepository.save(category);
+  public void addNewCategory(CategoryModel category) {
+    categoryRepository.save(category);
   }
 
   //method to update an existing category
-  public void updateExistingCategory(CategoryModel category){
+  public void updateExistingCategory(CategoryModel category) {
     categoryRepository.save(category);
   }
 
   //method to delete an existing category from the database
-  public void deleteCategory(String categoryName){
+  public void deleteCategory(String categoryName) {
     categoryRepository.deleteById(getRequestedCategory(categoryName).getId());
   }
 
