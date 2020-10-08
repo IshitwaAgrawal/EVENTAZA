@@ -24,7 +24,7 @@ public class EventReminder {
   private ReminderMail reminderMail;
 
 
-  @Scheduled(cron = "0 1 0 * * ?")
+  @Scheduled(cron = "0 47 17 * * ?")
   public void sendEventReminder() throws ParseException {
     System.out.println("start");
     LocalDate localDate = LocalDate.now().plusDays(1);

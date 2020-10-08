@@ -152,7 +152,7 @@ public class EventService {
   }
 
 
-  public List<EventModel> getRecommendedEvents() {
+  public List<EventModel> getTrendingEvents() {
     List<EventModel> events = new ArrayList<>();
     eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(event));
     return events;

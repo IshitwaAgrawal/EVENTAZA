@@ -1,7 +1,9 @@
 package com.eventza.Eventza.Categories;
 
 
+import java.math.BigInteger;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +36,18 @@ public class CategoryController {
     return categoryName + " updated";
   }
 
-  @DeleteMapping("/categories/{categoryName}")
-  public String deleteCategory(@PathVariable String categoryName) {
-    categoryService.deleteCategory(categoryName);
-    return categoryName + " deleted";
+  @DeleteMapping("/categories/{categoryId}")
+  public String deleteCategory(@PathVariable String categoryId) {
+    UUID id;
+    try {
+      id = UUID.fromString(categoryId);
+    } catch (Exception e) {
+      id = new UUID(
+          new BigInteger(categoryId.substring(0, 16), 16).longValue(),
+          new BigInteger(categoryId.substring(16), 16).longValue());
+    }
+    categoryService.deleteCategory(id);
+    return "category deleted";
   }
 
 }

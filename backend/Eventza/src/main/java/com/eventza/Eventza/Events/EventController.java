@@ -85,12 +85,17 @@ public class EventController {
   }
 
   @PostMapping("/categories/{categoryName}/events/{username}")
-  public ResponseEntity<String> addNewEvent(@PathVariable String categoryName, @RequestBody NewEventRequest event, @PathVariable String username) throws IOException {
+  public ResponseEntity<String> addNewEvent(@PathVariable String categoryName,
+      @RequestBody NewEventRequest event, @PathVariable String username) throws IOException {
     try {
       UUID id = categoryService.getCategoryId(categoryName);
       User user = userService.getUserByUsername(username);
       event.setCategoryModel(categoryService.getRequestedCategory(id));
-      EventModel new_event = new EventModel(event.getEventName(),user.getName(),user.getEmail(),event.getStartDate(),event.getStartTime(),event.getEndDate(),event.getEndTime(),event.getLocation(),event.getPrice(),event.getTotalTickets(),event.getEventDescription(),event.getCategoryModel());
+
+      EventModel new_event = new EventModel(event.getEventName(), user.getName(), user.getEmail(),
+          event.getStartDate(), event.getStartTime(), event.getEndDate(), event.getEndTime(),
+          event.getLocation(), event.getPrice(), event.getTotalTickets(),
+          event.getEventDescription(), event.getCategoryModel());
       eventService.addNewEvent(new_event, user);
       return new ResponseEntity<String>("New Event added", HttpStatus.OK);
     } catch (Exception e) {
@@ -130,8 +135,8 @@ public class EventController {
       id = UUID.fromString(eventId);
     } catch (Exception e) {
       id = new UUID(
-              new BigInteger(eventId.substring(0, 16), 16).longValue(),
-              new BigInteger(eventId.substring(16), 16).longValue());
+          new BigInteger(eventId.substring(0, 16), 16).longValue(),
+          new BigInteger(eventId.substring(16), 16).longValue());
     }
     eventService.deleteEvent(id);
     return "deleted";
@@ -144,77 +149,111 @@ public class EventController {
     UUID id = eventService.getEventId(eventName);
     User user = userService.getUserByUsername(username.get("username"));
     Double rate = eventService.rateAnEvent(id, rating, user);
-    return eventName + " rated" + rate;
+    return eventName + " rated";
   }
 
-  @RequestMapping(method = RequestMethod.GET, path = "/recommendedEvents")
-  public List<EventModel> getRecommendedEvents() {
-    return eventService.getRecommendedEvents();
+  @RequestMapping(method = RequestMethod.GET, path = "/trendingEvents")
+  public List<String> getTrendingEvents() {
+    //return eventService.getTrendingEvents();
+    List<String> names = new ArrayList<>();
+    eventService.getTrendingEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
 
   @RequestMapping(method = RequestMethod.GET, path = "/search/{location}")
   public List<EventModel> searchEventsByLocation(@PathVariable String location) {
     return eventService.searchEventsByLocation(location);
+
   }
 
 
   @GetMapping("/categories/getAllEvents")
-  public List<EventModel> getAllEvents() {
-    return eventService.getAllEvents();
+  public List<String> getAllEvents() {
+
+    //return eventService.getAllEvents();
+    List<String> names = new ArrayList<>();
+    eventService.getAllEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
+
   @GetMapping("/getPastEvents")
-  public List<EventModel> getPastEvents() throws ParseException {
-    return eventService.getPastEvents();
+  public List<String> getPastEvents() throws ParseException {
+    //return eventService.getPastEvents();
+    List<String> names = new ArrayList<>();
+    eventService.getPastEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
 
   @RequestMapping(method = RequestMethod.POST, path = "/{eventName}/register")
   public ResponseEntity<?> registerUserInEvent(@PathVariable String eventName,
       @RequestBody Map<String, String> username) {
-   // UUID id = UUID.fromString(eventId);
+    // UUID id = UUID.fromString(eventId);
     UUID id = eventService.getEventId(eventName);
-    if(eventService.getEventById(id).getRemainingTickets() == 0){
+    if (eventService.getEventById(id).getRemainingTickets() == 0) {
       return new ResponseEntity<String>("No tickets available", HttpStatus.EXPECTATION_FAILED);
     }
     User user = userService.getUserByUsername(username.get("username"));
     eventService.registerUserInEvent(id, user);
     user.registerEvent(eventService.getEventById(id));
     userService.updateUser(user);
-    return new ResponseEntity<User>(user, HttpStatus.OK);
+    return new ResponseEntity<String>("User registered", HttpStatus.OK);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
   public List<EventModel> getFeaturedEvents() {
+
     return eventService.getFeaturedEvents();
+   /* List<String> names = new ArrayList<>();
+    eventService.getFeaturedEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;*/
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/upcomingEvents")
-  public List<EventModel> getUpcomingEvents() {
-    return eventService.getUpcomingEvents();
+  public List<String> getUpcomingEvents() {
+
+    //return eventService.getUpcomingEvents();
+    List<String> names = new ArrayList<>();
+    eventService.getUpcomingEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/ongoingEvents")
-  public List<EventModel> getOngoingEvents() {
-    return eventService.getOngoingEvents();
+  public List<String> getOngoingEvents() {
+
+    //return eventService.getOngoingEvents();
+    List<String> names = new ArrayList<>();
+    eventService.getOngoingEvents().forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
   @GetMapping("/search")
-  public List<EventModel> searchFor(@RequestParam String keyword) {
-    return eventRepository.findAll(keyword);
+  public List<String> searchFor(@RequestParam String keyword) {
+    //return eventRepository.findAll(keyword);
+    List<String> names = new ArrayList<>();
+    eventRepository.findAll(keyword).forEach(name -> names.add(
+        name.getEventName()));
+    return names;
   }
 
   @PutMapping("/update")
-  public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data){
-    if(data.get("id")!=null) {
+  public ResponseEntity<?> updateEvent(@RequestBody Map<String, String> data) {
+    if (data.get("id") != null) {
       UUID id;
       try {
         id = UUID.fromString(data.get("id"));
       } catch (IllegalArgumentException e) {
         id = new UUID(
-                new BigInteger(data.get("id").substring(0, 16), 16).longValue(),
-                new BigInteger(data.get("id").substring(16), 16).longValue());
+            new BigInteger(data.get("id").substring(0, 16), 16).longValue(),
+            new BigInteger(data.get("id").substring(16), 16).longValue());
       }
       if (data.get("price") != null) {
         int price = Integer.parseInt(data.get("price"));
@@ -252,7 +291,8 @@ public class EventController {
       EventModel e = eventService.getEventById(id);
       return new ResponseEntity<EventModel>(e, HttpStatus.OK);
     }
-    return new ResponseEntity<String>("Please provide the UUID of the event.",HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<String>("Please provide the UUID of the event.",
+        HttpStatus.BAD_REQUEST);
   }
 
 }

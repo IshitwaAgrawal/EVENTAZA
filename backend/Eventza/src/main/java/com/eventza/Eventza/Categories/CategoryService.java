@@ -62,8 +62,8 @@ public class CategoryService {
   }
 
   //method to delete an existing category from the database
-  public void deleteCategory(String categoryName) {
-    categoryRepository.deleteById(getRequestedCategory(categoryName).getId());
+  public void deleteCategory(UUID id) {
+    categoryRepository.deleteById(id);
   }
 
 
