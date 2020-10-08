@@ -49,7 +49,7 @@ public class NewsLetterController {
         }
     }
 
-    @PostMapping("removeNewsService")
+    @PostMapping("/removeNewsService")
     public ResponseEntity<String> removeNewsLetterService(@RequestBody Map<String,String> user){
         try {
             User u = userService.getUserByUsername(user.get("username"));

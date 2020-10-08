@@ -12,6 +12,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import com.eventza.Eventza.model.NewEventRequest;
+import com.eventza.Eventza.model.RequestEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -165,7 +166,7 @@ public class EventController {
   }
 
   @GetMapping("/getPastEvents")
-  public List<EventModel> getPastEvents() throws ParseException {
+  public List<RequestEvent> getPastEvents() throws ParseException {
     return eventService.getPastEvents();
   }
 
@@ -201,11 +202,11 @@ public class EventController {
   }
 
   @GetMapping("/search")
-  public List<EventModel> searchFor(@RequestParam String keyword) {
-    return eventRepository.findAll(keyword);
+  public List<RequestEvent> searchFor(@RequestParam String keyword) {
+    return eventService.findSearchedEvents(keyword);
   }
 
-  @PutMapping("/update")
+  @PatchMapping("/update")
   public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data){
     if(data.get("id")!=null) {
       UUID id;
@@ -250,7 +251,8 @@ public class EventController {
         eventModel.setCategory(categoryService.getRequestedCategory(name));
       }
       EventModel e = eventService.getEventById(id);
-      return new ResponseEntity<EventModel>(e, HttpStatus.OK);
+      RequestEvent req = new RequestEvent(e.getId(),e.getEventName(),e.getOrganiserName(),e.getEventLocation(),e.getPrice(),e.getAverageRating(),e.getRatingCounter(),e.getTotalTickets(),e.getRemainingTickets(),e.getRegistrations(),e.getStartDate(),e.getEndDate(),e.getStartTime(),e.getEndTime(),e.getEventDescription(),e.getCategory());
+      return new ResponseEntity<RequestEvent>(req, HttpStatus.OK);
     }
     return new ResponseEntity<String>("Please provide the UUID of the event.",HttpStatus.BAD_REQUEST);
   }
