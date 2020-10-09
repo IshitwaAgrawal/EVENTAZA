@@ -29,11 +29,15 @@ public class ResetPasswordController {
 
   @RequestMapping(method = RequestMethod.POST, path = "/resetPassword")
   public ResponseEntity<?> resetPassword(@RequestBody UserDetails userDetails) throws Exception {
-
-    User user = userService.getUserByUsername(userDetails.getUsername());
+    User user = null;
+    try {
+      user = userService.getUserByUsername(userDetails.getUsername());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
     if (user == null) {
-     return new ResponseEntity<String>("Username doesn't exist", HttpStatus.NOT_FOUND);
-  }
+      return new ResponseEntity<String>("Username doesn't exist", HttpStatus.NOT_FOUND);
+    }
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     boolean check = encoder.matches(userDetails.getOldPassword(), user.getPassword());
