@@ -74,6 +74,7 @@ public class UserService implements UserServiceI{
         new_user.setCreated_events(0);
         new_user.setRegister_in_events(0);
         new_user.setNewsletter_service(false);
+        new_user.setOrganizer(false);
         mailService.sendVerificationEmail(new_user);
         repo.save(new_user);
 

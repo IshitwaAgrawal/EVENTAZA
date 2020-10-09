@@ -49,7 +49,8 @@ public class UserRegistration {
         }
         try{
             User registered = userService.registerNewUserAccount(user);
-            ResponseUser r_user = new ResponseUser(registered.getId(),registered.getUsername(),registered.getName(),registered.getEmail(),registered.getRoles(),registered.isNewsletter_service(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
+            ResponseUser r_user = new ResponseUser(registered.getId(),registered.getUsername(),registered.getName(),registered.getEmail(),registered.getRoles(),registered.isNewsletter_service(),registered.isOrganizer(),
+                new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
             return new ResponseEntity<>(r_user,HttpStatus.OK);
         }
 //        catch (PasswordException e){

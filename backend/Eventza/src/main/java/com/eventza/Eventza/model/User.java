@@ -22,6 +22,7 @@ public class User {
     private int created_events;
     private int register_in_events;
     private boolean newsletter_service;
+    private boolean organizer;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<EventModel> hostedEvents;
@@ -162,6 +163,14 @@ public class User {
 
     public void setNewsletter_service(boolean newsletter_service) {
         this.newsletter_service = newsletter_service;
+    }
+
+    public boolean isOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(boolean organizer) {
+        this.organizer = organizer;
     }
 
     public void addHostedEvents(EventModel eventModel){

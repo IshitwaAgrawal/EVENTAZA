@@ -78,7 +78,7 @@ public class EventController {
     UUID id = UUID.fromString(event_id.get("id"));
     System.out.println(id);
     return eventService.getEventById(id);
-  }
+  }1
 */
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
   public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName) {
@@ -91,6 +91,9 @@ public class EventController {
     try {
       UUID id = categoryService.getCategoryId(categoryName);
       User user = userService.getUserByUsername(username);
+      if(!user.isOrganizer()){
+        return new ResponseEntity<>("You are not a verified organizer yet!", HttpStatus.EXPECTATION_FAILED);
+      }
       event.setCategoryModel(categoryService.getRequestedCategory(id));
 
       EventModel new_event = new EventModel(event.getEventName(), user.getName(), user.getEmail(),
