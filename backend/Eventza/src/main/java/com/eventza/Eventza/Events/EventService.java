@@ -8,6 +8,7 @@ import com.eventza.Eventza.Service.MailService;
 import com.eventza.Eventza.Service.NewsletterMail;
 import com.eventza.Eventza.Service.ReminderMail;
 import com.eventza.Eventza.model.Ratings;
+import com.eventza.Eventza.model.RequestEvent;
 import com.eventza.Eventza.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,6 +76,7 @@ public class EventService {
     eventRepository.findByCategoryId(id).forEach(event -> events.add(event));
     return events;
   }
+
 
   public List<EventModel> getAllEvents() {
     return (List<EventModel>) eventRepository.findAll();
@@ -222,15 +224,14 @@ public class EventService {
     return combinedDateAndTime;
   }
 
-  public List<EventModel> getPastEvents() {
+  public List<RequestEvent> getPastEvents() {
     Date d = new Date();
     List<EventModel> events = getAllEvents();
-    List<EventModel> pastEvents = new ArrayList<>();
+    List<RequestEvent> pastEvents = new ArrayList<>();
     for (EventModel event : events) {
       Date endDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
-
       if (endDateTime.before(d)) {
-        pastEvents.add(event);
+        pastEvents.add(getRequestEvent(event));
       }
     }
     return pastEvents;
@@ -250,6 +251,15 @@ public class EventService {
     return upcomingEvents;
   }
 
+  public List<RequestEvent> findSearchedEvents(String keyword){
+    List<EventModel> events = eventRepository.findAll(keyword);
+    List<RequestEvent> eventList = new ArrayList<>();
+    for(EventModel e:events){
+      eventList.add(getRequestEvent(e));
+    }
+    return eventList;
+  }
+
   public List<EventModel> getOngoingEvents() {
     Date currentDateTime = new Date();
     List<EventModel> events = getAllEvents();
@@ -263,5 +273,9 @@ public class EventService {
       }
     }
     return ongoingEvents;
+  }
+
+  public static RequestEvent getRequestEvent(EventModel event){
+    return new RequestEvent(event.getId(),event.getEventName(),event.getOrganiserName(),event.getEventLocation(),event.getPrice(),event.getAverageRating(),event.getRatingCounter(),event.getTotalTickets(),event.getRemainingTickets(),event.getRegistrations(),event.getStartDate(),event.getEndDate(),event.getStartTime(),event.getEndTime(),event.getEventDescription(),event.getCategory());
   }
 }

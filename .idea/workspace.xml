@@ -23,7 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7075de6-312b-4007-813f-8c7a01318916" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Categories/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Categories/CategoryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Categories/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Categories/CategoryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Events/EventController.java" afterDir="false" />
@@ -32,6 +34,10 @@
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/VerificationMailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/VerificationMailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/NewsLetterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/NewsLetterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/resources/templates/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/resources/templates/checkout.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/FileUploadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/Service/FileUploadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/NewsLetterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/Eventza/src/main/java/com/eventza/Eventza/controller/NewsLetterController.java" afterDir="false" />
+>>>>>>> 1b661414e448e498adbdfc336f64d1300a1ee22c
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +105,22 @@
     </key>
   </component>
   <component name="RunManager">
+<<<<<<< HEAD
+=======
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+>>>>>>> 1b661414e448e498adbdfc336f64d1300a1ee22c
     <configuration name="EventzaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="Eventza.main" />
       <extension name="coverage">
@@ -143,7 +165,11 @@
       <workItem from="1601023301020" duration="3652000" />
       <workItem from="1601029743135" duration="6109000" />
       <workItem from="1601107723789" duration="3800000" />
+<<<<<<< HEAD
       <workItem from="1602137952655" duration="15578000" />
+=======
+      <workItem from="1602149519776" duration="9289000" />
+>>>>>>> 1b661414e448e498adbdfc336f64d1300a1ee22c
     </task>
     <servers />
   </component>
@@ -186,6 +212,7 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="232" y="181" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1601108171076" />
+<<<<<<< HEAD
     <state width="1366" height="210" key="GridCell.Tab.0.bottom" timestamp="1602159368707">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -234,6 +261,56 @@
     <state width="1366" height="210" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1602159368708" />
     <state width="1493" height="250" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1601111417454" />
     <state width="791" height="268" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1602095083579" />
+=======
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.0.center" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.0.left" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1600990192731" />
+    <state width="1493" height="192" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.0.right" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.1.bottom" timestamp="1602160917017">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1600990192733" />
+    <state width="1493" height="192" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1602160917017" />
+    <state width="791" height="268" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048043" />
+    <state width="1493" height="192" key="GridCell.Tab.1.center" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.1.left" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048041" />
+    <state width="1493" height="192" key="GridCell.Tab.1.right" timestamp="1602160917016">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1306" height="196" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1600990192732" />
+    <state width="1493" height="192" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1602160917016" />
+    <state width="791" height="268" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1602097048043" />
+>>>>>>> 1b661414e448e498adbdfc336f64d1300a1ee22c
     <state x="206" y="76" key="SettingsEditor" timestamp="1601017156977">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

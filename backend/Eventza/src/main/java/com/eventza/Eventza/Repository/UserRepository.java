@@ -31,5 +31,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
   @Query("UPDATE User u set u.newsletter_service = ?2 where u.id=?1")
   void updateNewsletterService(UUID id, Boolean value);
 
+
+  @Transactional
+  @Modifying
+  @Query("UPDATE User u set u.password = ?2 where u.id=?1")
+  void updatePassword(UUID id, String password);
+
   List<User> findAll();
 }

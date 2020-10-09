@@ -12,6 +12,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import com.eventza.Eventza.model.NewEventRequest;
+import com.eventza.Eventza.model.RequestEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -181,12 +182,8 @@ public class EventController {
 
 
   @GetMapping("/getPastEvents")
-  public List<String> getPastEvents() throws ParseException {
-    //return eventService.getPastEvents();
-    List<String> names = new ArrayList<>();
-    eventService.getPastEvents().forEach(name -> names.add(
-        name.getEventName()));
-    return names;
+  public List<RequestEvent> getPastEvents() throws ParseException {
+    return eventService.getPastEvents();
   }
 
 
@@ -236,17 +233,14 @@ public class EventController {
   }
 
   @GetMapping("/search")
-  public List<String> searchFor(@RequestParam String keyword) {
-    //return eventRepository.findAll(keyword);
-    List<String> names = new ArrayList<>();
-    eventRepository.findAll(keyword).forEach(name -> names.add(
-        name.getEventName()));
-    return names;
+  public List<EventModel> searchFor(@RequestParam String keyword) {
+    return eventRepository.findAll(keyword);
   }
 
-  @PutMapping("/update")
-  public ResponseEntity<?> updateEvent(@RequestBody Map<String, String> data) {
-    if (data.get("id") != null) {
+
+  @PatchMapping("/update")
+  public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data){
+    if(data.get("id")!=null) {
       UUID id;
       try {
         id = UUID.fromString(data.get("id"));
@@ -289,7 +283,8 @@ public class EventController {
         eventModel.setCategory(categoryService.getRequestedCategory(name));
       }
       EventModel e = eventService.getEventById(id);
-      return new ResponseEntity<EventModel>(e, HttpStatus.OK);
+      RequestEvent req = new RequestEvent(e.getId(),e.getEventName(),e.getOrganiserName(),e.getEventLocation(),e.getPrice(),e.getAverageRating(),e.getRatingCounter(),e.getTotalTickets(),e.getRemainingTickets(),e.getRegistrations(),e.getStartDate(),e.getEndDate(),e.getStartTime(),e.getEndTime(),e.getEventDescription(),e.getCategory());
+      return new ResponseEntity<RequestEvent>(req, HttpStatus.OK);
     }
     return new ResponseEntity<String>("Please provide the UUID of the event.",
         HttpStatus.BAD_REQUEST);
