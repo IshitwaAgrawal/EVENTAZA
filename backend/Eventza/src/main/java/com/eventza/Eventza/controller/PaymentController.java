@@ -4,11 +4,16 @@ package com.eventza.Eventza.controller;
 
 import com.eventza.Eventza.Events.EventService;
 import com.eventza.Eventza.Service.PaymentService;
+import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.PaymentModel.Currency;
 import com.eventza.Eventza.model.PaymentModel;
+import com.eventza.Eventza.model.User;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,8 +34,22 @@ public class PaymentController {
   @Autowired
   EventService eventService;
 
-  @RequestMapping("/{eventName}/checkout")
-  public String checkout(@PathVariable("eventName") String eventName, Model model) {
+  @Autowired
+  UserService userService;
+
+  @RequestMapping("/{eventName}/{username}/checkout")
+  public String checkout(@PathVariable("eventName") String eventName, @PathVariable("username") String username, Model model) {
+
+    UUID id = eventService.getEventId(eventName);
+    if (eventService.getEventById(id).getRemainingTickets() == 0) {
+      return "warning";
+    }
+
+    User user = userService.getUserByUsername(username);
+    eventService.registerUserInEvent(id, user);
+    user.registerEvent(eventService.getEventById(id));
+    userService.updateUser(user);
+    System.out.println("User registered");
 
     Integer price = eventService.getRequestedEvent(eventName).getPrice();
 
@@ -47,6 +66,7 @@ public class PaymentController {
       throws StripeException {
 
     paymentModel.setCurrency(Currency.INR);
+
     Charge charge = paymentService.charge(paymentModel);
 
     model.addAttribute("status", charge.getStatus());
