@@ -216,7 +216,7 @@ public class EventService {
     return featuredEvents;
   }
 
-  private Date convertToDateAndTime(String date, String time) {
+  public Date convertToDateAndTime(String date, String time) {
     LocalDate datePart = LocalDate.parse(date);
     LocalTime timePart = LocalTime.parse(time);
     LocalDateTime dt = LocalDateTime.of(datePart, timePart);

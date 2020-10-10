@@ -101,6 +101,11 @@ public class EventController {
           event.getLocation(), event.getPrice(), event.getTotalTickets(),
           event.getEventDescription(), event.getCategoryModel());
 
+      Date startDateTime = eventService.convertToDateAndTime(event.getStartDate(), event.getStartTime());
+      Date endDateTime = eventService.convertToDateAndTime(event.getEndDate(), event.getEndTime());
+      if(endDateTime.equals(startDateTime) || endDateTime.before(startDateTime) ){
+        return new ResponseEntity<>("start date and time cannot be equal to or after the end date and time", HttpStatus.BAD_REQUEST);
+      }
       eventService.addNewEvent(new_event, user);
       return new ResponseEntity<String>("New Event added", HttpStatus.OK);
     } catch (Exception e) {
@@ -242,8 +247,9 @@ public class EventController {
   }
 
 
-  @PatchMapping("/update")
-  public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data){
+  @PatchMapping("/update/{username}")
+  public ResponseEntity<?> updateEvent(@RequestBody Map<String,String> data, @PathVariable("username") String username){
+    User user  = userService.getUserByUsername(username);
     if(data.get("id")!=null) {
       UUID id;
       try {
@@ -253,6 +259,15 @@ public class EventController {
             new BigInteger(data.get("id").substring(0, 16), 16).longValue(),
             new BigInteger(data.get("id").substring(16), 16).longValue());
       }
+
+      EventModel event = eventService.getEventById(id);
+      if(!user.getEmail().equals(event.getOrganiserEmail())){
+        return new ResponseEntity<>("Only user who created the event can update it", HttpStatus.BAD_REQUEST);
+      }
+      if(eventService.getOngoingEvents().contains(event)){
+        return new ResponseEntity<>("Ongoing events cannot be updated", HttpStatus.EXPECTATION_FAILED);
+      }
+
       if (data.get("price") != null) {
         int price = Integer.parseInt(data.get("price"));
         eventRepository.updatePrice(id, price);

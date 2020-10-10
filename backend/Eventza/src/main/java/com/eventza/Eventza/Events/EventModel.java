@@ -24,7 +24,7 @@ public class EventModel {
   @Column(nullable = false)
   private UUID id;
   private String eventName;
-  @Lob
+  //@Lob
   //private byte[] imageByte;
   private String imageName;
   private String organiserName;
