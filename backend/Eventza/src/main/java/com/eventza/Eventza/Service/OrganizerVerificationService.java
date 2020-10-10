@@ -12,7 +12,7 @@ public class OrganizerVerificationService {
   @Autowired
   private MailService mailService;
 
-  public void organizerVerificationMail(User user, String cardNumber, MultipartFile file)
+  public void organizerVerificationMail(User user, String cardNumber)
       throws MessagingException {
 
     String subject = "Organizer verification";
@@ -22,9 +22,9 @@ public class OrganizerVerificationService {
     String mailContent = "<p>From "+user.getName()+", </p>";
     mailContent += "<p> PAN card number: " + cardNumber + "</p>";
     mailContent += "<p> Click the link to verify the organizer</p>";
-    mailContent += "<a href='" + site + "'>VERIFY</a><br>";
+    mailContent += "<a href='" + site + "'>VERIFY ORGANIZER</a><br>";
     mailContent += "<p> Below is the attachment of id proof <p>";
 
-    mailService.sendOrganizerVerificationMail(user.getEmail(), subject, senderName, mailContent, file);
+    mailService.sendOrganizerVerificationMail(user.getEmail(), subject, senderName, mailContent, user.getUsername());
   }
 }

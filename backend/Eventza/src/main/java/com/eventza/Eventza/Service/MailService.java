@@ -64,7 +64,7 @@ public class MailService {
 
   @Async
   public void sendOrganizerVerificationMail(String userEmail, String subject, String senderName,
-      String mailContent, MultipartFile file) throws MessagingException {
+      String mailContent, String username) throws MessagingException {
     MimeMessage message = mailSender.createMimeMessage();
 
     MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -75,10 +75,10 @@ public class MailService {
       helper.setSubject(subject);
       helper.setText(mailContent, true);
 
-      String path = "C:\\Users\\admin\\Desktop\\study\\2nd Sem\\comp";
-      FileSystemResource f
-          = new FileSystemResource(new File(path+"\\"+file.getOriginalFilename()));
-      helper.addAttachment(file.getOriginalFilename(), f);
+      String path = "D:\\eventazaData\\eventIdProof";
+      FileSystemResource file
+          = new FileSystemResource(new File(path+"\\" + username));
+      helper.addAttachment(file.getFilename(), file);
 
       mailSender.send(message);
     } catch (Exception e) {

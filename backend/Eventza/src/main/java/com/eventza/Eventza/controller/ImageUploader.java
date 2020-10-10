@@ -55,7 +55,7 @@ public class ImageUploader {
     try {
       EventModel event = eventService.getRequestedEvent(eventName);
       fileUploadService.imageUpload(image,event);
-      return new ResponseEntity<String>("File upload Successful", HttpStatus.OK);
+      return new ResponseEntity<String>("Image uploaded Successfully", HttpStatus.OK);
     }
     catch (Exception e){
       return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);

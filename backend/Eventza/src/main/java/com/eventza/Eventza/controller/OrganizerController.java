@@ -1,6 +1,7 @@
 package com.eventza.Eventza.controller;
 
 import com.eventza.Eventza.Repository.UserRepository;
+import com.eventza.Eventza.Service.FileUploadService;
 import com.eventza.Eventza.Service.OrganizerVerificationService;
 import com.eventza.Eventza.Service.UserService;
 import com.eventza.Eventza.model.User;
@@ -28,11 +29,13 @@ public class OrganizerController {
   @Autowired
   UserRepository userRepository;
 
+  @Autowired
+  FileUploadService fileUploadService;
 
   @PostMapping("/{username}/becomeAnOrganizer")
   public ResponseEntity<?> becomeAnOrganizer(@PathVariable("username") String username,
       @RequestParam("PAN_card_number") String cardNumber, @RequestParam("ID_Proof") MultipartFile file)
-      throws MessagingException {
+      throws Exception {
 
     User user = userService.getUserByUsername(username);
 
@@ -48,7 +51,8 @@ public class OrganizerController {
       return new ResponseEntity<>("ID Proof required!", HttpStatus.EXPECTATION_FAILED);
     }
 
-    organizerVerificationService.organizerVerificationMail(user, cardNumber, file);
+    fileUploadService.documentUpload(file, username);
+    organizerVerificationService.organizerVerificationMail(user, cardNumber);
 
     return new ResponseEntity<>("Mail sent", HttpStatus.OK);
 

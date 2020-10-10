@@ -100,6 +100,7 @@ public class EventController {
           event.getStartDate(), event.getStartTime(), event.getEndDate(), event.getEndTime(),
           event.getLocation(), event.getPrice(), event.getTotalTickets(),
           event.getEventDescription(), event.getCategoryModel());
+
       eventService.addNewEvent(new_event, user);
       return new ResponseEntity<String>("New Event added", HttpStatus.OK);
     } catch (Exception e) {
