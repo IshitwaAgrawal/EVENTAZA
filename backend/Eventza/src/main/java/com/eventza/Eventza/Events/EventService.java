@@ -154,11 +154,20 @@ public class EventService {
   }
 
 
-  public List<EventModel> getTrendingEvents() {
-    List<EventModel> events = new ArrayList<>();
-    eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(event));
+  public List<RequestEvent> getTrendingEvents() {
+    List<RequestEvent> events = new ArrayList<>();
+    eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(getRequestEvent(event)));
     return events;
 
+  }
+
+  public List<RequestEvent> getSearchedEvents(String keyword){
+    List<RequestEvent> res = new ArrayList<>();
+    List<EventModel> eventModels = eventRepository.findAll(keyword);
+    for(EventModel e:eventModels){
+      res.add(getRequestEvent(e));
+    }
+    return res;
   }
 
   public Double rateAnEvent(UUID id, Integer rating, User user) {
@@ -206,14 +215,14 @@ public class EventService {
   }
 
 
-  public List<EventModel> getFeaturedEvents() {
+  public List<RequestEvent> getFeaturedEvents() {
     List<CategoryModel> categories = categoryService.getAllCategories();
     List<EventModel> featuredEvents = new ArrayList<>();
+    List<RequestEvent> res = new ArrayList<>();
     for (CategoryModel category : categories) {
-      featuredEvents
-          .add(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId()));
+      res.add(getRequestEvent(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId())));
     }
-    return featuredEvents;
+    return res;
   }
 
   public Date convertToDateAndTime(String date, String time) {
@@ -237,15 +246,16 @@ public class EventService {
     return pastEvents;
   }
 
-  public List<EventModel> getUpcomingEvents() {
+  public List<RequestEvent> getUpcomingEvents() {
     Date currentDateTime = new Date();
     List<EventModel> events = getAllEvents();
-    List<EventModel> upcomingEvents = new ArrayList<>();
+//    List<EventModel> upcomingEvents = new ArrayList<>();
+    List<RequestEvent> upcomingEvents = new ArrayList<>();
     for (EventModel event : events) {
       Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
 
       if (eventStartDateTime.after(currentDateTime)) {
-        upcomingEvents.add(event);
+        upcomingEvents.add(getRequestEvent(event));
       }
     }
     return upcomingEvents;
@@ -260,22 +270,32 @@ public class EventService {
     return eventList;
   }
 
-  public List<EventModel> getOngoingEvents() {
+  public List<RequestEvent> getOngoingEvents() {
     Date currentDateTime = new Date();
     List<EventModel> events = getAllEvents();
-    List<EventModel> ongoingEvents = new ArrayList<>();
+    List<RequestEvent> ongoingEvents = new ArrayList<>();
     for (EventModel event : events) {
       Date eventStartDateTime = convertToDateAndTime(event.getStartDate(), event.getStartTime());
       Date eventEndDateTime = convertToDateAndTime(event.getEndDate(), event.getEndTime());
 
       if (eventStartDateTime.before(currentDateTime) && eventEndDateTime.after(currentDateTime)) {
-        ongoingEvents.add(event);
+        ongoingEvents.add(getRequestEvent(event));
       }
     }
     return ongoingEvents;
   }
 
+  public RequestEvent convertToRequestEvent(EventModel e){
+    return getRequestEvent(e);
+  }
+
   public static RequestEvent getRequestEvent(EventModel event){
     return new RequestEvent(event.getId(),event.getEventName(),event.getOrganiserName(),event.getEventLocation(),event.getPrice(),event.getAverageRating(),event.getRatingCounter(),event.getTotalTickets(),event.getRemainingTickets(),event.getRegistrations(),event.getStartDate(),event.getEndDate(),event.getStartTime(),event.getEndTime(),event.getEventDescription(),event.getCategory());
+  }
+
+  public boolean checkDate(EventModel event,int days){
+    LocalDate localDate = LocalDate.now().plusDays(days);
+    Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    return convertToDateAndTime(event.getStartDate(),event.getStartTime()).after(date);
   }
 }

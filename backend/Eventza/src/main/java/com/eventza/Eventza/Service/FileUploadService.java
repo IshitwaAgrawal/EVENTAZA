@@ -14,10 +14,10 @@ public class FileUploadService {
     }
 
     public void imageUpload(MultipartFile image, EventModel event)throws Exception{
-        image.transferTo(new File("D:\\eventazaData\\eventImages\\" + event.getId().toString()));
+        image.transferTo(new File("C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files\\" + event.getId().toString()));
     }
 
     public void documentUpload(MultipartFile file, String username)throws Exception{
-        file.transferTo(new File("D:\\eventazaData\\eventIdProof\\" + username));
+        file.transferTo(new File( "C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files\\"+ username));
     }
 }

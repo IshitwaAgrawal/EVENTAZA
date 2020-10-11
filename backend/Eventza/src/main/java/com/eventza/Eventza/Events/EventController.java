@@ -4,6 +4,8 @@ package com.eventza.Eventza.Events;
 import com.eventza.Eventza.Categories.CategoryService;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import com.eventza.Eventza.Exception.EventNotFoundException;
@@ -163,12 +165,8 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/trendingEvents")
-  public List<String> getTrendingEvents() {
-    //return eventService.getTrendingEvents();
-    List<String> names = new ArrayList<>();
-    eventService.getTrendingEvents().forEach(name -> names.add(
-        name.getEventName()));
-    return names;
+  public List<RequestEvent> getTrendingEvents() {
+    return eventService.getTrendingEvents();
   }
 
 
@@ -212,38 +210,23 @@ public class EventController {
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/featuredEvents")
-  public List<EventModel> getFeaturedEvents() {
-
+  public List<RequestEvent> getFeaturedEvents() {
     return eventService.getFeaturedEvents();
-   /* List<String> names = new ArrayList<>();
-    eventService.getFeaturedEvents().forEach(name -> names.add(
-        name.getEventName()));
-    return names;*/
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/upcomingEvents")
-  public List<String> getUpcomingEvents() {
-
-    //return eventService.getUpcomingEvents();
-    List<String> names = new ArrayList<>();
-    eventService.getUpcomingEvents().forEach(name -> names.add(
-        name.getEventName()));
-    return names;
+  public List<RequestEvent> getUpcomingEvents() {
+    return eventService.getUpcomingEvents();
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/ongoingEvents")
-  public List<String> getOngoingEvents() {
-
-    //return eventService.getOngoingEvents();
-    List<String> names = new ArrayList<>();
-    eventService.getOngoingEvents().forEach(name -> names.add(
-        name.getEventName()));
-    return names;
+  public List<RequestEvent> getOngoingEvents() {
+    return eventService.getOngoingEvents();
   }
 
   @GetMapping("/search")
-  public List<EventModel> searchFor(@RequestParam String keyword) {
-    return eventRepository.findAll(keyword);
+  public List<RequestEvent> searchFor(@RequestParam String keyword) {
+    return eventService.getSearchedEvents(keyword);
   }
 
 
@@ -261,10 +244,12 @@ public class EventController {
       }
 
       EventModel event = eventService.getEventById(id);
+      RequestEvent req_e = eventService.convertToRequestEvent(event);
+
       if(!user.getEmail().equals(event.getOrganiserEmail())){
         return new ResponseEntity<>("Only user who created the event can update it", HttpStatus.BAD_REQUEST);
       }
-      if(eventService.getOngoingEvents().contains(event)){
+      if(eventService.getOngoingEvents().contains(req_e)){
         return new ResponseEntity<>("Ongoing events cannot be updated", HttpStatus.EXPECTATION_FAILED);
       }
 
@@ -273,33 +258,47 @@ public class EventController {
         eventRepository.updatePrice(id, price);
       }
       if (data.get("eventLocation") != null) {
-        eventRepository.updateLocation(id, data.get("eventLocation"));
+        if(eventService.checkDate(event,2)){
+          eventRepository.updateLocation(id, data.get("eventLocation"));
+        }
       }
       if (data.get("eventName") != null) {
-        eventRepository.updateName(id, data.get("eventName"));
+        if(eventService.checkDate(event,3)) {
+          eventRepository.updateName(id, data.get("eventName"));
+        }
       }
       if (data.get("totalTickets") != null) {
         eventRepository.updateTickets(id, Integer.parseInt(data.get("totalTickets")));
       }
       if (data.get("startDate") != null) {
-        eventRepository.updateStartDate(id, data.get("startDate"));
+        if(eventService.checkDate(event,1)) {
+          eventRepository.updateStartDate(id, data.get("startDate"));
+        }
       }
       if (data.get("endDate") != null) {
-        eventRepository.updateEndDate(id, data.get("endDate"));
+        if(eventService.checkDate(event,1)) {
+          eventRepository.updateEndDate(id, data.get("endDate"));
+        }
       }
       if (data.get("startTime") != null) {
-        eventRepository.updateStartTime(id, data.get("startTime"));
+        if(eventService.checkDate(event,2)) {
+          eventRepository.updateStartTime(id, data.get("startTime"));
+        }
       }
       if (data.get("endTime") != null) {
-        eventRepository.updateEndTime(id, data.get("endTime"));
+        if(eventService.checkDate(event,1)) {
+          eventRepository.updateEndTime(id, data.get("endTime"));
+        }
       }
       if (data.get("eventDescription") != null) {
         eventRepository.updateDescription(id, data.get("eventDescription"));
       }
       if (data.get("category") != null) {
-        String name = data.get("category");
-        EventModel eventModel = eventRepository.getEventModelById(id);
-        eventModel.setCategory(categoryService.getRequestedCategory(name));
+        if(eventService.checkDate(event,2)) {
+          String name = data.get("category");
+          EventModel eventModel = eventRepository.getEventModelById(id);
+          eventModel.setCategory(categoryService.getRequestedCategory(name));
+        }
       }
       EventModel e = eventService.getEventById(id);
       RequestEvent req = new RequestEvent(e.getId(),e.getEventName(),e.getOrganiserName(),e.getEventLocation(),e.getPrice(),e.getAverageRating(),e.getRatingCounter(),e.getTotalTickets(),e.getRemainingTickets(),e.getRegistrations(),e.getStartDate(),e.getEndDate(),e.getStartTime(),e.getEndTime(),e.getEventDescription(),e.getCategory());
