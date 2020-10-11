@@ -18,6 +18,7 @@ import java.util.Map;
 
 
 @RestController
+@RequestMapping("/api")
 public class WishlistController {
 
     @Autowired

@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.regex.PatternSyntaxException;
 
 @RestController
+@RequestMapping("/api")
 public class UserRegistration {
 
     @Autowired
