@@ -160,7 +160,11 @@ public class EventController {
       @RequestBody Map<String, String> username) {
 
     UUID id = eventService.getEventId(eventName);
+    EventModel event = eventService.getEventById(id);
     User user = userService.getUserByUsername(username.get("username"));
+    if(user.getEmail().equals(event.getOrganiserEmail())){
+      return "cannot rate your own event!";
+    }
     Double rate = eventService.rateAnEvent(id, rating, user);
     return eventName + " rated";
   }
@@ -200,10 +204,14 @@ public class EventController {
       @RequestBody Map<String, String> username) {
     // UUID id = UUID.fromString(eventId);
     UUID id = eventService.getEventId(eventName);
+    EventModel event = eventService.getEventById(id);
     if (eventService.getEventById(id).getRemainingTickets() == 0) {
       return new ResponseEntity<String>("No tickets available", HttpStatus.EXPECTATION_FAILED);
     }
     User user = userService.getUserByUsername(username.get("username"));
+    if(user.getEmail().equals(event.getOrganiserEmail())){
+      return new ResponseEntity<String>("Cannot register in own events", HttpStatus.BAD_REQUEST);
+    }
     eventService.registerUserInEvent(id, user);
     user.registerEvent(eventService.getEventById(id));
     userService.updateUser(user);

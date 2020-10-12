@@ -39,7 +39,7 @@ public class ImageRetriever {
   @GetMapping("/{eventName}/image")
   public byte[] retrieveImage(@PathVariable("eventName") String eventName)
       throws IOException {
-    String filePath = "D:\\eventImages\\";
+    String filePath = "D:\\eventazaData\\eventImages\\";
     String eventId = eventService.getEventId(eventName).toString();
     File file = new File(filePath + eventId);
 
@@ -48,7 +48,7 @@ public class ImageRetriever {
 
     fileInputStream.read(buffer);
     fileInputStream.close();
-    
+
     return buffer;
   }
 

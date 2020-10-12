@@ -38,7 +38,7 @@ public class BrochureDownloadController {
                 return new ResponseEntity<String>("Brochure not found!",HttpStatus.NOT_FOUND);
             }
             System.out.println(filename);
-            String filebase = "C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files\\";
+            String filebase = "D:\\eventazaData\\eventBrochure\\";
             Path path = Paths.get(filebase + filename);
             Resource resource = null;
             try {

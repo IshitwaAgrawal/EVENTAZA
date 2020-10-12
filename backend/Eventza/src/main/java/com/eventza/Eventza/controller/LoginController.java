@@ -18,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,9 +52,9 @@ public class LoginController {
       User user = userService.getUserByUsername(request.getUsername());
       System.out.println(user.isVerified());
       if (!user.isVerified()) {
-        String k = RandomString.make(64);
-        user.setVerificationToken(k);
-        userService.updateUser(user);
+       // String k = RandomString.make(64);
+        //user.setVerificationToken(k);
+       // userService.updateUser(user);
         mailService.sendVerificationEmail(user);
         userService.updateUser(user);
         return new ResponseEntity<String>("User not verified. Please check EMAIL.",
@@ -87,5 +89,11 @@ public class LoginController {
       return new ResponseEntity<String>("User is disabled by ADMIN.", HttpStatus.BAD_REQUEST);
 //            return ResponseEntity.ok("Not Enabled from Admin!");
     }
+  }
+
+  @GetMapping("/getUser/{username}")
+  public ResponseEntity<?> getUser(@PathVariable String username){
+    User user = userService.getUserByUsername(username);
+    return new ResponseEntity<User>(user,HttpStatus.OK);
   }
 }

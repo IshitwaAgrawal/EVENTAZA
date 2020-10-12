@@ -17,7 +17,7 @@ public class OrganizerVerificationService {
 
     String subject = "Organizer verification";
     String senderName = user.getName();
-    String site = "http://localhost:8000/acceptOrganizer" + "/" + user.getUsername();
+    String site = "http://localhost:8000/api/acceptOrganizer" + "/" + user.getUsername();
 
     String mailContent = "<p>From "+user.getName()+", </p>";
     mailContent += "<p> PAN card number: " + cardNumber + "</p>";

@@ -75,7 +75,7 @@ public class MailService {
       helper.setSubject(subject);
       helper.setText(mailContent, true);
 
-      String path = "C:\\Users\\ISHITWA\\Desktop\\EVENTAZA\\backend\\Eventza\\src\\main\\resources\\Files";
+      String path = "D:\\eventazaData\\eventIdProof";
       FileSystemResource file
           = new FileSystemResource(new File(path+"\\" + username));
       helper.addAttachment(file.getFilename(), file);
