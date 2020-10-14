@@ -45,18 +45,6 @@ public class EventController {
   @Autowired
   private EventRepository eventRepository;
 
-  //    @PostMapping("/categories/{categoryName}/events")
-//    public String addNewEvent(@PathVariable String categoryName, @RequestBody EventModel event){
-//        try {
-//            UUID id = categoryService.getCategoryId(categoryName);
-//            event.setCategory(categoryService.getRequestedCategory(id));
-//            eventService.addNewEvent(event);
-//            return "New event added";
-//        }
-//        catch (Exception e){
-//            return e.getMessage();
-//        }
-//    }
 
 
   @RequestMapping(method = RequestMethod.GET, path = "/events/{eventId}")
@@ -74,15 +62,7 @@ public class EventController {
     }
   }
 
-  /*
-  @GetMapping("/categories/{categoryName}/events")
-  public EventModel getRequestedEvent(@RequestBody Map<String,String> event_id)
-      throws EventNotFoundException {
-    UUID id = UUID.fromString(event_id.get("id"));
-    System.out.println(id);
-    return eventService.getEventById(id);
-  }1
-*/
+
   @RequestMapping(method = RequestMethod.GET, path = "/categories/{categoryName}/events")
   public List<EventModel> getAllEventsFromRequestedCategory(@PathVariable String categoryName) {
     return eventService.getAllEventsFromRequestedCategory(categoryName);
@@ -117,17 +97,6 @@ public class EventController {
     }
   }
 
- /* @RequestMapping(method = RequestMethod.PUT, path = "/categories/{categoryName}/events/{eventName}")
-  public String updateExistingEvent(@PathVariable String categoryName,
-      @PathVariable String eventName, @RequestBody EventModel event) {
-    UUID id = categoryService.getCategoryId(categoryName);
-    event.setCategory(new CategoryModel(id, categoryName));
-    UUID event_id = eventService.getEventId(eventName);
-    eventService.updateExistingEvent(event_id, event);
-    return eventName + " updated";
-  }
-  */
-
 
   @PutMapping("/categories/{categoryName}/events/{eventName}")
   public String updateExistingEvent(@PathVariable String eventName, @RequestBody EventModel event) {
@@ -135,11 +104,6 @@ public class EventController {
     return eventName + " updated";
   }
 
-//  @RequestMapping(method = RequestMethod.DELETE, path = "/categories/{categoryName}/events/{eventName}")
-//  public String deleteEvent(@PathVariable String eventName) {
-//    eventService.deleteEvent(eventName);
-//    return eventName + " deleted";
-//  }
 
   @RequestMapping(method = RequestMethod.DELETE, path = "/events/{eventId}")
   public String delete_Event(@PathVariable String eventId) {

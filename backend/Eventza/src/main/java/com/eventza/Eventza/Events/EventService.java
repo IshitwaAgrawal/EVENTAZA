@@ -93,38 +93,21 @@ public class EventService {
 //      eventRepository.setRemainingTickets(eventModel.getId(), eventModel.getTotalTickets());
 //      user.addHostedEvents(eventModel);
 //      userService.updateUser(user);
-      userService.addHostedEvent(user,eventModel);
+      userService.addHostedEvent(user, eventModel);
       List<User> users = userRepository.findAll();
       for (User u : users) {
         if (u.isNewsletter_service()) {
           newsletterMail.sendNewsletterMail(u, eventModel);
         }
       }
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
 
-  /*public void updateExistingEvent(UUID id, EventModel eventModel){
-    EventModel event = eventRepository.findById(id).get();
-    Double rating = event.getAverageRating();
-    Integer registrations = event.getRegistrations();
-    eventRepository.deleteById(id);
-    eventModel.setAverageRating(rating);
-    eventModel.setRegistrations(registrations);
-    eventRepository.save(eventModel);
-  }*/
-
   public void updateExistingEvent(EventModel eventModel) {
     eventRepository.save(eventModel);
   }
-
-//  public void deleteEvent(String eventName) {
-//    EventModel event = eventRepository.findByEventName(eventName);
-//    this.deleteWishlistEvents(event);
-//    eventRepository.deleteById(getEventId(eventName));
-//  }
 
   public void deleteEvent(UUID uuid) {
     try {
@@ -138,13 +121,12 @@ public class EventService {
       }
       userService.deleteHostedEvent(user, event);
       eventRepository.deleteById(uuid);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
 
-  public void deleteWishlistEvents(EventModel event){
+  public void deleteWishlistEvents(EventModel event) {
   }
 
   public List<EventModel> searchEventsByLocation(String eventLocation) {
@@ -156,15 +138,16 @@ public class EventService {
 
   public List<RequestEvent> getTrendingEvents() {
     List<RequestEvent> events = new ArrayList<>();
-    eventRepository.findByAverageRatingGreaterThanEqual(3.5).forEach(event -> events.add(getRequestEvent(event)));
+    eventRepository.findByAverageRatingGreaterThanEqual(3.5)
+        .forEach(event -> events.add(getRequestEvent(event)));
     return events;
 
   }
 
-  public List<RequestEvent> getSearchedEvents(String keyword){
+  public List<RequestEvent> getSearchedEvents(String keyword) {
     List<RequestEvent> res = new ArrayList<>();
     List<EventModel> eventModels = eventRepository.findAll(keyword);
-    for(EventModel e:eventModels){
+    for (EventModel e : eventModels) {
       res.add(getRequestEvent(e));
     }
     return res;
@@ -220,7 +203,8 @@ public class EventService {
     List<EventModel> featuredEvents = new ArrayList<>();
     List<RequestEvent> res = new ArrayList<>();
     for (CategoryModel category : categories) {
-      res.add(getRequestEvent(eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId())));
+      res.add(getRequestEvent(
+          eventRepository.findFirstByCategoryIdOrderByAverageRatingDesc(category.getId())));
     }
     return res;
   }
@@ -261,10 +245,10 @@ public class EventService {
     return upcomingEvents;
   }
 
-  public List<RequestEvent> findSearchedEvents(String keyword){
+  public List<RequestEvent> findSearchedEvents(String keyword) {
     List<EventModel> events = eventRepository.findAll(keyword);
     List<RequestEvent> eventList = new ArrayList<>();
-    for(EventModel e:events){
+    for (EventModel e : events) {
       eventList.add(getRequestEvent(e));
     }
     return eventList;
@@ -285,17 +269,21 @@ public class EventService {
     return ongoingEvents;
   }
 
-  public RequestEvent convertToRequestEvent(EventModel e){
+  public RequestEvent convertToRequestEvent(EventModel e) {
     return getRequestEvent(e);
   }
 
-  public static RequestEvent getRequestEvent(EventModel event){
-    return new RequestEvent(event.getId(),event.getEventName(),event.getOrganiserName(),event.getEventLocation(),event.getPrice(),event.getAverageRating(),event.getRatingCounter(),event.getTotalTickets(),event.getRemainingTickets(),event.getRegistrations(),event.getStartDate(),event.getEndDate(),event.getStartTime(),event.getEndTime(),event.getEventDescription(),event.getCategory());
+  public static RequestEvent getRequestEvent(EventModel event) {
+    return new RequestEvent(event.getId(), event.getEventName(), event.getOrganiserName(),
+        event.getEventLocation(), event.getPrice(), event.getAverageRating(),
+        event.getRatingCounter(), event.getTotalTickets(), event.getRemainingTickets(),
+        event.getRegistrations(), event.getStartDate(), event.getEndDate(), event.getStartTime(),
+        event.getEndTime(), event.getEventDescription(), event.getCategory());
   }
 
-  public boolean checkDate(EventModel event,int days){
+  public boolean checkDate(EventModel event, int days) {
     LocalDate localDate = LocalDate.now().plusDays(days);
     Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    return convertToDateAndTime(event.getStartDate(),event.getStartTime()).after(date);
+    return convertToDateAndTime(event.getStartDate(), event.getStartTime()).after(date);
   }
 }

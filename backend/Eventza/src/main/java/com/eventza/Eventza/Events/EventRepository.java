@@ -95,11 +95,4 @@ public interface EventRepository extends CrudRepository<EventModel, UUID> {
 
 
 
-
-  /*@Transactional
-  @Modifying
-  @Query("update EventModel event set event.imageByte = ?2 where event.id = ?1")
-  void setImageByteForEventModule(UUID id, byte[] imageByte);
-*/
-
 }

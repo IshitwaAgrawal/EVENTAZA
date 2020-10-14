@@ -24,8 +24,6 @@ public class EventModel {
   @Column(nullable = false)
   private UUID id;
   private String eventName;
-  //@Lob
-  //private byte[] imageByte;
   private String imageName;
   private String organiserName;
   private String organiserEmail;
@@ -74,8 +72,6 @@ public class EventModel {
     this.imageName = null;
     this.organiserName = organiserName;
     this.organiserEmail = organiserEmail;
-//  this.endDate = new Date(lastDate);
-//  this.startDate = new Date(startDate);
     this.endDate = parseDate(lastDate);
     this.endTime = parseTime(endTime);
     this.startDate = parseDate(startDate);
